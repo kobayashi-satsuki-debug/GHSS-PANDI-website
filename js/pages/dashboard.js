@@ -130,6 +130,7 @@
       }
 
       const actions = [];
+      if (role === 'student') actions.push(['#ai', L('Ask the AI study buddy', 'എ.ഐ പഠന സഹായിയോട് ചോദിക്കുക')]);
       if (role === 'student' || isStaff) actions.push(['chat.html', L('Open class chat', 'ക്ലാസ് ചാറ്റ്')]);
       if (role !== 'teacher') actions.push(['results.html', L('View results', 'ഫലങ്ങൾ')]);
       if (isStaff) actions.push(['#publish', L('Publish results', 'ഫലം പ്രകാശനം')]);
@@ -207,6 +208,138 @@
           '<div class="list-card"><table class="tbl"><thead><tr><th>' + I18NS.t('res.subject') + '</th><th>' + I18NS.t('res.marks') + '</th><th>' + I18NS.t('res.grade') + '</th></tr></thead><tbody>' +
           rows.map(r => '<tr><td>' + UI.esc(r.subject) + '</td><td>' + r.marks + ' / ' + (r.max_marks || 100) + '</td><td>' + UI.esc(r.grade || '') + '</td></tr>').join('') +
           '</tbody></table></div>';
+      }
+    };
+
+    const AI_STATE = { nickname: '', name: me.full_name || '' };
+    const aiBubble = (role_, text) =>
+      '<div class="ai-bubble ' + (role_ === 'user' ? 'user' : 'bot') + '">' +
+      (role_ === 'assistant' ? '<span class="ai-who">' + UI.esc(AI_STATE.nickname || 'AI') + '</span>' : '') +
+      '<div class="ai-text">' + UI.esc(text).replace(/\n/g, '<br>') + '</div></div>';
+
+    PANES.ai = {
+      label: () => L('AI study buddy', 'എ.ഐ പഠന സഹായി'),
+      async render() {
+        let nick = '', history = [];
+        try {
+          const p = await API.aiProfile();
+          nick = p.nickname || '';
+          AI_STATE.nickname = nick;
+          AI_STATE.name = p.name || AI_STATE.name;
+          if (nick) history = await API.aiHistory();
+        } catch (e) { /* the setup card still works */ }
+
+        const setup = '<div class="ai-setup card" id="ai-setup">' +
+          '<h3>' + L('Give your assistant a name', 'നിങ്ങളുടെ സഹായിക്ക് ഒരു പേര് നൽകുക') + '</h3>' +
+          '<p class="small muted">' + L('Pick any nickname you like — it is shown only to you and saved to your student account. You can change it whenever you want.',
+            'ഇഷ്ടമുള്ള വിളിപ്പേര് തിരഞ്ഞെടുക്കാം — ഇത് നിങ്ങൾക്ക് മാത്രം കാണാം, നിങ്ങളുടെ വിദ്യാർത്ഥി അക്കൗണ്ടിൽ സേവ് ചെയ്യും. എപ്പോൾ വേണമെങ്കിലും മാറ്റാം.') + '</p>' +
+          '<div class="ai-chips">' + ['Pandi Buddy', 'Minnal', 'Thara', 'Guru', 'Chandran', 'Kunjappu'].map(s =>
+            '<button type="button" class="chip" data-nick="' + s + '">' + s + '</button>').join('') + '</div>' +
+          '<div class="ai-nick-row"><input id="ai-nick" maxlength="24" placeholder="' + L('Your own nickname', 'സ്വന്തം വിളിപ്പേര്') + '" value="' + UI.esc(nick) + '">' +
+          '<button class="btn btn-primary" id="ai-nick-save">' + L('Save name', 'പേര് സേവ് ചെയ്യുക') + '</button></div>' +
+          '<div class="form-msg" id="ai-nick-msg" role="alert"></div></div>';
+
+        const chat = '<div class="ai-chat-wrap" id="ai-chat">' +
+          '<div class="ai-chat-head"><span class="ai-avatar">🤖</span><div><strong>' + UI.esc(nick || L('Your assistant', 'നിങ്ങളുടെ സഹായി')) + '</strong>' +
+          '<div class="small muted">' + L('Study helper · bot replies, not a teacher', 'പഠന സഹായി · ബോട്ട് മറുപടി, അധ്യാപകനല്ല') + '</div></div>' +
+          '<button class="btn btn-ghost btn-sm" id="ai-nick-edit">' + L('Change name', 'പേര് മാറ്റുക') + '</button></div>' +
+          '<div class="ai-log" id="ai-log">' +
+          (history.length
+            ? history.map(m => aiBubble(m.role, m.content)).join('')
+            : aiBubble('assistant', window.AI.welcome(AI_STATE))) +
+          '</div>' +
+          '<div class="ai-chips" id="ai-suggest">' + window.AI.suggestions().map(s =>
+            '<button type="button" class="chip" data-say="' + UI.esc(s) + '">' + UI.esc(s) + '</button>').join('') + '</div>' +
+          '<form class="ai-form" id="ai-form"><input id="ai-input" maxlength="600" autocomplete="off" placeholder="' +
+          L('Ask about a subject, exam or school…', 'വിഷയം, പരീക്ഷ അല്ലെങ്കിൽ സ്കൂളിനെക്കുറിച്ച് ചോദിക്കുക…') + '">' +
+          '<button class="btn btn-primary" type="submit">' + L('Send', 'അയക്കുക') + '</button></form>' +
+          '<p class="small muted ai-note">' + L('Your chat is private to you and your class teachers. Never share passwords or personal details.',
+            'നിങ്ങളുടെ ചാറ്റ് നിങ്ങൾക്കും ക്ലാസ് അധ്യാപകർക്കും മാത്രം. പാസ്‌വേഡോ വ്യക്തിവിവരങ്ങളോ ഒരിക്കലും പങ്കുവയ്ക്കരുത്.') + '</p></div>';
+
+        return head(L('AI study buddy', 'എ.ഐ പഠന സഹായി'),
+          L('A helper that answers from the school study notes. You choose its nickname.',
+            'സ്കൂൾ പഠന കുറിപ്പുകളിൽ നിന്ന് ഉത്തരം നൽകുന്ന സഹായി. വിളിപ്പേര് നിങ്ങൾ തിരഞ്ഞെടുക്കാം.')) +
+          (nick ? chat : setup);
+      },
+
+      async after() {
+        const setup = document.getElementById('ai-setup');
+        const log = document.getElementById('ai-log');
+        const form = document.getElementById('ai-form');
+
+        async function saveNick(name) {
+          const msg = document.getElementById('ai-nick-msg');
+          const input = document.getElementById('ai-nick');
+          try {
+            const saved = await API.setAiNickname(name);
+            AI_STATE.nickname = saved;
+            UI.toast(L('Saved. Say hello to ', 'സേവ് ചെയ്തു. ഹായ് ') + saved);
+            await renderPane('ai');
+          } catch (err) {
+            const map = {
+              nickname_short: L('A nickname needs at least 2 letters.', 'വിളിപ്പേരിന് കുറഞ്ഞത് 2 അക്ഷരം വേണം.'),
+              nickname_long: L('Keep the nickname under 25 letters.', 'വിളിപ്പേര് 25 അക്ഷരത്തിൽ താഴെ ആയിരിക്കണം.'),
+              nickname_chars: L('Letters, numbers, spaces and - . \' only.', 'അക്ഷരങ്ങൾ, അക്കങ്ങൾ, സ്പേസ്, - . \' മാത്രം.')
+            };
+            const text = map[err.message] || API.errorText(err);
+            if (msg) UI.showMsg(msg, text, 'error'); else UI.toast(text);
+          }
+        }
+
+        if (setup) {
+          setup.querySelectorAll('[data-nick]').forEach(b => {
+            b.addEventListener('click', () => {
+              const input = document.getElementById('ai-nick');
+              input.value = b.dataset.nick;
+              input.focus();
+            });
+          });
+          setup.querySelector('#ai-nick-save').addEventListener('click', () => {
+            saveNick(document.getElementById('ai-nick').value);
+          });
+          const editBtn = setup.querySelector('#ai-nick-edit');
+          if (editBtn) editBtn.addEventListener('click', () => renderPane('ai'));
+        }
+
+        if (!log || !form) return;
+
+        const input = document.getElementById('ai-input');
+        const send = async text => {
+          const value = String(text || '').trim();
+          if (!value) return;
+          log.insertAdjacentHTML('beforeend', aiBubble('user', value));
+          try { await API.aiSave('user', value); } catch (e) { /* keep the local copy */ }
+          log.insertAdjacentHTML('beforeend', '<div class="ai-bubble bot typing" id="ai-typing"><span class="ai-who">' +
+            UI.esc(AI_STATE.nickname || 'AI') + '</span><div class="ai-text">…</div></div>');
+          log.scrollTop = log.scrollHeight;
+          let answer = '';
+          try { answer = await window.AI.reply(value, AI_STATE); } catch (e) { answer = L('I could not reach my notes. Ask me again in a moment.', 'എന്റെ കുറിപ്പുകളിൽ എത്താനായില്ല. അൽപ്പസമയം കഴിഞ്ഞ് വീണ്ടും ചോദിക്കുക.'); }
+          const typing = document.getElementById('ai-typing');
+          if (typing) typing.remove();
+          log.insertAdjacentHTML('beforeend', aiBubble('assistant', answer));
+          log.scrollTop = log.scrollHeight;
+          try { await API.aiSave('assistant', answer); } catch (e) {}
+          input.focus();
+        };
+
+        const editBtn = document.querySelector('#ai-chat #ai-nick-edit');
+        if (editBtn) editBtn.addEventListener('click', async () => {
+          const name = window.prompt(L('New nickname for your assistant', 'സഹായിക്ക് പുതിയ വിളിപ്പേര്'), AI_STATE.nickname || '');
+          if (name) await saveNick(name);
+        });
+
+        document.getElementById('ai-suggest').addEventListener('click', e => {
+          const b = e.target.closest('[data-say]');
+          if (b) send(b.dataset.say);
+        });
+
+        form.addEventListener('submit', e => {
+          e.preventDefault();
+          const v = input.value;
+          input.value = '';
+          send(v);
+        });
+        log.scrollTop = log.scrollHeight;
       }
     };
   }
@@ -803,7 +936,7 @@
 
   // ================= navigation & router =================
   const MENU = ['overview'];
-  if (role === 'student') MENU.push('myresults');
+  if (role === 'student') MENU.push('myresults', 'ai');
   if (role === 'parent') MENU.push('children');
   if (isStaff) MENU.push('publish', 'notices', 'moderation', 'students', 'content');
   if (isAdmin) MENU.push('registrations', 'parents', 'accounts', 'classes', 'enquiries', 'history');

@@ -29,3 +29,13 @@ window.APP_CONFIG = {
   defaultLang: 'en',
   chatMaxLength: 500
 };
+
+/* The student AI study buddy. Left empty, the buddy answers from the study
+   notes built into js/ai.js, so the site works with no API key and no cost.
+   To connect a real language model, deploy a Supabase Edge Function that holds
+   the key (never put a key in this file) and set its URL here. It must accept
+   {"message","lang","nickname","class"} and return {"reply":"..."}. */
+window.AI_CONFIG = {
+  endpoint: '',
+  maxTurnsPerHour: 60
+};

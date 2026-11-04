@@ -63,7 +63,23 @@ copy is opened over plain `http`.
 * The site refuses to render inside a frame (`frame-ancestors 'none'` plus a
   frame-busting check) to stop clickjacking.
 
-## 5. Monitoring
+## 5. Student AI study buddy
+
+* The assistant runs entirely in the browser from `js/ai.js` — a keyword-matched
+  knowledge base of school study notes. No student question is sent to an
+  outside AI service, and no API key sits in the page.
+* Only students have the pane. `set_ai_nickname`, `ai_history` and
+  `log_ai_message` are `SECURITY DEFINER` functions granted to `authenticated`,
+  and each one resolves the caller through `my_student_id()`, so a student can
+  read or write only their own `ai_messages` rows.
+* The nickname is 2–24 characters, stored in `students.ai_nickname`; changing a
+  role or another student's row is refused by the same guard as the rest of the
+  schema.
+* `window.AI_CONFIG.endpoint` in `js/config.js` is empty by default. If the
+  school later wants a real language model, point it at a Supabase Edge Function
+  that holds the provider key server-side — never put a key in `js/config.js`.
+
+## 6. Monitoring
 
 * `security_log` — role and status changes (who, when, from → to). Admins read
   it in the SQL editor or from a future dashboard pane.
@@ -72,7 +88,7 @@ copy is opened over plain `http`.
 * Supabase → Authentication → **Logs** records sign-ups, sign-ins and failures;
   enable **Leaked password protection** there, and keep email confirmation on.
 
-## 6. Routine checks for the school IT club
+## 7. Routine checks for the school IT club
 
 1. Review `security_log` and the pending lists once a week.
 2. Remove accounts of students who leave (`set_account_status`).
@@ -83,6 +99,6 @@ copy is opened over plain `http`.
 6. Never paste the `service_role` key into any file in this folder — the anon
    key is the only key that belongs on the website.
 
-## 7. Reporting a problem
+## 8. Reporting a problem
 
 Security issues: `14101ghsspandi@gmail.com` (see `.well-known/security.txt`).

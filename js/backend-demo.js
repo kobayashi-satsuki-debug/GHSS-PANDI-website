@@ -111,7 +111,8 @@
         { id: uid(), title_en: 'Science exhibition', title_ml: 'ശാസ്ത്ര പ്രദർശനം', category: 'events', src: 'assets/gallery/science-01.svg' },
         { id: uid(), title_en: 'Basketball court', title_ml: 'ബാസ്കറ്റ്ബോൾ കോർട്ട്', category: 'sports', src: 'assets/gallery/sports-02.svg' }
       ],
-      moderation_reports: null
+      moderation_reports: null,
+      ai_messages: []
     };
   }
 
@@ -120,7 +121,7 @@
       const raw = localStorage.getItem(KEY);
       if (raw) {
         const db = JSON.parse(raw);
-        if (db && db.profiles) return db;
+        if (db && db.profiles) { if (!Array.isArray(db.ai_messages)) db.ai_messages = []; return db; }
       }
     } catch (e) {}
     return null;
@@ -339,6 +340,47 @@
       return db.results.filter(r => r.student_id === studentId)
         .sort((a, b) => a.subject.localeCompare(b.subject));
     },
+    // ---- AI study buddy ----
+    async aiProfile() {
+      const me = requireRole(['student'], sessionId());
+      const s = db.students.find(x => x.profile_id === me.id);
+      if (!s) throw new Error('err.noperm');
+      return { nickname: s.ai_nickname || '', name: me.full_name || '' };
+    },
+
+    async setAiNickname(name) {
+      const me = requireRole(['student'], sessionId());
+      const s = db.students.find(x => x.profile_id === me.id);
+      if (!s) throw new Error('err.noperm');
+      const v = String(name || '').trim();
+      if (v.length < 2) throw new Error('nickname_short');
+      if (v.length > 24) throw new Error('nickname_long');
+      if (/[<>{}\[\]|\\/@#$%^&*+=~`]/.test(v)) throw new Error('nickname_chars');
+      s.ai_nickname = v;
+      save(db);
+      return v;
+    },
+
+    async aiHistory() {
+      const me = requireRole(['student'], sessionId());
+      const s = db.students.find(x => x.profile_id === me.id);
+      if (!s) return [];
+      return db.ai_messages.filter(m => m.student_id === s.id)
+        .sort((a, b) => b.created_at.localeCompare(a.created_at)).slice(0, 40).reverse();
+    },
+
+    async aiSave(role, content) {
+      const me = requireRole(['student'], sessionId());
+      const s = db.students.find(x => x.profile_id === me.id);
+      if (!s) throw new Error('err.noperm');
+      const text = String(content || '').trim();
+      if (!text) throw new Error('err.required');
+      const row = { id: uid(), student_id: s.id, role, content: text.slice(0, 2000), created_at: new Date().toISOString() };
+      db.ai_messages.push(row);
+      save(db);
+      return row;
+    },
+
     async publishResults(rows) {
       const me = requireRole(['teacher', 'admin'], sessionId());
       rows.forEach(r => {

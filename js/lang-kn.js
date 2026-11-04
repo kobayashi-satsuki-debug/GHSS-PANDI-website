@@ -226,6 +226,28 @@ window.KN_TEXT = {
   'Print / Save as PDF': 'ಮುದ್ರಿಸಿ / PDF ಆಗಿ ಉಳಿಸಿ',
   'School notices': 'ಶಾಲಾ ಸೂಚನೆಗಳು',
 
+  /* AI study buddy */
+  'AI study buddy': 'ಎಐ ಅಧ್ಯಯನ ಸಹಾಯಕ',
+  'A helper that answers from the school study notes. You choose its nickname.':
+    'ಶಾಲೆಯ ಅಧ್ಯಯನ ಟಿಪ್ಪಣಿಗಳಿಂದ ಉತ್ತರಿಸುವ ಸಹಾಯಕ. ಅದರ ಅಡ್ಡಹೆಸರನ್ನು ನೀವು ಆಯ್ಕೆ ಮಾಡುತ್ತೀರಿ.',
+  'Give your assistant a name': 'ನಿಮ್ಮ ಸಹಾಯಕನಿಗೆ ಒಂದು ಹೆಸರು ಕೊಡಿ',
+  'Pick any nickname you like — it is shown only to you and saved to your student account. You can change it whenever you want.':
+    'ನಿಮಗೆ ಇಷ್ಟವಾದ ಅಡ್ಡಹೆಸರು ಆಯ್ಕೆ ಮಾಡಿ — ಅದು ನಿಮಗೆ ಮಾತ್ರ ಕಾಣುತ್ತದೆ ಮತ್ತು ನಿಮ್ಮ ವಿದ್ಯಾರ್ಥಿ ಖಾತೆಯಲ್ಲಿ ಉಳಿಸಲಾಗುತ್ತದೆ. ಯಾವಾಗ ಬೇಕಾದರೂ ಬದಲಿಸಬಹುದು.',
+  'Your own nickname': 'ನಿಮ್ಮದೇ ಅಡ್ಡಹೆಸರು',
+  'Save name': 'ಹೆಸರು ಉಳಿಸಿ',
+  'Change name': 'ಹೆಸರು ಬದಲಿಸಿ',
+  'Your assistant': 'ನಿಮ್ಮ ಸಹಾಯಕ',
+  'Study helper · bot replies, not a teacher': 'ಅಧ್ಯಯನ ಸಹಾಯಕ · ಬಾಟ್ ಉತ್ತರ, ಶಿಕ್ಷಕರಲ್ಲ',
+  'Ask about a subject, exam or school…': 'ವಿಷಯ, ಪರೀಕ್ಷೆ ಅಥವಾ ಶಾಲೆಯ ಬಗ್ಗೆ ಕೇಳಿ…',
+  'Your chat is private to you and your class teachers. Never share passwords or personal details.':
+    'ನಿಮ್ಮ ಚಾಟ್ ನಿಮಗೆ ಮತ್ತು ನಿಮ್ಮ ತರಗತಿ ಶಿಕ್ಷಕರಿಗೆ ಮಾತ್ರ. ಗುಪ್ತಪದ ಅಥವಾ ವೈಯಕ್ತಿಕ ವಿವರಗಳನ್ನು ಎಂದಿಗೂ ಹಂಚಿಕೊಳ್ಳಬೇಡಿ.',
+  'Saved. Say hello to ': 'ಉಳಿಸಲಾಗಿದೆ. ನಮಸ್ಕಾರ ಹೇಳಿ ',
+  'A nickname needs at least 2 letters.': 'ಅಡ್ಡಹೆಸರಿಗೆ ಕನಿಷ್ಠ 2 ಅಕ್ಷರ ಬೇಕು.',
+  'Keep the nickname under 25 letters.': 'ಅಡ್ಡಹೆಸರು 25 ಅಕ್ಷರಗಳಿಗಿಂತ ಕಡಿಮೆ ಇರಲಿ.',
+  "Letters, numbers, spaces and - . ' only.": "ಅಕ್ಷರ, ಸಂಖ್ಯೆ, ಸ್ಪೇಸ್ ಮತ್ತು - . ' ಮಾತ್ರ.",
+  'Ask the AI study buddy': 'ಎಐ ಅಧ್ಯಯನ ಸಹಾಯಕನನ್ನು ಕೇಳಿ',
+  'New nickname for your assistant': 'ಸಹಾಯಕನಿಗೆ ಹೊಸ ಅಡ್ಡಹೆಸರು',
+
   /* chat */
   'Class group chat': 'ತರಗತಿ ಗುಂಪು ಚಾಟ್',
   'Write a message…': 'ಸಂದೇಶ ಬರೆಯಿರಿ…',

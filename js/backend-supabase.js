@@ -183,6 +183,32 @@
       if (error) fail(error);
       return (data || []).map(r => ({ ...r, exam: r.exam_name }));
     },
+    // ---- AI study buddy ----
+    async aiProfile() {
+      const me = await profile();
+      if (!me || !me.student) throw new Error('err.noperm');
+      return { nickname: me.student.ai_nickname || '', name: (me.profile && me.profile.full_name) || '' };
+    },
+
+    async setAiNickname(name) {
+      const { data, error } = await client().rpc('set_ai_nickname', { p_name: name });
+      if (error) fail(error);
+      if (cachedProfile && cachedProfile.student) cachedProfile.student.ai_nickname = data;
+      return data;
+    },
+
+    async aiHistory() {
+      const { data, error } = await client().rpc('ai_history', { p_limit: 40 });
+      if (error) fail(error);
+      return (data || []).slice().reverse();
+    },
+
+    async aiSave(role, content) {
+      const { data, error } = await client().rpc('log_ai_message', { p_role: role, p_content: content });
+      if (error) fail(error);
+      return { id: data, role: role, content: content, created_at: new Date().toISOString() };
+    },
+
     async publishResults(rows) {
       const { error } = await client().rpc('publish_results', { p_rows: rows });
       if (error) fail(error);

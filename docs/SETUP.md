@@ -99,6 +99,11 @@ created, in preview mode and in live mode.
    6. `supabase/06-security-hardening.sql` — rate limits on the enquiry form and
       chat reports, a role/status change guard, and the `security_log` audit
       table. Safe to re-run. See [SECURITY.md](SECURITY.md).
+   7. `supabase/07-ai-buddy.sql` — the student AI study buddy: the
+      `students.ai_nickname` column, the `ai_messages` table and the
+      `set_ai_nickname` / `ai_history` / `log_ai_message` functions. Students can
+      only read and write their own rows. Safe to re-run. Without it the AI pane
+      still opens but saving a nickname fails with "sign in again".
 3. In **Authentication → URL configuration** set:
    - Site URL: `https://ghsspandi.org.in`
    - Redirect URLs: `https://ghsspandi.org.in/reset.html`,

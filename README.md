@@ -11,7 +11,8 @@ Home, About, Admissions, Photo gallery, Achievements, Faculty, Notices,
 Exam results, Sign in, Register, Password reset, Dashboard, Class chat.
 
 ## Portals
-- **Student** — own results, class chat, profile
+- **Student** — own results, class chat, an AI study buddy with a nickname the
+  student chooses, profile
 - **Teacher** — publish results for assigned classes, notices, chat moderation,
   gallery and achievements (after admin approval)
 - **Parent** — results for school-verified children, child-link requests
@@ -23,6 +24,11 @@ accounts, parent verification requests, school notices, admission enquiries
 and moderation history. Files are named `ghss-pandi-<section>-<date>.csv`.
 The export uses only the rows the signed-in role is allowed to read, so a
 teacher's file contains only their own classes.
+
+The student AI study buddy answers from the school study notes in the browser
+(`js/ai.js`) — no outside AI service and no API key. Its chat history and chosen
+nickname are stored per student in Supabase (`supabase/07-ai-buddy.sql`) and are
+readable only by that student.
 
 Roles live in the database and are enforced with Postgres row level security
 and `security definer` functions, so they cannot be changed from the browser.
@@ -43,7 +49,7 @@ Preview accounts (password `pandi2026`):
 ## Go live
 1. Create a Supabase project and run `supabase/01-schema.sql`,
    `02-security.sql`, `03-rpc.sql`, `04-seed.sql`, `05-fix-students-unique.sql`,
-   `06-security-hardening.sql` in that order. (If your project already ran the older `01-schema.sql`, run
+   `06-security-hardening.sql`, `07-ai-buddy.sql` in that order. (If your project already ran the older `01-schema.sql`, run
    only `05-fix-students-unique.sql` to repair student sign-up.)
 2. Put the project URL and anon public key in `js/config.js`
    (`demoFallback: false`). In Supabase → Authentication → Email Templates →

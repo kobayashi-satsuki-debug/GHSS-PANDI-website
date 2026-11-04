@@ -18,8 +18,8 @@ window.SCHOOL_CONFIG = {
 
 window.SUPABASE_CONFIG = {
   /* Replace with your project values from Supabase → Settings → API */
-  url: 'https://YOUR-PROJECT.supabase.co',
-  anonKey: 'YOUR-ANON-PUBLIC-KEY'
+  url: 'https://ljpwzkmniocjpcijuuoq.supabase.co',
+  anonKey: 'sb_publishable_XNVFQfIFiGAelOGk2_NXQQ_i8RHoQpU'
 };
 
 window.APP_CONFIG = {

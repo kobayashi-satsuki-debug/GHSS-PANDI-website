@@ -1,7 +1,7 @@
 # G H S S Pandi — bilingual school website
 
 Government Higher Secondary School, Pandi, Adoor, Kasaragod, Kerala 671543
-Phone 9446553567 · 14101ghsspandi@gmail.com · ghsspandi.in
+Phone 9446553567 · 14101ghsspandi@gmail.com · ghsspandi.org.in
 
 Static website (HTML, CSS, JavaScript) with a Supabase backend for accounts,
 results, chat and moderation. Every page works in English, Malayalam and Kannada.
@@ -52,7 +52,7 @@ Preview accounts (password `pandi2026`):
 3. Register the school admin account, then run
    `select public.make_admin('14101ghsspandi@gmail.com');`
 4. Host the folder on Netlify, Vercel or GitHub Pages and point
-   `ghsspandi.in` at it.
+   `ghsspandi.org.in` at it.
 
 Full instructions, security notes and the custom-domain checklist:
 [docs/SETUP.md](docs/SETUP.md).

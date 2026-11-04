@@ -5,7 +5,7 @@ portal, results publishing, moderated class chat and an administration dashboard
 
 School: Government Higher Secondary School, Pandi, Adoor, Kasaragod, Kerala 671543
 Phone: 9446553567 · Email: 14101ghsspandi@gmail.com
-Planned domain: ghsspandi.in
+Planned domain: ghsspandi.org.in
 
 ---
 
@@ -97,9 +97,9 @@ created, in preview mode and in live mode.
       longer collide (`duplicate key ... students_class_roll_no_key`). Safe to
       re-run; run it on its own if the project already has the older schema.
 3. In **Authentication → URL configuration** set:
-   - Site URL: `https://ghsspandi.in`
-   - Redirect URLs: `https://ghsspandi.in/reset.html`,
-     `https://ghsspandi.in/**`, plus your preview host if you use one.
+   - Site URL: `https://ghsspandi.org.in`
+   - Redirect URLs: `https://ghsspandi.org.in/reset.html`,
+     `https://ghsspandi.org.in/**`, plus your preview host if you use one.
 4. In **Authentication → Email** keep email confirmation on. Password reset
    links return to `reset.html`.
 5. Copy the project URL and anon key into `js/config.js`, set
@@ -158,7 +158,7 @@ Any static host works — there is no build step.
 
 ### Option A: Netlify (simple, free)
 1. Netlify → **Add new site → Deploy manually**, drag the project folder.
-2. Add custom domain `ghsspandi.in`, then at the domain registrar point DNS to
+2. Add custom domain `ghsspandi.org.in`, then at the domain registrar point DNS to
    Netlify (A record + `www` CNAME as Netlify instructs).
 3. Enable HTTPS (automatic) and force HTTPS.
 
@@ -166,12 +166,25 @@ Any static host works — there is no build step.
 1. `npm i -g vercel` (or use the dashboard), then run `vercel` in this folder.
 2. Add the domain in **Settings → Domains** and follow the DNS records shown.
 
-### Option C: GitHub Pages
-Push the folder to a repository, enable Pages on the `main` branch, add a
-`CNAME` file containing `ghsspandi.in`, and point the domain's DNS to GitHub.
+### Option C: GitHub Pages (the current setup)
+The repository already contains a `CNAME` file with `ghsspandi.org.in`, and
+Pages serves the `main` branch. The site only opens once DNS points at GitHub:
+
+| Type | Name | Value |
+|---|---|---|
+| A | `@` | `185.199.108.153` |
+| A | `@` | `185.199.109.153` |
+| A | `@` | `185.199.110.153` |
+| A | `@` | `185.199.111.153` |
+| CNAME | `www` | `kobayashi-satsuki-debug.github.io` |
+
+Then in the repository: **Settings → Pages → Custom domain** `ghsspandi.org.in`,
+wait for the DNS check to pass and tick **Enforce HTTPS**. Until the A records
+exist, GitHub redirects every page to `ghsspandi.org.in`, which does not resolve
+yet — that is why the GitHub Pages URL shows no site.
 
 ### Custom domain checklist
-- [ ] Apex `ghsspandi.in` points to the host
+- [ ] Apex `ghsspandi.org.in` points to the host
 - [ ] `www` redirects to the apex (or the reverse)
 - [ ] HTTPS certificate issued
 - [ ] Supabase Site URL and redirect URLs updated to the live domain
@@ -193,5 +206,5 @@ python3 -m http.server 8099
 ```
 
 Preview accounts (preview mode only, password `pandi2026`):
-`student@ghsspandi.in`, `teacher@ghsspandi.in`, `parent@ghsspandi.in`,
-`principal@ghsspandi.in`.
+`student@ghsspandi.org.in`, `teacher@ghsspandi.org.in`, `parent@ghsspandi.org.in`,
+`principal@ghsspandi.org.in`.

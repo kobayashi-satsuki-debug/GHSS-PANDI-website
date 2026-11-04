@@ -33,6 +33,9 @@ python3 -m http.server 8099
 ```
 Open http://localhost:8099 — without Supabase keys it runs in preview mode.
 
+Registration sends a 6-digit code to the email address; in preview mode the
+code is displayed on the page instead of being emailed.
+
 Preview accounts (password `pandi2026`):
 `student@ghsspandi.in`, `teacher@ghsspandi.in`, `parent@ghsspandi.in`,
 `principal@ghsspandi.in`.
@@ -43,7 +46,9 @@ Preview accounts (password `pandi2026`):
    in that order. (If your project already ran the older `01-schema.sql`, run
    only `05-fix-students-unique.sql` to repair student sign-up.)
 2. Put the project URL and anon public key in `js/config.js`
-   (`demoFallback: false`).
+   (`demoFallback: false`). In Supabase → Authentication → Email Templates →
+   Confirm signup keep `{{ .Token }}` in the body, and leave **Confirm email**
+   on so registrations ask for the emailed code.
 3. Register the school admin account, then run
    `select public.make_admin('14101ghsspandi@gmail.com');`
 4. Host the folder on Netlify, Vercel or GitHub Pages and point

@@ -44,7 +44,44 @@
         options: { data: meta, emailRedirectTo: location.origin + location.pathname.replace(/[^/]*$/, 'login.html') }
       });
       if (error) fail(error);
-      return { requiresApproval: role === 'teacher', needsEmailConfirm: !(data.session) };
+      return {
+        requiresApproval: role === 'teacher',
+        needsOtp: !data.session,
+        verified: !!data.session,
+        email: email.trim().toLowerCase()
+      };
+    },
+
+    async verifySignupOtp(email, token) {
+      const { data, error } = await client().auth.verifyOtp({
+        email: (email || '').trim().toLowerCase(),
+        token: String(token || '').trim(),
+        type: 'signup'
+      });
+      if (error) {
+        const m = (error.message || '');
+        if (/expired/i.test(m)) throw new Error('auth.otpExpired');
+        if (/invalid|incorrect/i.test(m)) throw new Error('auth.otpWrong');
+        if (/rate|too many/i.test(m)) throw new Error('auth.otpWait');
+        fail(error);
+      }
+      if (data && data.user) {
+        const meta = data.user.user_metadata || {};
+        localStorage.setItem('ghss_last_signup_role', meta.role || 'student');
+      }
+      return { verified: true, requiresApproval: (localStorage.getItem('ghss_last_signup_role') === 'teacher') };
+    },
+
+    async resendSignupOtp(email) {
+      const { error } = await client().auth.resend({
+        type: 'signup',
+        email: (email || '').trim().toLowerCase()
+      });
+      if (error) {
+        if (/rate|too many|seconds/i.test(error.message || '')) throw new Error('auth.otpWait');
+        fail(error);
+      }
+      return { sent: true };
     },
 
     async signIn(email, password) {

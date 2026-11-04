@@ -40,6 +40,10 @@
     'auth.pendingTeacher': ['Your teacher account is awaiting approval by the school administrator. You can sign in after approval.', 'നിങ്ങളുടെ അധ്യാപക അക്കൗണ്ട് സ്കൂൾ അഡ്മിനിസ്ട്രേറ്ററുടെ അംഗീകാരത്തിനായി കാത്തിരിക്കുന്നു. അംഗീകാരത്തിന് ശേഷം പ്രവേശിക്കാം.'],
     'auth.pendingStudent': ['Your student account is awaiting verification by the school.', 'നിങ്ങളുടെ വിദ്യാർത്ഥി അക്കൗണ്ട് സ്കൂളിന്റെ പരിശോധനയ്ക്കായി കാത്തിരിക്കുന്നു.'],
     'auth.disabled': ['This account has been disabled. Please contact the school office.', 'ഈ അക്കൗണ്ട് പ്രവർത്തനരഹിതമാക്കിയിരിക്കുന്നു. സ്കൂൾ ഓഫീസുമായി ബന്ധപ്പെടുക.'],
+    'auth.otpWrong': ['That code is not correct. Check the email and try again.', 'ആ കോഡ് ശരിയല്ല. ഇമെയിൽ പരിശോധിച്ച് വീണ്ടും ശ്രമിക്കുക.'],
+    'auth.otpExpired': ['That code has expired or was already used. Press Resend code.', 'കോഡിന്റെ സമയം കഴിഞ്ഞു അല്ലെങ്കിൽ ഇതിനകം ഉപയോഗിച്ചു. "കോഡ് വീണ്ടും അയയ്ക്കുക" അമർത്തുക.'],
+    'auth.otpLocked': ['Too many wrong attempts. Please register again.', 'വളരെയധികം തെറ്റായ ശ്രമങ്ങൾ. വീണ്ടും രജിസ്റ്റർ ചെയ്യുക.'],
+    'auth.otpWait': ['Please wait a minute before asking for another code.', 'അടുത്ത കോഡ് ആവശ്യപ്പെടുന്നതിന് മുമ്പ് ഒരു മിനിറ്റ് കാത്തിരിക്കുക.'],
 
     // ---- register ----
     'reg.title': ['Create an account', 'അക്കൗണ്ട് ഉണ്ടാക്കുക'],
@@ -151,6 +155,7 @@
     'err.email': ['Enter a valid email address.', 'ശരിയായ ഇമെയിൽ വിലാസം നൽകുക.'],
     'err.phone': ['Enter a valid 10-digit mobile number.', 'ശരിയായ 10 അക്ക മൊബൈൽ നമ്പർ നൽകുക.'],
     'err.passwordShort': ['Password must be at least 8 characters.', 'പാസ്‌വേഡ് കുറഞ്ഞത് 8 അക്ഷരങ്ങൾ വേണം.'],
+    'err.emailTaken': ['This email is already registered. Sign in or use another address.', 'ഈ ഇമെയിൽ ഇതിനകം രജിസ്റ്റർ ചെയ്തിട്ടുണ്ട്. ലോഗിൻ ചെയ്യുക അല്ലെങ്കിൽ മറ്റൊരു വിലാസം ഉപയോഗിക്കുക.'],
     'err.noperm': ['You do not have permission to do that.', 'അതിന് നിങ്ങൾക്ക് അനുമതിയില്ല.'],
     'err.session': ['Please sign in again.', 'വീണ്ടും പ്രവേശിക്കുക.'],
     'err.demo': ['Demo mode: data is stored only in this browser. Connect Supabase to go live.', 'ഡെമോ മോഡ്: ഡാറ്റ ഈ ബ്രൗസറിൽ മാത്രം. ലൈവ് ആകാൻ Supabase ബന്ധിപ്പിക്കുക.'],

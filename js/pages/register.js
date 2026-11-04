@@ -74,16 +74,98 @@
     UI.busy(btn, true);
     try {
       const res = await API.signUp({ email, password: pw, role, full_name: name, phone, extra });
-      const key = role === 'teacher' ? 'reg.doneTeacher' : role === 'parent' ? 'reg.doneParent' : 'reg.doneStudent';
-      let text = I18NS.t(key);
-      if (res && res.needsEmailConfirm) {
-        text += ' ' + (I18NS.pick('Check your email for the confirmation link.', 'ഇമെയിൽ സ്ഥിരീകരണ ലിങ്ക് അയച്ചിട്ടുണ്ട്.'));
+      if (res && (res.needsOtp || res.needsEmailConfirm)) {
+        startOtp(email, res.devCode);
+      } else {
+        finish(role);
       }
-      UI.showMsg(msg, text, 'success');
-      setTimeout(() => { location.href = role === 'parent' ? 'login.html#parent' : 'login.html'; }, 2400);
     } catch (err) {
       UI.showMsg(msg, API.errorText(err), 'error');
+    } finally {
       UI.busy(btn, false);
+    }
+  });
+
+  /* ---------- step 2: email OTP ---------- */
+  const otpStep = document.getElementById('otp-step');
+  const otpHint = document.getElementById('otp-hint');
+  const otpMsg = document.getElementById('otp-msg');
+  const otpInput = document.getElementById('otp-code');
+  const otpVerify = document.getElementById('otp-verify');
+  const otpResend = document.getElementById('otp-resend');
+  let otpEmail = '';
+  let resendTimer = null;
+
+  function startOtp(email, devCode) {
+    otpEmail = email;
+    form.hidden = true;
+    otpStep.hidden = false;
+    otpInput.value = '';
+    UI.hideMsg(msg);
+    otpHint.textContent = I18NS.pick(
+      'We sent a 6-digit code to ' + email + '. It expires in 10 minutes.',
+      email + ' എന്ന വിലാസത്തിലേക്ക് 6 അക്ക കോഡ് അയച്ചു. 10 മിനിറ്റിനുള്ളിൽ കാലഹരണപ്പെടും.'
+    ) + (devCode ? ' ' + I18NS.pick('Preview mode — your code is ' + devCode, 'പ്രിവ്യൂ മോഡ് — നിങ്ങളുടെ കോഡ് ' + devCode) : '');
+    otpInput.focus();
+    if (devCode) UI.showMsg(otpMsg, I18NS.pick('Preview mode: use code ' + devCode, 'പ്രിവ്യൂ മോഡ്: കോഡ് ' + devCode), 'info');
+    startResendCountdown();
+  }
+
+  function startResendCountdown() {
+    let left = 60;
+    clearInterval(resendTimer);
+    otpResend.disabled = true;
+    otpResend.textContent = I18NS.pick('Resend in ' + left + 's', 'വീണ്ടും അയയ്ക്കാൻ ' + left + ' സെ');
+    resendTimer = setInterval(() => {
+      left -= 1;
+      if (left <= 0) {
+        clearInterval(resendTimer);
+        otpResend.disabled = false;
+        otpResend.textContent = I18NS.pick('Resend code', 'കോഡ് വീണ്ടും അയയ്ക്കുക');
+        return;
+      }
+      otpResend.textContent = I18NS.pick('Resend in ' + left + 's', 'വീണ്ടും അയയ്ക്കാൻ ' + left + ' സെ');
+    }, 1000);
+  }
+
+  function finish(r) {
+    const key = r === 'teacher' ? 'reg.doneTeacher' : r === 'parent' ? 'reg.doneParent' : 'reg.doneStudent';
+    UI.showMsg(otpMsg, I18NS.t(key), 'success');
+    if (form) UI.showMsg(msg, I18NS.t(key), 'success');
+    setTimeout(() => { location.href = r === 'parent' ? 'login.html#parent' : 'login.html'; }, 2200);
+  }
+
+  async function submitOtp() {
+    const code = otpInput.value.replace(/\D/g, '');
+    UI.hideMsg(otpMsg);
+    if (code.length !== 6) return UI.showMsg(otpMsg, I18NS.pick('Enter the 6-digit code.', '6 അക്ക കോഡ് നൽകുക.'), 'error');
+    UI.busy(otpVerify, true);
+    try {
+      const res = await API.verifySignupOtp(otpEmail, code);
+      clearInterval(resendTimer);
+      finish(role);
+      return res;
+    } catch (err) {
+      UI.showMsg(otpMsg, API.errorText(err), 'error');
+      otpInput.select();
+    } finally {
+      UI.busy(otpVerify, false);
+    }
+  }
+
+  otpVerify.addEventListener('click', submitOtp);
+  otpInput.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); submitOtp(); } });
+  otpInput.addEventListener('input', () => { otpInput.value = otpInput.value.replace(/\D/g, '').slice(0, 6); });
+
+  otpResend.addEventListener('click', async () => {
+    UI.hideMsg(otpMsg);
+    try {
+      const res = await API.resendSignupOtp(otpEmail);
+      if (res && res.devCode) UI.showMsg(otpMsg, I18NS.pick('Preview mode: new code ' + res.devCode, 'പ്രിവ്യൂ മോഡ്: പുതിയ കോഡ് ' + res.devCode), 'info');
+      else UI.showMsg(otpMsg, I18NS.pick('A new code is on its way.', 'പുതിയ കോഡ് അയച്ചിട്ടുണ്ട്.'), 'success');
+      startResendCountdown();
+    } catch (err) {
+      UI.showMsg(otpMsg, API.errorText(err), 'error');
     }
   });
 })();

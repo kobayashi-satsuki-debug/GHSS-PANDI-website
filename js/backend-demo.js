@@ -137,6 +137,15 @@
   function sessionId() { try { return localStorage.getItem(SESSION_KEY); } catch (e) { return null; } }
   function setSession(id) { try { if (id) localStorage.setItem(SESSION_KEY, id); else localStorage.removeItem(SESSION_KEY); } catch (e) {} }
 
+  const OTP_TTL = 10 * 60 * 1000;
+  const OTP_MAX_TRIES = 5;
+  const OTP_RESEND_GAP = 60 * 1000;
+  const otpCode = () => String(Math.floor(100000 + Math.random() * 900000));
+  function pruneOtps() {
+    const t = Date.now();
+    db.pending_signups = (db.pending_signups || []).filter(p => p.expires_at > t);
+  }
+
   function profileById(id) { return db.profiles.find(p => p.id === id) || null; }
   function requireRole(roles, id) {
     const p = profileById(id || sessionId());
@@ -147,39 +156,89 @@
   }
   function teacherOf(profileId) { return db.teachers.find(t => t.profile_id === profileId) || null; }
 
+
+  async function createAccount(rec) {
+    const { email, role, full_name, phone, extra } = rec;
+    if (db.profiles.some(p => p.email === email)) throw new Error('err.emailTaken');
+    const isTeacher = role === 'teacher';
+    const isStudent = role === 'student';
+    const profile = {
+      id: uid(), email, full_name, role, phone: phone || '',
+      status: isTeacher ? 'pending' : 'active',
+      created_at: now(), password_hash: rec.password_hash, email_verified: true
+    };
+    db.profiles.push(profile);
+    if (isStudent) {
+      db.students.push({
+        id: uid(), profile_id: profile.id, full_name,
+        class: (extra && extra.class) || '', roll_no: (extra && extra.roll_no) || '',
+        admission_no: (extra && extra.admission_no) || '', status: 'pending'
+      });
+    }
+    if (isTeacher) {
+      db.teachers.push({
+        id: uid(), profile_id: profile.id, full_name, employee_no: (extra && extra.employee_no) || '',
+        subject: (extra && extra.subject) || '', designation: 'HSA', status: 'pending', classes: []
+      });
+    }
+    if (role === 'parent') {
+      db.parents.push({ id: uid(), profile_id: profile.id, full_name, phone: phone || '' });
+    }
+    save(db);
+    return { requiresApproval: isTeacher, verified: true };
+  }
+
   const Backend = {
     mode: 'demo',
     async signUp({ email, password, role, full_name, phone, extra }) {
       email = (email || '').trim().toLowerCase();
       if (!email || !password) throw new Error('err.required');
       if (password.length < 8) throw new Error('err.passwordShort');
-      if (db.profiles.some(p => p.email === email)) throw new Error('This email is already registered.');
-      const isTeacher = role === 'teacher';
-      const isStudent = role === 'student';
-      const profile = {
-        id: uid(), email, full_name, role, phone: phone || '',
-        status: isTeacher ? 'pending' : (isStudent ? 'active' : 'active'),
-        created_at: now(), password_hash: await hash(password)
+      if (db.profiles.some(p => p.email === email)) throw new Error('err.emailTaken');
+      pruneOtps();
+      db.pending_signups = (db.pending_signups || []).filter(p => p.email !== email);
+      const rec = {
+        email, role, full_name, phone: phone || '', extra: extra || {},
+        password_hash: await hash(password),
+        code: otpCode(), tries: 0,
+        sent_at: Date.now(), expires_at: Date.now() + OTP_TTL
       };
-      db.profiles.push(profile);
-      if (isStudent) {
-        db.students.push({
-          id: uid(), profile_id: profile.id, full_name,
-          class: (extra && extra.class) || '', roll_no: (extra && extra.roll_no) || '',
-          admission_no: (extra && extra.admission_no) || '', status: 'pending'
-        });
-      }
-      if (isTeacher) {
-        db.teachers.push({
-          id: uid(), profile_id: profile.id, full_name, employee_no: (extra && extra.employee_no) || '',
-          subject: (extra && extra.subject) || '', designation: 'HSA', status: 'pending', classes: []
-        });
-      }
-      if (role === 'parent') {
-        db.parents.push({ id: uid(), profile_id: profile.id, full_name, phone: phone || '' });
-      }
+      db.pending_signups.push(rec);
       save(db);
-      return { requiresApproval: isTeacher };
+      return { needsOtp: true, email, devCode: rec.code };
+    },
+
+    async verifySignupOtp(email, token) {
+      email = (email || '').trim().toLowerCase();
+      pruneOtps();
+      const rec = (db.pending_signups || []).find(p => p.email === email);
+      if (!rec) throw new Error('auth.otpExpired');
+      if (rec.tries >= OTP_MAX_TRIES) {
+        db.pending_signups = db.pending_signups.filter(p => p !== rec);
+        save(db);
+        throw new Error('auth.otpLocked');
+      }
+      if (String(token || '').trim() !== rec.code) {
+        rec.tries += 1;
+        save(db);
+        throw new Error('auth.otpWrong');
+      }
+      db.pending_signups = db.pending_signups.filter(p => p !== rec);
+      return createAccount(rec);
+    },
+
+    async resendSignupOtp(email) {
+      email = (email || '').trim().toLowerCase();
+      pruneOtps();
+      const rec = (db.pending_signups || []).find(p => p.email === email);
+      if (!rec) throw new Error('auth.otpExpired');
+      if (Date.now() - rec.sent_at < OTP_RESEND_GAP) throw new Error('auth.otpWait');
+      rec.code = otpCode();
+      rec.tries = 0;
+      rec.sent_at = Date.now();
+      rec.expires_at = Date.now() + OTP_TTL;
+      save(db);
+      return { devCode: rec.code };
     },
 
     async signIn(email, password) {

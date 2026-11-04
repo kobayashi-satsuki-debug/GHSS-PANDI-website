@@ -64,6 +64,25 @@ window.SUPABASE_CONFIG = {
 Only the **anon public** key belongs in the browser. Never paste the
 `service_role` key into any file — it bypasses every security policy.
 
+## 2a. Registration codes (OTP)
+
+Every registration is verified with a 6-digit code before the account is
+created, in preview mode and in live mode.
+
+* **Preview mode** shows the code on the screen (for showing the site offline).
+* **Live mode** uses Supabase's email OTP. In Supabase → Authentication → Email
+  Templates → **Confirm signup**, keep `{{ .Token }}` in the message body, so the
+  six digits are sent instead of a magic link. Templates that only contain
+  `{{ .ConfirmationURL }}` cannot be typed into the code box.
+* Keep **Confirm email** enabled (Authentication → Providers → Email). If it is
+  turned off, Supabase returns a session immediately and the code step is
+  skipped — accounts then exist without a verified email address.
+* The code expires after 10 minutes; five wrong tries cancel the pending
+  sign-up and the person registers again. "Resend code" is limited to one
+  request a minute (Supabase enforces its own rate limit on top).
+* The school can see which accounts still wait for approval in the admin
+  dashboard → Teacher approvals / Accounts.
+
 ## 3. Create the Supabase database
 
 1. Create a project at supabase.com (region: Mumbai / Singapore; free tier is

@@ -13,7 +13,7 @@ window.SCHOOL_CONFIG = {
   addressMl: 'പാണ്ടി, അടൂർ, കാസർകോട് ജില്ല, കേരളം 671543',
   phone: '9446553567',
   email: '14101ghsspandi@gmail.com',
-  domain: 'ghsspandi.in'
+  domain: 'ghsspandi.org.in'
 };
 
 window.SUPABASE_CONFIG = {

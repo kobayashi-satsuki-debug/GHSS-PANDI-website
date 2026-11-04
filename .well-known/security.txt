@@ -1,0 +1,4 @@
+Contact: mailto:14101ghsspandi@gmail.com
+Expires: 2027-12-31T00:00:00.000Z
+Preferred-Languages: en, ml
+Canonical: https://ghsspandi.org.in/.well-known/security.txt

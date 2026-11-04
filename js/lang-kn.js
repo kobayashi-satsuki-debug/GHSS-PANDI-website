@@ -448,6 +448,7 @@ window.KN_TEXT = {
   'Author': 'ಬರಹಗಾರ',
   'Pinned': 'ಪಿನ್ ಮಾಡಲಾಗಿದೆ',
   'Date': 'ದಿನಾಂಕ',
+  'Please wait a moment, then send again.': 'ಸ್ವಲ್ಪ ಕಾಯಿರಿ, ನಂತರ ಮತ್ತೆ ಕಳುಹಿಸಿ.',
   'This email is already registered. Sign in or use another address.': 'ಈ ಇಮೇಲ್ ಈಗಾಗಲೇ ನೋಂದಣಿಯಾಗಿದೆ. ಲಾಗಿನ್ ಮಾಡಿ ಅಥವಾ ಬೇರೆ ವಿಳಾಸ ಬಳಸಿ.',
   'Resend code': 'ಕೋಡ್ ಮತ್ತೆ ಕಳುಹಿಸಿ',
   '6-digit code': '6 ಅಂಕಿಗಳ ಕೋಡ್',

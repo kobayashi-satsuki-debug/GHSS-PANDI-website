@@ -156,6 +156,7 @@
     'err.phone': ['Enter a valid 10-digit mobile number.', 'ശരിയായ 10 അക്ക മൊബൈൽ നമ്പർ നൽകുക.'],
     'err.passwordShort': ['Password must be at least 8 characters.', 'പാസ്‌വേഡ് കുറഞ്ഞത് 8 അക്ഷരങ്ങൾ വേണം.'],
     'err.emailTaken': ['This email is already registered. Sign in or use another address.', 'ഈ ഇമെയിൽ ഇതിനകം രജിസ്റ്റർ ചെയ്തിട്ടുണ്ട്. ലോഗിൻ ചെയ്യുക അല്ലെങ്കിൽ മറ്റൊരു വിലാസം ഉപയോഗിക്കുക.'],
+    'err.slowdown': ['Please wait a moment, then send again.', 'അൽപ്പസമയം കാത്തിരുന്ന് വീണ്ടും അയക്കുക.'],
     'err.noperm': ['You do not have permission to do that.', 'അതിന് നിങ്ങൾക്ക് അനുമതിയില്ല.'],
     'err.session': ['Please sign in again.', 'വീണ്ടും പ്രവേശിക്കുക.'],
     'err.demo': ['Demo mode: data is stored only in this browser. Connect Supabase to go live.', 'ഡെമോ മോഡ്: ഡാറ്റ ഈ ബ്രൗസറിൽ മാത്രം. ലൈവ് ആകാൻ Supabase ബന്ധിപ്പിക്കുക.'],

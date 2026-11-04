@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /$
+Allow: /index.html
+Disallow: /dashboard.html
+Disallow: /chat.html
+Disallow: /login.html
+Disallow: /register.html
+Disallow: /reset.html
+Disallow: /results.html
+Sitemap: https://ghsspandi.org.in/sitemap.xml

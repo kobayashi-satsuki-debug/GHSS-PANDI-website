@@ -4,6 +4,9 @@
 
   const form = document.getElementById('login-form');
   const msg = document.getElementById('login-msg');
+  if (/[?&]timeout=1/.test(location.search) && msg) {
+    UI.showMsg(msg, I18NS.pick('You were signed out after 30 minutes of inactivity. Please sign in again.', '30 മിനിറ്റ് നിഷ്ക്രിയത്വത്തിന് ശേഷം പുറത്തായി. വീണ്ടും പ്രവേശിക്കുക.'), 'info');
+  }
   const email = document.getElementById('login-email');
   const tabs = document.getElementById('login-tabs');
   const note = document.getElementById('login-role-note');

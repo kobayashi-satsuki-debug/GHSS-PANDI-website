@@ -42,8 +42,8 @@ Preview accounts (password `pandi2026`):
 
 ## Go live
 1. Create a Supabase project and run `supabase/01-schema.sql`,
-   `02-security.sql`, `03-rpc.sql`, `04-seed.sql`, `05-fix-students-unique.sql`
-   in that order. (If your project already ran the older `01-schema.sql`, run
+   `02-security.sql`, `03-rpc.sql`, `04-seed.sql`, `05-fix-students-unique.sql`,
+   `06-security-hardening.sql` in that order. (If your project already ran the older `01-schema.sql`, run
    only `05-fix-students-unique.sql` to repair student sign-up.)
 2. Put the project URL and anon public key in `js/config.js`
    (`demoFallback: false`). In Supabase → Authentication → Email Templates →
@@ -55,7 +55,8 @@ Preview accounts (password `pandi2026`):
    `ghsspandi.org.in` at it.
 
 Full instructions, security notes and the custom-domain checklist:
-[docs/SETUP.md](docs/SETUP.md).
+[docs/SETUP.md](docs/SETUP.md). How roles, rate limits and headers are
+enforced: [docs/SECURITY.md](docs/SECURITY.md).
 
 The crest in `assets/logo.svg` and the gallery images are placeholders —
 replace them with the school's real photograph and photo set.

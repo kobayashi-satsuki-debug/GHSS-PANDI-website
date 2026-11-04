@@ -107,7 +107,7 @@
   PANES.overview = {
     label: () => L('Overview', 'അവലോകനം'),
     async render() {
-      let html = head(L('Welcome, ', 'സ്വാഗതം, ') + UI.esc(me.full_name.split(' ')[0]), L('Your school account at a glance.', 'നിങ്ങളുടെ അക്കൗണ്ട് ഒറ്റനോട്ടത്തിൽ.'));
+      let html = head(L('Welcome, ', 'സ്വാഗതം, ') + UI.esc(me.full_name || ''), L('Your school account at a glance.', 'നിങ്ങളുടെ അക്കൗണ്ട് ഒറ്റനോട്ടത്തിൽ.'));
       const stats = [];
       if (role === 'student' && session.student) {
         stats.push([session.student.class, L('Class', 'ക്ലാസ്')]);

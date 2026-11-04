@@ -160,6 +160,7 @@
       location.href = 'dashboard.html';
       return null;
     }
+    if (window.Security) Security.startIdleGuard();
     return s;
   }
 

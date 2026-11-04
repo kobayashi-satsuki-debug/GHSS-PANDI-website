@@ -96,6 +96,9 @@ created, in preview mode and in live mode.
       unique index partial, so two sign-ups that leave class and roll blank no
       longer collide (`duplicate key ... students_class_roll_no_key`). Safe to
       re-run; run it on its own if the project already has the older schema.
+   6. `supabase/06-security-hardening.sql` — rate limits on the enquiry form and
+      chat reports, a role/status change guard, and the `security_log` audit
+      table. Safe to re-run. See [SECURITY.md](SECURITY.md).
 3. In **Authentication → URL configuration** set:
    - Site URL: `https://ghsspandi.org.in`
    - Redirect URLs: `https://ghsspandi.org.in/reset.html`,

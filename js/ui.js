@@ -104,12 +104,13 @@
 
   const MONTHS = {
     en: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-    ml: ['ജനു', 'ഫെബ്രു', 'മാർ', 'ഏപ്രി', 'മേയ്', 'ജൂൺ', 'ജൂലൈ', 'ഓഗ', 'സെപ്റ്റ', 'ഒക്ടോ', 'നവം', 'ഡിസം']
+    ml: ['ജനു', 'ഫെബ്രു', 'മാർ', 'ഏപ്രി', 'മേയ്', 'ജൂൺ', 'ജൂലൈ', 'ഓഗ', 'സെപ്റ്റ', 'ഒക്ടോ', 'നവം', 'ഡിസം'],
+    kn: ['ಜನ', 'ಫೆಬ್ರ', 'ಮಾರ್ಚ್', 'ಏಪ್ರಿ', 'ಮೇ', 'ಜೂನ್', 'ಜುಲೈ', 'ಆಗ', 'ಸೆಪ್ಟ', 'ಅಕ್ಟೋ', 'ನವೆಂ', 'ಡಿಸೆಂ']
   };
   function dayMonth(value) {
     const d = new Date(value);
     const lang = window.I18NS ? window.I18NS.getLang() : 'en';
-    return { d: d.getDate(), m: MONTHS[lang][d.getMonth()] };
+    return { d: d.getDate(), m: (MONTHS[lang] || MONTHS.en)[d.getMonth()] };
   }
 
 

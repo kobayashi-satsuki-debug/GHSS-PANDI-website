@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" data-lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reset password | G H S S Pandi</title>
+<meta name="description" content="Reset your G H S S Pandi school account password.">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#7d1024">
+<link rel="icon" type="image/svg+xml" href="assets/logo.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manjari:wght@400;700&family=Noto+Sans+Malayalam:wght@400;600&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header id="site-header" class="site-header"></header>
+<main id="main">
+<section class="section auth-section">
+  <div class="container auth-shell">
+    <div class="auth-aside">
+      <span class="eyebrow" data-en="Account recovery" data-ml="അക്കൗണ്ട് വീണ്ടെടുക്കൽ">Account recovery</span>
+      <h1 data-en="Reset your password" data-ml="പാസ്‌വേഡ് പുനഃസജ്ജീകരിക്കുക">Reset your password</h1>
+      <p data-en="Enter the email used for your school account. A single-use link will be sent to it." data-ml="സ്കൂൾ അക്കൗണ്ടിന്റെ ഇമെയിൽ നൽകുക. ഒറ്റത്തവണ ഉപയോഗിക്കാവുന്ന ലിങ്ക് അയക്കും.">A single-use link will be sent to your email.</p>
+      <p class="small" data-en="If you no longer have access to that email, contact the school office on 9446553567." data-ml="ആ ഇമെയിൽ ഇല്ലെങ്കിൽ 9446553567 ൽ ഓഫീസിനെ ബന്ധപ്പെടുക.">If you lost access to that email, call the office on 9446553567.</p>
+    </div>
+
+    <div class="card auth-card">
+      <div id="request-form-wrap">
+        <h2 data-en="Send a reset link" data-ml="റീസെറ്റ് ലിങ്ക് അയക്കുക">Send a reset link</h2>
+        <form id="request-form" novalidate>
+          <div class="form-field"><label for="reset-email" data-en="Email address" data-ml="ഇമെയിൽ">Email address</label><input id="reset-email" type="email" autocomplete="username" required></div>
+          <div class="form-msg" id="reset-msg" role="alert"></div>
+          <button class="btn btn-primary" type="submit" data-en="Send reset link" data-ml="ലിങ്ക് അയക്കുക">Send reset link</button>
+        </form>
+      </div>
+      <form id="update-form" hidden>
+        <h2 data-en="Choose a new password" data-ml="പുതിയ പാസ്‌വേഡ്">Choose a new password</h2>
+        <div class="form-field"><label for="new-password" data-en="New password" data-ml="പുതിയ പാസ്‌വേഡ്">New password</label>
+          <div class="pw-wrap"><input id="new-password" type="password" autocomplete="new-password" required>
+          <button class="pw-toggle" type="button" data-target="new-password">SHOW</button></div></div>
+        <div class="form-field"><label for="new-password2" data-en="Confirm new password" data-ml="പാസ്‌വേഡ് വീണ്ടും">Confirm new password</label><input id="new-password2" type="password" autocomplete="new-password" required></div>
+        <div class="form-msg" id="update-msg" role="alert"></div>
+        <button class="btn btn-primary" type="submit" data-en="Update password" data-ml="പാസ്‌വേഡ് അപ്‌ഡേറ്റ് ചെയ്യുക">Update password</button>
+      </form>
+      <div class="auth-links"><a href="login.html" data-en="Back to sign in" data-ml="പ്രവേശന പേജിലേക്ക്">Back to sign in</a></div>
+    </div>
+  </div>
+</section>
+</main>
+<footer id="site-footer" class="site-footer"></footer>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="js/config.js"></script>
+<script src="js/lang-kn.js"></script>
+    <script src="js/i18n.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/backend-demo.js"></script>
+<script src="js/backend-supabase.js"></script>
+<script src="js/api.js"></script>
+<script src="js/site.js"></script>
+<script src="js/components.js"></script>
+<script src="js/pages/reset.js"></script>
+</body>
+</html>

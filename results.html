@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" data-lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Exam results | G H S S Pandi</title>
+<meta name="description" content="Student examination results at Government Higher Secondary School Pandi.">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#7d1024">
+<link rel="icon" type="image/svg+xml" href="assets/logo.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manjari:wght@400;700&family=Noto+Sans+Malayalam:wght@400;600&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header id="site-header" class="site-header"></header>
+<main id="main">
+<section class="page-hero">
+  <div class="container">
+    <span class="eyebrow" data-en="Results" data-ml="ഫലങ്ങൾ">Results</span>
+    <h1 data-en="Exam results" data-ml="പരീക്ഷാ ഫലങ്ങൾ">Exam results</h1>
+    <p data-en="Students sign in to see their own results. Parents see results for children whose link the school has verified." data-ml="വിദ്യാർത്ഥികൾ സ്വന്തം ഫലം കാണാൻ പ്രവേശിക്കുക. സ്ഥിരീകരിച്ച കുട്ടികളുടെ ഫലം രക്ഷിതാക്കൾക്ക് കാണാം.">Students sign in to see their own results. Parents see results for children whose link the school has verified.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div id="results-gate" class="card" hidden>
+      <h2 data-en="Sign in to view results" data-ml="ഫലം കാണാൻ പ്രവേശിക്കുക">Sign in to view results</h2>
+      <p data-en="Results are private. Use your student, parent or teacher account." data-ml="ഫലങ്ങൾ സ്വകാര്യമാണ്. വിദ്യാർത്ഥി, രക്ഷിതാവ് അല്ലെങ്കിൽ അധ്യാപക അക്കൗണ്ട് ഉപയോഗിക്കുക.">Results are private. Use your school account.</p>
+      <div class="row-actions">
+        <a class="btn btn-primary" href="login.html" data-en="Sign in" data-ml="പ്രവേശിക്കുക">Sign in</a>
+        <a class="btn btn-ghost" href="register.html" data-en="Create an account" data-ml="അക്കൗണ്ട് ഉണ്ടാക്കുക">Create an account</a>
+      </div>
+    </div>
+
+    <div id="results-panel">
+      <div class="split">
+        <div class="card">
+          <h2 data-en="Find a result" data-ml="ഫലം കണ്ടെത്തുക">Find a result</h2>
+          <div id="children-picker" hidden></div>
+          <form id="result-form" novalidate>
+            <div class="form-row">
+              <div class="form-field"><label for="r-class" data-en="Class" data-ml="ക്ലാസ്">Class</label><select id="r-class" name="class"></select></div>
+              <div class="form-field"><label for="r-roll" data-en="Roll number" data-ml="റോൾ നമ്പർ">Roll number</label><input id="r-roll" name="roll_no" inputmode="numeric" autocomplete="off" required></div>
+            </div>
+            <div class="form-msg" id="result-msg" role="alert"></div>
+            <button class="btn btn-primary" type="submit" data-en="View result" data-ml="ഫലം കാണുക">View result</button>
+          </form>
+        </div>
+        <div class="card">
+          <h3 data-en="Who can see results" data-ml="ആർക്ക് ഫലം കാണാം">Who can see results</h3>
+          <ul class="check-list">
+            <li data-en="The student, signed in with their own account" data-ml="വിദ്യാർത്ഥി സ്വന്തം അക്കൗണ്ടിൽ">The student with their own account</li>
+            <li data-en="A parent whose link to the student the school has verified" data-ml="സ്കൂൾ സ്ഥിരീകരിച്ച ബന്ധമുള്ള രക്ഷിതാവ്">A verified parent</li>
+            <li data-en="Teachers assigned to the class, and the school office" data-ml="ക്ലാസ് അധ്യാപകരും ഓഫീസും">Class teachers and the office</li>
+          </ul>
+          <p class="small muted" data-en="Results are never shown publicly. Every lookup is checked against your role." data-ml="ഫലങ്ങൾ പൊതുവായി കാണിക്കില്ല. ഓരോ തിരച്ചിലും നിങ്ങളുടെ റോൾ പരിശോധിക്കുന്നു.">Every lookup is checked against your account role.</p>
+        </div>
+      </div>
+      <div id="result-output" style="margin-top:1.4rem"></div>
+    </div>
+  </div>
+</section>
+</main>
+<footer id="site-footer" class="site-footer"></footer>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="js/config.js"></script>
+<script src="js/lang-kn.js"></script>
+    <script src="js/i18n.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/backend-demo.js"></script>
+<script src="js/backend-supabase.js"></script>
+<script src="js/api.js"></script>
+<script src="js/site.js"></script>
+<script src="js/components.js"></script>
+<script src="js/pages/results.js"></script>
+</body>
+</html>

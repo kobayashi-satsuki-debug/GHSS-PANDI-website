@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" data-lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dashboard | G H S S Pandi</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#7d1024">
+<link rel="icon" type="image/svg+xml" href="assets/logo.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header id="site-header" class="site-header"></header>
+<main id="main">
+<section class="section" style="padding-top:2rem">
+  <div class="container">
+    <div class="dash-shell">
+      <aside class="dash-side">
+        <div class="dash-user" id="dash-user">
+          <div class="avatar" id="dash-avatar">--</div>
+          <div><strong id="dash-name">…</strong><span id="dash-role"></span></div>
+        </div>
+        <nav class="dash-nav" id="dash-nav" aria-label="Dashboard sections"></nav>
+        <div style="margin-top:.9rem;border-top:1px solid var(--line);padding-top:.9rem">
+          <a class="btn btn-ghost btn-sm" href="index.html" style="width:100%;margin-bottom:.4rem" data-en="View website" data-ml="വെബ്സൈറ്റ് കാണുക">View website</a>
+          <button class="btn btn-ghost btn-sm" id="logout-btn" type="button" style="width:100%" data-en="Log out" data-ml="ലോഗ് ഔട്ട്">Log out</button>
+        </div>
+      </aside>
+      <div class="dash-main" id="dash-main">
+        <div class="skeleton" style="height:120px;margin-bottom:1rem"></div>
+        <div class="skeleton" style="height:240px"></div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+<footer id="site-footer" class="site-footer"></footer>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="js/config.js"></script>
+<script src="js/lang-kn.js"></script>
+    <script src="js/i18n.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/backend-demo.js"></script>
+<script src="js/backend-supabase.js"></script>
+<script src="js/api.js"></script>
+<script src="js/site.js"></script>
+<script src="js/components.js"></script>
+<script src="js/pages/dashboard.js"></script>
+</body>
+</html>

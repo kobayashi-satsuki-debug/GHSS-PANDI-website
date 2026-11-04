@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" data-lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Register | G H S S Pandi</title>
+<meta name="description" content="Create a student, teacher or parent account for G H S S Pandi.">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#7d1024">
+<link rel="icon" type="image/svg+xml" href="assets/logo.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manjari:wght@400;700&family=Noto+Sans+Malayalam:wght@400;600&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header id="site-header" class="site-header"></header>
+<main id="main">
+<section class="section auth-section">
+  <div class="container auth-shell">
+    <div class="auth-aside">
+      <span class="eyebrow" data-en="New account" data-ml="പുതിയ അക്കൗണ്ട്">New account</span>
+      <h1 data-en="Register for the school portal" data-ml="സ്കൂൾ പോർട്ടലിൽ രജിസ്റ്റർ ചെയ്യുക">Register for the school portal</h1>
+      <p data-en="Students, teachers and parents register separately. Every account is checked by the school before sensitive pages open." data-ml="വിദ്യാർത്ഥികൾ, അധ്യാപകർ, രക്ഷിതാക്കൾ വെവ്വേറെ രജിസ്റ്റർ ചെയ്യുന്നു. പ്രധാന പേജുകൾ തുറക്കുന്നതിന് മുൻപ് സ്കൂൾ പരിശോധിക്കും.">Every account is checked by the school before sensitive pages open.</p>
+      <ul class="check-list">
+        <li data-en="Teacher accounts: verified by the school administration" data-ml="അധ്യാപക അക്കൗണ്ടുകൾ: സ്കൂൾ അഡ്മിനിസ്ട്രേറ്റർ അംഗീകരിക്കണം">Teachers: verified by the administration</li>
+        <li data-en="Parent accounts: relationship verified by the office" data-ml="രക്ഷിതാവ്: ബന്ധം ഓഫീസ് സ്ഥിരീകരിക്കും">Parents: relationship verified by the office</li>
+        <li data-en="Student accounts: class and roll number checked against records" data-ml="വിദ്യാർത്ഥി: ക്ലാസും റോളും രേഖകളുമായി ഒത്തുനോക്കും">Students: class and roll number checked</li>
+      </ul>
+    </div>
+
+    <div class="card auth-card">
+      <h2 data-en="Create an account" data-ml="അക്കൗണ്ട് ഉണ്ടാക്കുക">Create an account</h2>
+      <div class="tabs" id="reg-tabs" role="tablist">
+        <button role="tab" type="button" data-role="student" class="active" aria-selected="true" data-en="Student" data-ml="വിദ്യാർത്ഥി">Student</button>
+        <button role="tab" type="button" data-role="teacher" aria-selected="false" data-en="Teacher" data-ml="അധ്യാപകൻ">Teacher</button>
+        <button role="tab" type="button" data-role="parent" aria-selected="false" data-en="Parent" data-ml="രക്ഷിതാവ്">Parent</button>
+      </div>
+      <p class="small muted" id="reg-note"></p>
+      <form id="register-form" novalidate>
+        <div class="form-field"><label for="reg-name" data-en="Full name" data-ml="പൂർണ്ണ നാമം">Full name</label><input id="reg-name" name="full_name" required></div>
+        <div class="form-row">
+          <div class="form-field"><label for="reg-email" data-en="Email address" data-ml="ഇമെയിൽ">Email</label><input id="reg-email" name="email" type="email" autocomplete="email" required></div>
+          <div class="form-field"><label for="reg-phone" data-en="Mobile number" data-ml="മൊബൈൽ">Mobile number</label><input id="reg-phone" name="phone" inputmode="numeric" maxlength="10" required></div>
+        </div>
+        <div class="form-row">
+          <div class="form-field"><label for="reg-password" data-en="Password" data-ml="പാസ്‌വേഡ്">Password</label>
+            <div class="pw-wrap"><input id="reg-password" type="password" autocomplete="new-password" required>
+            <button class="pw-toggle" type="button" data-target="reg-password">SHOW</button></div></div>
+          <div class="form-field"><label for="reg-password2" data-en="Confirm password" data-ml="പാസ്‌വേഡ് വീണ്ടും">Confirm password</label>
+            <div class="pw-wrap"><input id="reg-password2" type="password" autocomplete="new-password" required>
+            <button class="pw-toggle" type="button" data-target="reg-password2">SHOW</button></div></div>
+        </div>
+
+        <div id="student-fields">
+          <div class="form-row">
+            <div class="form-field"><label for="reg-class" data-en="Class" data-ml="ക്ലാസ്">Class</label><select id="reg-class"><option>8 A</option><option>8 B</option><option>9 A</option><option>9 B</option><option>10 A</option><option>10 B</option><option>Plus One Science</option><option>Plus One Humanities</option><option>Plus Two Science</option><option>Plus Two Humanities</option></select></div>
+            <div class="form-field"><label for="reg-roll" data-en="Roll number" data-ml="റോൾ നമ്പർ">Roll number</label><input id="reg-roll" inputmode="numeric"></div>
+          </div>
+          <div class="form-field"><label for="reg-admission" data-en="Admission number" data-ml="അഡ്മിഷൻ നമ്പർ">Admission number</label><input id="reg-admission"></div>
+        </div>
+
+        <div id="teacher-fields" hidden>
+          <div class="form-row">
+            <div class="form-field"><label for="reg-employee" data-en="Staff ID" data-ml="സ്റ്റാഫ് ഐഡി">Staff ID</label><input id="reg-employee"></div>
+            <div class="form-field"><label for="reg-subject" data-en="Subject" data-ml="വിഷയം">Subject</label><input id="reg-subject"></div>
+          </div>
+        </div>
+
+        <div id="parent-fields" hidden>
+          <div class="form-field"><label for="reg-relationship" data-en="Relationship to student" data-ml="വിദ്യാർത്ഥിയുമായുള്ള ബന്ധം">Relationship to student</label>
+            <select id="reg-relationship"><option>Mother</option><option>Father</option><option>Guardian</option></select></div>
+        </div>
+
+        <div class="form-msg" id="reg-msg" role="alert"></div>
+        <button class="btn btn-primary" type="submit" data-en="Create account" data-ml="അക്കൗണ്ട് ഉണ്ടാക്കുക">Create account</button>
+      </form>
+      <div class="auth-links"><a href="login.html" data-en="Already have an account? Sign in" data-ml="അക്കൗണ്ട് ഉണ്ടോ? പ്രവേശിക്കുക">Already have an account? Sign in</a></div>
+    </div>
+  </div>
+</section>
+</main>
+<footer id="site-footer" class="site-footer"></footer>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="js/config.js"></script>
+<script src="js/lang-kn.js"></script>
+    <script src="js/i18n.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/backend-demo.js"></script>
+<script src="js/backend-supabase.js"></script>
+<script src="js/api.js"></script>
+<script src="js/site.js"></script>
+<script src="js/components.js"></script>
+<script src="js/pages/register.js"></script>
+</body>
+</html>

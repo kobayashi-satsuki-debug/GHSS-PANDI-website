@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" data-lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sign in | G H S S Pandi</title>
+<meta name="description" content="Sign in to the G H S S Pandi student, teacher and parent portal.">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#7d1024">
+<link rel="icon" type="image/svg+xml" href="assets/logo.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manjari:wght@400;700&family=Noto+Sans+Malayalam:wght@400;600&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header id="site-header" class="site-header"></header>
+<main id="main">
+<section class="section auth-section">
+  <div class="container auth-shell">
+    <div class="auth-aside">
+      <span class="eyebrow" data-en="School portal" data-ml="സ്കൂൾ പോർട്ടൽ">School portal</span>
+      <h1 data-en="Sign in to G H S S Pandi" data-ml="ജി.എച്ച്.എസ്.എസ് പാണ്ടിയിൽ പ്രവേശിക്കുക">Sign in to G H S S Pandi</h1>
+      <p data-en="One login for students, teachers and parents. Your role comes from the school database, so students can never gain teacher permissions from the browser." data-ml="വിദ്യാർത്ഥികൾക്കും അധ്യാപകർക്കും രക്ഷിതാക്കൾക്കും ഒരു ലോഗിൻ. റോൾ സ്കൂൾ ഡാറ്റാബേസിൽ നിന്നാണ്.">Your role comes from the school database, not from the browser.</p>
+      <ul class="check-list">
+        <li data-en="Teacher accounts are verified by the school administration" data-ml="അധ്യാപക അക്കൗണ്ടുകൾ സ്കൂൾ ഭരണവിഭാഗം പരിശോധിക്കുന്നു">Teacher accounts are verified by the administration</li>
+        <li data-en="Parents must be verified before seeing a child's results" data-ml="ഫലം കാണാൻ രക്ഷിതാവിന്റെ ബന്ധം സ്ഥിരീകരിക്കണം">Parents are verified before seeing results</li>
+        <li data-en="Password reset by email" data-ml="ഇമെയിൽ വഴി പാസ്‌വേഡ് പുനഃസജ്ജീകരണം">Password reset by email</li>
+      </ul>
+    </div>
+
+    <div class="card auth-card">
+      <h2 data-en="Sign in" data-ml="പ്രവേശിക്കുക">Sign in</h2>
+      <div class="tabs" id="login-tabs" role="tablist">
+        <button role="tab" type="button" data-role="student" class="active" aria-selected="true" data-en="Student" data-ml="വിദ്യാർത്ഥി">Student</button>
+        <button role="tab" type="button" data-role="teacher" aria-selected="false" data-en="Teacher" data-ml="അധ്യാപകൻ">Teacher</button>
+        <button role="tab" type="button" data-role="parent" aria-selected="false" data-en="Parent" data-ml="രക്ഷിതാവ്">Parent</button>
+      </div>
+      <p class="small muted" id="login-role-note"></p>
+      <form id="login-form" novalidate>
+        <div class="form-field"><label for="login-email" data-en="Email address" data-ml="ഇമെയിൽ വിലാസം">Email address</label>
+          <input id="login-email" name="email" type="email" autocomplete="username" required></div>
+        <div class="form-field"><label for="login-password" data-en="Password" data-ml="പാസ്‌വേഡ്">Password</label>
+          <div class="pw-wrap"><input id="login-password" name="password" type="password" autocomplete="current-password" required>
+          <button class="pw-toggle" type="button" data-target="login-password">SHOW</button></div></div>
+        <div class="form-msg" id="login-msg" role="alert"></div>
+        <button class="btn btn-primary" type="submit" data-en="Sign in" data-ml="പ്രവേശിക്കുക">Sign in</button>
+      </form>
+      <div class="auth-links">
+        <a href="reset.html" data-en="Forgot password?" data-ml="പാസ്‌വേഡ് മറന്നോ?">Forgot password?</a>
+        <a href="register.html" data-en="Create an account" data-ml="അക്കൗണ്ട് ഉണ്ടാക്കുക">Create an account</a>
+      </div>
+      <div id="demo-logins" class="demo-note" hidden>
+        <strong data-en="Preview accounts" data-ml="മാതൃകാ അക്കൗണ്ടുകൾ">Preview accounts</strong>
+        <span>student@ghsspandi.in · teacher@ghsspandi.in · parent@ghsspandi.in · principal@ghsspandi.in</span>
+        <span data-en="Password for all: pandi2026" data-ml="എല്ലാത്തിനും പാസ്‌വേഡ്: pandi2026">Password for all: pandi2026</span>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+<footer id="site-footer" class="site-footer"></footer>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="js/config.js"></script>
+<script src="js/lang-kn.js"></script>
+    <script src="js/i18n.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/backend-demo.js"></script>
+<script src="js/backend-supabase.js"></script>
+<script src="js/api.js"></script>
+<script src="js/site.js"></script>
+<script src="js/components.js"></script>
+<script src="js/pages/login.js"></script>
+</body>
+</html>

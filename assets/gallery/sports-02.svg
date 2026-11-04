@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600" role="img" aria-label="Basketball court">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0.4" y2="1">
+      <stop offset="0%" stop-color="#15324f"/><stop offset="100%" stop-color="#356a95"/>
+    </linearGradient>
+    <linearGradient id="glow" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ffd166" stop-opacity=".45"/>
+      <stop offset="100%" stop-color="#ffd166" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="600" fill="url(#bg)"/>
+  <circle cx="620" cy="120" r="90" fill="#ffd166" opacity=".28"/>
+  <circle cx="620" cy="120" r="150" fill="url(#glow)"/>
+  <path d="M0 470 q180 -90 360 -20 q200 70 440 -10 L800 600 L0 600 Z" fill="url(#bg)" opacity=".9"/>
+  <path d="M0 470 q180 -90 360 -20 q200 70 440 -10" fill="none" stroke="#ffd166" stroke-width="3" opacity=".35"/>
+  
+  <ellipse cx="400" cy="420" rx="300" ry="90" fill="#ffd166" opacity=".28"/>
+  <ellipse cx="400" cy="420" rx="220" ry="60" fill="none" stroke="#ffd166" stroke-width="4" opacity=".5"/>
+  <g stroke="#ffd166" stroke-width="7" stroke-linecap="round" opacity=".75" fill="none">
+    <circle cx="330" cy="260" r="20"/><line x1="330" y1="285" x2="330" y2="360"/>
+    <line x1="330" y1="360" x2="300" y2="420"/><line x1="330" y1="360" x2="365" y2="420"/>
+    <line x1="330" y1="305" x2="290" y2="330"/><line x1="330" y1="305" x2="380" y2="280"/>
+  </g>
+  <circle cx="520" cy="300" r="34" fill="none" stroke="#ffd166" stroke-width="6" opacity=".6"/>
+  <text x="40" y="560" font-family="Georgia, serif" font-size="22" fill="#ffffff" opacity=".8" letter-spacing="1">Basketball court</text>
+</svg>

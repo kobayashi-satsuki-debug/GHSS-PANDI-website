@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600" role="img" aria-label="School main block">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0.4" y2="1">
+      <stop offset="0%" stop-color="#1b3a5c"/><stop offset="100%" stop-color="#4a86b8"/>
+    </linearGradient>
+    <linearGradient id="glow" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#f2c14e" stop-opacity=".45"/>
+      <stop offset="100%" stop-color="#f2c14e" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="600" fill="url(#bg)"/>
+  <circle cx="620" cy="120" r="90" fill="#f2c14e" opacity=".28"/>
+  <circle cx="620" cy="120" r="150" fill="url(#glow)"/>
+  <path d="M0 470 q180 -90 360 -20 q200 70 440 -10 L800 600 L0 600 Z" fill="url(#bg)" opacity=".9"/>
+  <path d="M0 470 q180 -90 360 -20 q200 70 440 -10" fill="none" stroke="#f2c14e" stroke-width="3" opacity=".35"/>
+  
+  <rect x="180" y="300" width="440" height="180" rx="6" fill="#0d2237" opacity=".55"/>
+  <rect x="210" y="330" width="60" height="60" fill="#f2c14e" opacity=".65"/>
+  <rect x="300" y="330" width="60" height="60" fill="#f2c14e" opacity=".55"/>
+  <rect x="390" y="330" width="60" height="60" fill="#f2c14e" opacity=".65"/>
+  <rect x="480" y="330" width="60" height="60" fill="#f2c14e" opacity=".55"/>
+  <rect x="360" y="420" width="80" height="60" fill="#0a1a29" opacity=".8"/>
+  <rect x="160" y="290" width="480" height="14" fill="#f2c14e" opacity=".5"/>
+  <text x="40" y="560" font-family="Georgia, serif" font-size="22" fill="#ffffff" opacity=".8" letter-spacing="1">School main block</text>
+</svg>

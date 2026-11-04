@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200" role="img" aria-label="G H S S Pandi school crest">
+  <defs>
+    <linearGradient id="crestGold" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#f6d36b"/>
+      <stop offset="55%" stop-color="#d9a126"/>
+      <stop offset="100%" stop-color="#b57e10"/>
+    </linearGradient>
+    <linearGradient id="crestMaroon" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#7d1024"/>
+      <stop offset="100%" stop-color="#4b0a17"/>
+    </linearGradient>
+    <linearGradient id="crestGreen" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#1c6b47"/>
+      <stop offset="100%" stop-color="#0f4a30"/>
+    </linearGradient>
+  </defs>
+
+  <!-- outer ring -->
+  <circle cx="100" cy="100" r="97" fill="#4b0a17"/>
+  <circle cx="100" cy="100" r="94" fill="none" stroke="url(#crestGold)" stroke-width="4"/>
+  <circle cx="100" cy="100" r="84" fill="#fffdf6"/>
+  <circle cx="100" cy="100" r="80" fill="none" stroke="#d9a126" stroke-width="1.6"/>
+
+  <!-- ribbon text -->
+  <path id="topArc" d="M 100,100 m -70,0 a 70,70 0 1,1 140,0" fill="none"/>
+  <text font-family="Georgia, serif" font-size="12.5" font-weight="700" fill="#7d1024" letter-spacing="2.4">
+    <textPath href="#topArc" startOffset="50%" text-anchor="middle">GOVT. HIGHER SECONDARY SCHOOL</textPath>
+  </text>
+  <path id="botArc" d="M 100,100 m 68,0 a 68,68 0 1,1 -136,0" fill="none"/>
+  <text font-family="Georgia, serif" font-size="13" font-weight="700" fill="#1c6b47" letter-spacing="3.4">
+    <textPath href="#botArc" startOffset="50%" text-anchor="middle">PANDI • KERALA</textPath>
+  </text>
+
+  <!-- shield -->
+  <path d="M100 34 L146 48 C146 96 132 124 100 145 C68 124 54 96 54 48 Z"
+        fill="url(#crestMaroon)" stroke="url(#crestGold)" stroke-width="3"/>
+  <path d="M100 40 L140 52 C140 93 127 118 100 137 C73 118 60 93 60 52 Z"
+        fill="none" stroke="#f6d36b" stroke-width="1.2" opacity=".7"/>
+
+  <!-- rising sun -->
+  <path d="M78 74 A22 22 0 0 1 122 74 Z" fill="url(#crestGold)" opacity=".95"/>
+  <g stroke="#f6d36b" stroke-width="1.8" stroke-linecap="round" opacity=".9">
+    <line x1="100" y1="46" x2="100" y2="53"/>
+    <line x1="80" y1="55" x2="85" y2="60"/>
+    <line x1="120" y1="55" x2="115" y2="60"/>
+    <line x1="68" y1="70" x2="75" y2="72"/>
+    <line x1="132" y1="70" x2="125" y2="72"/>
+  </g>
+
+  <!-- open book -->
+  <g>
+    <path d="M100 84 C89 78 76 77 68 80 L68 96 C76 93 89 94 100 100 Z" fill="#fffdf6" stroke="#b57e10" stroke-width="1.4"/>
+    <path d="M100 84 C111 78 124 77 132 80 L132 96 C124 93 111 94 100 100 Z" fill="#fff8e6" stroke="#b57e10" stroke-width="1.4"/>
+    <line x1="100" y1="84" x2="100" y2="100" stroke="#b57e10" stroke-width="1.4"/>
+    <g stroke="#c9a86a" stroke-width="1.1" opacity=".9">
+      <line x1="73" y1="85" x2="95" y2="89"/>
+      <line x1="73" y1="89" x2="95" y2="93"/>
+      <line x1="105" y1="89" x2="127" y2="85"/>
+      <line x1="105" y1="93" x2="127" y2="89"/>
+    </g>
+  </g>
+
+  <!-- lamp of knowledge -->
+  <g transform="translate(100 112)">
+    <path d="M-13 0 H13 L9 10 H-9 Z" fill="url(#crestGold)" stroke="#8a5d06" stroke-width="1"/>
+    <path d="M-4 -3 C-8 -9 -2 -13 0 -18 C2 -13 8 -9 4 -3 Z" fill="#ffe9a8" stroke="#d9a126" stroke-width="1"/>
+    <circle cx="0" cy="-9" r="1.7" fill="#fff6d0"/>
+  </g>
+
+  <!-- laurel -->
+  <g fill="none" stroke="#1c6b47" stroke-width="1.6" opacity=".85">
+    <path d="M66 118 C58 106 58 92 64 82"/>
+    <path d="M134 118 C142 106 142 92 136 82"/>
+  </g>
+  <g fill="#1c6b47" opacity=".8">
+    <ellipse cx="61" cy="101" rx="4" ry="2.2" transform="rotate(-30 61 101)"/>
+    <ellipse cx="60" cy="110" rx="4" ry="2.2" transform="rotate(-10 60 110)"/>
+    <ellipse cx="63" cy="92" rx="4" ry="2.2" transform="rotate(-50 63 92)"/>
+    <ellipse cx="139" cy="101" rx="4" ry="2.2" transform="rotate(30 139 101)"/>
+    <ellipse cx="140" cy="110" rx="4" ry="2.2" transform="rotate(10 140 110)"/>
+    <ellipse cx="137" cy="92" rx="4" ry="2.2" transform="rotate(50 137 92)"/>
+  </g>
+
+  <!-- foundation year -->
+  <path d="M74 150 H126 L132 158 L126 166 H74 L68 158 Z" fill="url(#crestGreen)"/>
+  <text x="100" y="162" font-family="Georgia, serif" font-size="9" font-weight="700" fill="#f6d36b" text-anchor="middle" letter-spacing="1.6">EST. 1948</text>
+</svg>

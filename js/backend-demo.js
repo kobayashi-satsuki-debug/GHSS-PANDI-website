@@ -259,6 +259,80 @@
       return p;
     },
 
+    /* ---------- PDF notes / resources ---------- */
+    async resources(filter) {
+      const db = load();
+      let rows = (db.resources || []).slice();
+      if (filter && filter.class) rows = rows.filter(r => r.class === filter.class);
+      if (filter && filter.subject) {
+        const q = String(filter.subject).trim().toLowerCase();
+        rows = rows.filter(r => r.subject.toLowerCase().indexOf(q) !== -1);
+      }
+      return rows.sort((a, b) => (a.created_at < b.created_at ? 1 : -1));
+    },
+
+    async uploadResource({ file, class: cls, subject, title, description }) {
+      const me = requireRole(['teacher', 'admin'], sessionId());
+      if (!file) throw new Error('err.required');
+      if (!/\.pdf$/i.test(file.name || '') && file.type !== 'application/pdf') throw new Error('res.notpdf');
+      if (file.size > 20 * 1024 * 1024) throw new Error('res.toobig');
+      const text = String(title || '').trim();
+      if (text.length < 2) throw new Error('err.required');
+      const data = await new Promise((resolve, reject) => {
+        const fr = new FileReader();
+        fr.onload = () => resolve(String(fr.result || ''));
+        fr.onerror = () => reject(new Error('res.readfail'));
+        fr.readAsDataURL(file);
+      });
+      const db = load();
+      db.resources = db.resources || [];
+      const row = {
+        id: uid(),
+        class: String(cls || '').trim(),
+        subject: String(subject || '').trim(),
+        title: text.slice(0, 120),
+        description: String(description || '').slice(0, 500),
+        storage_path: 'demo/' + uid() + '-' + file.name,
+        file_name: file.name,
+        file_size: file.size,
+        mime: 'application/pdf',
+        uploaded_by: me.id,
+        uploader_name: me.full_name,
+        is_published: true,
+        created_at: now(),
+        data: data
+      };
+      if (!row.class || !row.subject) throw new Error('err.required');
+      db.resources.push(row);
+      save(db);
+      return row;
+    },
+
+    async deleteResource(id) {
+      const me = requireRole(['teacher', 'admin'], sessionId());
+      const db = load();
+      db.resources = db.resources || [];
+      const i = db.resources.findIndex(r => r.id === id);
+      if (i === -1) throw new Error('not_found');
+      if (me.role !== 'admin' && db.resources[i].uploaded_by !== me.id) throw new Error('err.noperm');
+      db.resources.splice(i, 1);
+      save(db);
+      return true;
+    },
+
+    async resourceUrl(row) {
+      if (!row || !row.data) throw new Error('not_found');
+      return row.data;
+    },
+
+    async signInWithOAuth(provider, role) {
+      throw new Error('oauth_unavailable');
+    },
+
+    async completeOAuth(payload) {
+      throw new Error('oauth_unavailable');
+    },
+
     async signOut() { setSession(null); },
 
     async session() {

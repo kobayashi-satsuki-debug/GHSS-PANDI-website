@@ -19,6 +19,8 @@
     parent: ['Parents register themselves; the school verifies your relationship to the student.', 'രക്ഷിതാക്കൾ സ്വയം രജിസ്റ്റർ ചെയ്യുന്നു; ബന്ധം സ്കൂൾ പരിശോധിക്കുന്നു.']
   };
 
+  if (window.OAuthUI) OAuthUI.mount(document.getElementById('reg-oauth'), () => role);
+
   function selectRole(r) {
     role = r;
     tabs.querySelectorAll('[role=tab]').forEach(t => {

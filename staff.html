@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" data-lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Staff sign in | G H S S Pandi</title>
+<meta name="description" content="Headmaster, headmistress and staff sign-in for the G H S S Pandi portal.">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#7d1024">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://ljpwzkmniocjpcijuuoq.supabase.co wss://ljpwzkmniocjpcijuuoq.supabase.co; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="color-scheme" content="light">
+<link rel="icon" type="image/svg+xml" href="assets/logo.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manjari:wght@400;700&family=Noto+Sans+Malayalam:wght@400;600&family=Noto+Sans+Kannada:wght@400;600&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header id="site-header" class="site-header"></header>
+<main id="main">
+<section class="section auth-section">
+  <div class="container auth-shell">
+    <div class="auth-aside">
+      <span class="eyebrow" data-en="Staff portal">Staff portal</span>
+      <h1 data-en="Headmaster / staff sign-in" data-ml="പ്രിൻസിപ്പൽ / സ്റ്റാഫ് ലോഗിൻ">Headmaster / staff sign-in</h1>
+      <p data-en="For the headmaster, headmistress, teachers and office staff. This page signs you in to the administration dashboard, where teacher accounts, results, notices and parent requests are handled." data-ml="പ്രിൻസിപ്പൽ, അധ്യാപകർ, ഓഫീസ് സ്റ്റാഫ് എന്നിവർക്കുള്ള പ്രവേശനം. അധ്യാപക അക്കൗണ്ടുകൾ, ഫലങ്ങൾ, അറിയിപ്പുകൾ, രക്ഷിതാവിന്റെ അഭ്യർത്ഥനകൾ എന്നിവ കൈകാര്യം ചെയ്യുന്ന ഡാഷ്ബോർഡിലേക്ക്.">For the headmaster, headmistress, teachers and office staff.</p>
+      <ul class="check-list">
+        <li data-en="Staff accounts are created by the school office" data-ml="സ്റ്റാഫ് അക്കൗണ്ടുകൾ ഓഫീസ് നൽകുന്നതാണ്">Staff accounts are created by the school office</li>
+        <li data-en="Teachers stay pending until the headmaster approves" data-ml="പ്രിൻസിപ്പൽ അംഗീകരിക്കുന്നതുവരെ അധ്യാപകർ പെൻഡിംഗ്">Teachers stay pending until approved</li>
+        <li data-en="Every staff action is written to the audit log" data-ml="ഓരോ സ്റ്റാഫ് നടപടിയും ഓഡിറ്റ് ലോഗിൽ">Every action is written to the audit log</li>
+      </ul>
+    </div>
+
+    <div class="card auth-card">
+      <h2 data-en="Staff sign in" data-ml="സ്റ്റാഫ് പ്രവേശനം">Staff sign in</h2>
+      <form id="staff-form" novalidate>
+        <div class="form-field"><label for="staff-email" data-en="Official email address" data-ml="ഔദ്യോഗിക ഇമെയിൽ">Official email address</label>
+          <input id="staff-email" name="email" type="email" autocomplete="username" required></div>
+        <div class="form-field"><label for="staff-password" data-en="Password" data-ml="പാസ്‌വേഡ്">Password</label>
+          <div class="pw-wrap"><input id="staff-password" name="password" type="password" autocomplete="current-password" required>
+          <button class="pw-toggle" type="button" data-target="staff-password">SHOW</button></div></div>
+        <div class="form-msg" id="staff-msg" role="alert"></div>
+        <button class="btn btn-primary" type="submit" data-en="Sign in to the staff dashboard" data-ml="സ്റ്റാഫ് ഡാഷ്ബോർഡിൽ പ്രവേശിക്കുക">Sign in to the staff dashboard</button>
+      </form>
+      <div id="staff-oauth"></div>
+      <div class="auth-links">
+        <a href="reset.html" data-en="Forgot password?" data-ml="പാസ്‌വേഡ് മറന്നോ?">Forgot password?</a>
+        <a href="login.html" data-en="Student / parent sign-in" data-ml="വിദ്യാർത്ഥി / രക്ഷിതാവ് ലോഗിൻ">Student / parent sign-in</a>
+      </div>
+      <div class="demo-note" id="staff-demo" hidden>
+        <strong data-en="Preview accounts" data-ml="മാതൃകാ അക്കൗണ്ടുകൾ">Preview accounts</strong>
+        <span>principal@ghsspandi.in · teacher@ghsspandi.in</span>
+        <span data-en="Password for all: pandi2026" data-ml="എല്ലാത്തിനും പാസ്‌വേഡ്: pandi2026">Password for all: pandi2026</span>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+<footer id="site-footer" class="site-footer"></footer>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="js/config.js"></script>
+<script src="js/lang-kn.js"></script>
+<script src="js/i18n.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/backend-demo.js"></script>
+<script src="js/backend-supabase.js"></script>
+<script src="js/api.js"></script>
+<script src="js/security.js"></script>
+<script src="js/site.js"></script>
+<script src="js/components.js"></script>
+<script src="js/oauth.js"></script>
+<script src="js/pages/staff.js"></script>
+</body>
+</html>

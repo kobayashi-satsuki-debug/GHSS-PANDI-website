@@ -131,6 +131,7 @@
 
       const actions = [];
       if (role === 'student') actions.push(['ai.html', L('Open the AI study buddy', 'എ.ഐ പഠന സഹായി തുറക്കുക')]);
+      if (role === 'student') actions.push(['resources.html', L('Download class notes', 'ക്ലാസ് കുറിപ്പുകൾ ഡൗൺലോഡ് ചെയ്യുക')]);
       if (role === 'student' || isStaff) actions.push(['chat.html', L('Open class chat', 'ക്ലാസ് ചാറ്റ്')]);
       if (role !== 'teacher') actions.push(['results.html', L('View results', 'ഫലങ്ങൾ')]);
       if (isStaff) actions.push(['#publish', L('Publish results', 'ഫലം പ്രകാശനം')]);
@@ -740,6 +741,84 @@
     };
   }
 
+  // ================= staff: PDF notes / resources =================
+  if (isStaff) {
+    PANES.resources = {
+      label: () => L('Notes (PDF)', 'കുറിപ്പുകൾ (PDF)'),
+      async render() {
+        const rows = await API.resources({});
+        const list = rows.length
+          ? rows.map(r => '<div class="res-row"><div><strong>' + UI.esc(r.title) + '</strong>' +
+              '<div class="sub">' + UI.esc(r.class) + ' · ' + UI.esc(r.subject) + ' · ' +
+              Math.max(1, Math.round(Number(r.file_size || 0) / 1024)) + ' KB · ' +
+              UI.formatDate(r.created_at) + ' · ' + UI.esc(r.uploader_name || '') + '</div></div>' +
+              '<div class="row-actions"><a class="btn btn-ghost btn-sm" href="resources.html" target="_blank" rel="noopener">' +
+              L('Open list', 'പട്ടിക') + '</a>' +
+              '<button class="btn btn-ghost btn-sm" type="button" data-del-res="' + r.id + '">' + L('Delete', 'നീക്കുക') + '</button></div></div>').join('')
+          : '<div class="empty"><span class="big">📄</span>' + L('No PDF notes uploaded yet.', 'ഇതുവരെ കുറിപ്പുകൾ ഇല്ല.') + '</div>';
+
+        return head(L('Notes and PDF resources', 'കുറിപ്പുകളും PDF സാമഗ്രികളും'),
+            L('Choose the class and subject, then upload a PDF. Students download it from the Resources page.', 'ക്ലാസും വിഷയവും തിരഞ്ഞെടുത്ത് PDF അപ്‌ലോഡ് ചെയ്യുക. വിദ്യാർത്ഥികൾ റിസോഴ്‌സ് പേജിൽ നിന്ന് ഡൗൺലോഡ് ചെയ്യും.')) +
+          '<div class="dash-card"><h3>' + L('Upload a PDF', 'PDF അപ്‌ലോഡ് ചെയ്യുക') + '</h3>' +
+          '<form class="mini-form" id="res-form" novalidate>' +
+            '<div class="form-row"><div class="form-field"><label>' + L('Class', 'ക്ലാസ്') + '</label>' +
+              '<select name="class" required>' + classOptions('', true) + '</select></div>' +
+            '<div class="form-field"><label>' + L('Subject', 'വിഷയം') + '</label>' +
+              '<input name="subject" list="res-subjects" placeholder="' + L('e.g. Mathematics', 'ഉദാ: ഗണിതം') + '" required>' +
+              '<datalist id="res-subjects"><option>Mathematics<option>English<option>Malayalam<option>Physics<option>Chemistry<option>Biology<option>Social Science<option>Computer Science<option>Hindi<option>Arabic</datalist></div></div>' +
+            '<div class="form-field"><label>' + L('Title', 'തലക്കെട്ട്') + '</label><input name="title" required maxlength="120" placeholder="' +
+              L('Chapter 4 — Quadratic equations notes', 'അധ്യായം 4 — ദ്വിമാന സമവാക്യ കുറിപ്പുകൾ') + '"></div>' +
+            '<div class="form-field"><label>' + L('Description (optional)', 'വിവരണം (ഐച്ഛികം)') + '</label><textarea name="description" rows="2" maxlength="500"></textarea></div>' +
+            '<div class="form-field"><label>' + L('PDF file (max 20 MB)', 'PDF ഫയൽ (പരമാവധി 20 MB)') + '</label>' +
+              '<input type="file" name="file" accept="application/pdf,.pdf" required></div>' +
+            '<div class="form-msg" id="res-msg" role="alert"></div>' +
+            '<div><button class="btn btn-primary" type="submit">' + L('Upload for students', 'അപ്‌ലോഡ് ചെയ്യുക') + '</button></div>' +
+          '</form></div>' +
+          '<div class="dash-card"><h3>' + L('Uploaded notes', 'അപ്‌ലോഡ് ചെയ്ത കുറിപ്പുകൾ') + '</h3>' + list + '</div>';
+      },
+      after: () => {
+        const form = document.getElementById('res-form');
+        const msg = document.getElementById('res-msg');
+        form.addEventListener('submit', async e => {
+          e.preventDefault();
+          UI.hideMsg(msg);
+          const d = Object.fromEntries(new FormData(form).entries());
+          const file = form.querySelector('[name=file]').files[0];
+          if (!d.class || !d.subject.trim() || !d.title.trim() || !file) {
+            return UI.showMsg(msg, I18NS.t('err.required'), 'error');
+          }
+          if (!/\.pdf$/i.test(file.name) && file.type !== 'application/pdf') {
+            return UI.showMsg(msg, L('Please choose a PDF file.', 'PDF ഫയൽ തിരഞ്ഞെടുക്കുക.'), 'error');
+          }
+          if (file.size > 20 * 1024 * 1024) {
+            return UI.showMsg(msg, L('That file is bigger than 20 MB.', 'ഫയൽ 20 MB-ൽ കൂടുതലാണ്.'), 'error');
+          }
+          const btn = form.querySelector('button[type=submit]');
+          UI.busy(btn, true);
+          try {
+            await API.uploadResource({ file: file, class: d.class, subject: d.subject.trim(), title: d.title.trim(), description: (d.description || '').trim() });
+            UI.showMsg(msg, L('Uploaded. Students can download it from the Resources page.', 'അപ്‌ലോഡ് ചെയ്തു. വിദ്യാർത്ഥികൾക്ക് റിസോഴ്‌സ് പേജിൽ നിന്ന് ഡൗൺലോഡ് ചെയ്യാം.'), 'success');
+            const pane = document.querySelector('#dash-main');
+            setTimeout(() => { renderPane('resources'); }, 900);
+          } catch (err) {
+            UI.showMsg(msg, API.errorText(err), 'error');
+            UI.busy(btn, false);
+          }
+        });
+        document.querySelectorAll('[data-del-res]').forEach(b => {
+          b.addEventListener('click', async () => {
+            if (!(await UI.confirmDialog(L('Delete this PDF?', 'ഈ PDF നീക്കണോ?'), L('Students will no longer see it.', 'വിദ്യാർത്ഥികൾക്ക് ഇത് കാണാനാകില്ല.')))) return;
+            try {
+              await API.deleteResource(b.dataset.delRes);
+              UI.toast(L('Deleted.', 'നീക്കി.'), 'success');
+              renderPane('resources');
+            } catch (err) { UI.toast(API.errorText(err), 'error'); }
+          });
+        });
+      }
+    };
+  }
+
   // ================= admin: teacher approvals =================
   if (isAdmin) {
     PANES.registrations = {
@@ -939,7 +1018,7 @@
   const MENU = ['overview'];
   if (role === 'student') MENU.push('myresults', 'ai');
   if (role === 'parent') MENU.push('children');
-  if (isStaff) MENU.push('publish', 'notices', 'moderation', 'students', 'content');
+  if (isStaff) MENU.push('publish', 'resources', 'notices', 'moderation', 'students', 'content');
   if (isAdmin) MENU.push('registrations', 'parents', 'accounts', 'classes', 'enquiries', 'history');
   MENU.push('profile');
   const visible = MENU.filter(k => PANES[k]);

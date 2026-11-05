@@ -106,6 +106,80 @@
       return p;
     },
 
+    /* ---------- PDF notes / resources ---------- */
+    async resources(filter) {
+      let q = client().from('resources').select('*').order('created_at', { ascending: false });
+      if (filter && filter.class) q = q.eq('class', filter.class);
+      if (filter && filter.subject) q = q.ilike('subject', '%' + String(filter.subject).trim() + '%');
+      const { data, error } = await q;
+      if (error) fail(error);
+      return data || [];
+    },
+
+    async uploadResource({ file, class: cls, subject, title, description }) {
+      const safe = String(file.name || 'notes.pdf').replace(/[^A-Za-z0-9._-]/g, '_').slice(-80);
+      const folder = String(cls || 'general').replace(/\s+/g, '-').toLowerCase();
+      const path = folder + '/' + Date.now() + '-' + safe;
+      const up = await client().storage.from('resources')
+        .upload(path, file, { contentType: 'application/pdf', upsert: false });
+      if (up.error) fail(up.error);
+      const { data, error } = await client().from('resources').insert({
+        class: cls, subject: subject, title: title,
+        description: description || '',
+        storage_path: path, file_name: file.name, file_size: file.size, mime: 'application/pdf'
+      }).select().single();
+      if (error) {
+        await client().storage.from('resources').remove([path]);
+        fail(error);
+      }
+      return data;
+    },
+
+    async deleteResource(id) {
+      const { data, error } = await client().from('resources').select('storage_path').eq('id', id).single();
+      if (error) fail(error);
+      const del = await client().from('resources').delete().eq('id', id);
+      if (del.error) fail(del.error);
+      if (data && data.storage_path) await client().storage.from('resources').remove([data.storage_path]);
+      return true;
+    },
+
+    /* short-lived signed link: the bucket itself stays private */
+    async resourceUrl(row) {
+      const { data, error } = await client().storage.from('resources')
+        .createSignedUrl(row.storage_path, 600);
+      if (error) fail(error);
+      return data.signedUrl;
+    },
+
+    /* Google / other OAuth providers. The provider proves the email; the
+       school role is chosen once afterwards on oauth.html and checked by
+       complete_oauth_profile() in the database. */
+    async signInWithOAuth(provider, role) {
+      const target = location.origin + location.pathname.replace(/[^/]*$/, 'oauth.html');
+      try { sessionStorage.setItem('ghss_oauth_role', role || ''); } catch (e) {}
+      const { error } = await client().auth.signInWithOAuth({
+        provider: provider,
+        options: { redirectTo: target, queryParams: { prompt: 'select_account' } }
+      });
+      if (error) fail(error);
+      return { redirected: true };
+    },
+
+    async completeOAuth(payload) {
+      const { data, error } = await client().rpc('complete_oauth_profile', {
+        p_role: payload.role,
+        p_full_name: payload.full_name,
+        p_phone: payload.phone || '',
+        p_class: payload.class || '',
+        p_roll: payload.roll || '',
+        p_subject: payload.subject || ''
+      });
+      if (error) fail(error);
+      cachedProfile = null;
+      return data;
+    },
+
     async signOut() {
       await client().auth.signOut();
       cachedProfile = null;

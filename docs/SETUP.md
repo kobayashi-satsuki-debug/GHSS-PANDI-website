@@ -35,11 +35,18 @@ register.html         Registration (student / teacher / parent tabs)
 reset.html            Password reset and recovery
 dashboard.html        Role dashboard (students, teachers, parents, admin)
 ai.html               AI study buddy page (students only)
+resources.html        PDF notes by class and subject (signed-in users)
+staff.html            Headmaster / headmistress / staff sign-in
+oauth.html            One-time role choice after Google sign-in
 chat.html             Moderated class group chat
 css/style.css         All styling
 js/config.js          School details and Supabase keys  ← edit this
 js/ai.js              AI study buddy answers (study-note knowledge base)
 js/pages/ai.js        AI study buddy page logic
+js/oauth.js           "Continue with Google" buttons
+js/pages/resources.js PDF notes page logic
+js/pages/staff.js     Staff sign-in page logic
+js/pages/oauth.js     Google sign-in completion page logic
 js/i18n.js            English / Malayalam dictionary and language switching
 js/lang-kn.js          Kannada dictionary (keyed by the English string)
 js/backend-demo.js    Preview mode (data kept in this browser)
@@ -107,13 +114,29 @@ created, in preview mode and in live mode.
       `set_ai_nickname` / `ai_history` / `log_ai_message` functions. Students can
       only read and write their own rows. Safe to re-run. Without it the AI pane
       still opens but saving a nickname fails with "sign in again".
-3. In **Authentication → URL configuration** set:
+   8. `supabase/08-oauth.sql` — Google sign-in: the one-time role choice, the
+      `profiles.setup_complete` flag and `complete_oauth_profile()`. Safe to
+      re-run.
+   9. `supabase/09-resources.sql` — PDF notes: the `resources` table, its
+      policies, and the private `resources` storage bucket (20 MB per file,
+      PDF only). Safe to re-run.
+3. **Google sign-in (optional).** In Supabase go to **Authentication →
+   Providers → Google**, enable it and paste a Google Cloud OAuth client ID and
+   secret. Add `https://<your-project>.supabase.co/auth/v1/callback` as the
+   authorised redirect URI in Google Cloud, and add
+   `https://ghsspandi.org.in/oauth.html` to Supabase's Redirect URLs. If you
+   leave Google off, the "Continue with Google" buttons hide themselves; set
+   `window.OAUTH_CONFIG = { providers: [] }` in `js/config.js` to force them off.
+4. In **Authentication → URL configuration** set:
    - Site URL: `https://ghsspandi.org.in`
    - Redirect URLs: `https://ghsspandi.org.in/reset.html`,
      `https://ghsspandi.org.in/**`, plus your preview host if you use one.
-4. In **Authentication → Email** keep email confirmation on. Password reset
+5. In **Authentication → Email** keep email confirmation on. Password reset
    links return to `reset.html`.
-5. Copy the project URL and anon key into `js/config.js`, set
+6. In **Storage** confirm the bucket `resources` is **private** (the SQL creates
+   it that way). Students get ten-minute signed links, so a copied URL stops
+   working.
+7. Copy the project URL and anon key into `js/config.js`, set
    `demoFallback: false`, and reload the site.
 
 ### Make the first administrator

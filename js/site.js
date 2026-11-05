@@ -12,7 +12,8 @@
     ['achievements.html', 'nav.achievements', 'Achievements', 'നേട്ടങ്ങൾ'],
     ['faculty.html', 'nav.faculty', 'Faculty', 'അധ്യാപകർ'],
     ['notices.html', 'nav.notices', 'Notices', 'അറിയിപ്പുകൾ'],
-    ['results.html', 'nav.results', 'Results', 'ഫലങ്ങൾ']
+    ['results.html', 'nav.results', 'Results', 'ഫലങ്ങൾ'],
+    ['resources.html', 'nav.resources', 'Resources', 'പഠന സാമഗ്രികൾ']
   ];
 
   function page() {
@@ -90,6 +91,8 @@
             '<li><a href="login.html#parent" data-en="Parent login" data-ml="രക്ഷിതാവ് ലോഗിൻ">Parent login</a></li>' +
             '<li><a href="register.html" data-en="Create an account" data-ml="അക്കൗണ്ട് ഉണ്ടാക്കുക">Create an account</a></li>' +
             '<li><a href="results.html" data-en="Exam results" data-ml="പരീക്ഷാ ഫലങ്ങൾ">Exam results</a></li>' +
+            '<li><a href="resources.html" data-en="Notes and PDF resources" data-ml="കുറിപ്പുകളും PDF സാമഗ്രികളും">Notes and PDF resources</a></li>' +
+            '<li><a href="staff.html" data-en="Headmaster / staff sign-in" data-ml="പ്രിൻസിപ്പൽ / സ്റ്റാഫ് ലോഗിൻ">Headmaster / staff sign-in</a></li>' +
             '<li><a href="admissions.html" data-en="Admissions" data-ml="പ്രവേശനം">Admissions</a></li>' +
           '</ul>' +
         '</div>' +

@@ -757,3 +757,28 @@ html[data-lang="ml"] .site-footer h4 { font-family: var(--font-ml); }
   .ai-log { height: 320px; }
   .ai-bubble { max-width: 92%; }
 }
+
+/* ---------- OAuth buttons ---------- */
+.auth-divider { display: flex; align-items: center; gap: .8rem; margin: 1.1rem 0 .9rem; color: var(--muted, #6b6b6b); font-size: .82rem; }
+.auth-divider::before, .auth-divider::after { content: ""; flex: 1; height: 1px; background: rgba(0, 0, 0, .12); }
+.oauth-btn { display: flex; align-items: center; justify-content: center; gap: .55rem; width: 100%; margin-bottom: .55rem;
+  background: #fff; border: 1px solid rgba(0, 0, 0, .16); color: #222; font-weight: 600; padding: .7rem 1rem; border-radius: 10px; cursor: pointer; }
+.oauth-btn:hover { background: #f6f6f6; }
+.oauth-btn:disabled { opacity: .6; cursor: progress; }
+
+/* ---------- PDF resources ---------- */
+.res-toolbar { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 1rem; margin: 1.4rem 0 1.6rem; }
+.res-card { display: flex; gap: 1rem; align-items: flex-start; padding: 1rem 1.15rem; margin-bottom: .8rem;
+  background: #fff; border: 1px solid rgba(0, 0, 0, .08); border-radius: 14px; box-shadow: 0 1px 2px rgba(0, 0, 0, .04); }
+.res-icon { font-size: 1.6rem; line-height: 1; }
+.res-body { flex: 1; }
+.res-body h3 { margin: 0 0 .35rem; font-size: 1.02rem; }
+.res-meta { display: flex; flex-wrap: wrap; gap: .4rem; align-items: center; margin: 0 0 .3rem; }
+.res-actions { align-self: center; }
+.res-row { display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding: .65rem 0; border-bottom: 1px solid rgba(0, 0, 0, .07); }
+.res-row:last-child { border-bottom: 0; }
+@media (max-width: 620px) {
+  .res-card { flex-direction: column; }
+  .res-actions { align-self: flex-start; }
+  .res-row { flex-direction: column; align-items: flex-start; }
+}

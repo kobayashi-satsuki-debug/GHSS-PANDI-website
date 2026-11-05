@@ -44,6 +44,15 @@
     });
   });
 
+  if (window.OAuthUI) OAuthUI.mount(document.getElementById('login-oauth'), () => {
+    const on = tabs.querySelector('[role=tab].active');
+    return on ? on.dataset.role : 'student';
+  });
+
+  if (/[?&]pending=teacher/.test(location.search) && msg) {
+    UI.showMsg(msg, I18NS.t('auth.pendingTeacher'), 'info');
+  }
+
   form.addEventListener('submit', async function (e) {
     e.preventDefault();
     UI.hideMsg(msg);
@@ -57,7 +66,8 @@
     try {
       const s = await API.signIn(em, pw);
       const next = new URLSearchParams(location.search).get('next');
-      const role = s && s.profile ? s.profile.role : '';
+      const prof = s && (s.profile || s);
+      const role = prof ? prof.role : '';
       const target = next && next.indexOf('http') !== 0 ? next : 'dashboard.html';
       location.href = (role === 'parent' && target === 'dashboard.html') ? 'dashboard.html#children' : target;
     } catch (err) {

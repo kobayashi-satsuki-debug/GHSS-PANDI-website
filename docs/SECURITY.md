@@ -103,12 +103,16 @@ copy is opened over plain `http`.
 
 Security issues: `14101ghsspandi@gmail.com` (see `.well-known/security.txt`).
 
-## PDF notes (SQL 09)
+## PDF notes (SQL 09 and 10)
 
 * `public.resources` holds one row per uploaded PDF. `set_resource_meta()`
   overwrites the uploader and trims the class/subject/title on the server, so a
   browser cannot claim another teacher's name. Only `is_staff()` may insert;
   students and parents only ever `select`.
+* Only students, teachers and staff may read the library: `can_read_resources()`
+  checks `profiles.role` on the server, and the page shows parents a short
+  message instead of the notes. Uploading is staff-only in the database too, so
+  the separate upload page is a convenience, not the guard.
 * PDFs live in the **private** `resources` bucket (20 MB limit, PDF only). Read
   and write policies are scoped to `authenticated`, and students download with
   ten-minute signed URLs, so a shared link expires.

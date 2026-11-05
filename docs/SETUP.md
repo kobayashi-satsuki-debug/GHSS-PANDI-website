@@ -35,14 +35,16 @@ register.html         Registration (student / teacher / parent tabs)
 reset.html            Password reset and recovery
 dashboard.html        Role dashboard (students, teachers, parents, admin)
 ai.html               AI study buddy page (students only)
-resources.html        PDF notes by class and subject (signed-in users)
+resources.html        PDF notes, read-only (students, teachers, staff only)
+upload.html           Upload and delete PDF notes (teachers and headmaster only)
 staff.html            Headmaster / headmistress / staff sign-in
 chat.html             Moderated class group chat
 css/style.css         All styling
 js/config.js          School details and Supabase keys  ← edit this
 js/ai.js              AI study buddy answers (study-note knowledge base)
 js/pages/ai.js        AI study buddy page logic
-js/pages/resources.js PDF notes page logic
+js/pages/resources.js PDF notes viewer logic
+js/pages/upload.js    PDF notes upload page logic
 js/pages/staff.js     Staff sign-in page logic
 js/i18n.js            English / Malayalam dictionary and language switching
 js/lang-kn.js          Kannada dictionary (keyed by the English string)
@@ -115,6 +117,9 @@ created, in preview mode and in live mode.
    8. `supabase/09-resources.sql` — PDF notes: the `resources` table, its
       policies, and the private `resources` storage bucket (20 MB per file,
       PDF only). Safe to re-run.
+   9. `supabase/10-resource-roles.sql` — narrows who may read the notes to
+      students, teachers and staff (`can_read_resources()`), so parent accounts
+      cannot open the library. Safe to re-run.
 3. In **Authentication → URL configuration** set:
    - Site URL: `https://ghsspandi.org.in`
    - Redirect URLs: `https://ghsspandi.org.in/reset.html`,

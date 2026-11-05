@@ -752,8 +752,8 @@
               '<div class="sub">' + UI.esc(r.class) + ' · ' + UI.esc(r.subject) + ' · ' +
               Math.max(1, Math.round(Number(r.file_size || 0) / 1024)) + ' KB · ' +
               UI.formatDate(r.created_at) + ' · ' + UI.esc(r.uploader_name || '') + '</div></div>' +
-              '<div class="row-actions"><a class="btn btn-ghost btn-sm" href="resources.html" target="_blank" rel="noopener">' +
-              L('Open list', 'പട്ടിക') + '</a>' +
+              '<div class="row-actions"><a class="btn btn-ghost btn-sm" href="upload.html">' +
+              L('Upload page', 'അപ്‌ലോഡ് പേജ്') + '</a>' +
               '<button class="btn btn-ghost btn-sm" type="button" data-del-res="' + r.id + '">' + L('Delete', 'നീക്കുക') + '</button></div></div>').join('')
           : '<div class="empty"><span class="big">📄</span>' + L('No PDF notes uploaded yet.', 'ഇതുവരെ കുറിപ്പുകൾ ഇല്ല.') + '</div>';
 

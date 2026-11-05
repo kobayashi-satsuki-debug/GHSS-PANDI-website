@@ -8,12 +8,19 @@
   if (!session) {
     root.innerHTML = '<div class="card" style="max-width:520px">' +
       '<h2>' + L('Sign in to see the notes', 'കുറിപ്പുകൾ കാണാൻ പ്രവേശിക്കുക') + '</h2>' +
-      '<p class="muted">' + L('PDF notes are shared with signed-in students, teachers and parents of the school.', 'പിഡിഎഫ് കുറിപ്പുകൾ സ്കൂളിലെ വിദ്യാർത്ഥികൾക്കും അധ്യാപകർക്കും രക്ഷിതാക്കൾക്കും മാത്രം.') + '</p>' +
+      '<p class="muted">' + L('PDF notes are for signed-in students, teachers and staff of the school.', 'പിഡിഎഫ് കുറിപ്പുകൾ സ്കൂളിലെ വിദ്യാർത്ഥികൾക്കും അധ്യാപകർക്കും സ്റ്റാഫിനും മാത്രം.') + '</p>' +
       '<p><a class="btn btn-primary" href="login.html?next=resources.html">' + L('Sign in', 'പ്രവേശിക്കുക') + '</a></p></div>';
     return;
   }
 
   const role = session.profile.role;
+  if (role !== 'student' && role !== 'teacher' && role !== 'admin') {
+    root.innerHTML = '<div class="card" style="max-width:520px">' +
+      '<h2>' + L('Notes are not open to this account', 'ഈ അക്കൗണ്ടിന് കുറിപ്പുകൾ ലഭ്യമല്ല') + '</h2>' +
+      '<p class="muted">' + L('The notes library is for students, teachers and staff. Parents can see their child\'s results instead.', 'കുറിപ്പുകൾ വിദ്യാർത്ഥികൾക്കും അധ്യാപകർക്കും സ്റ്റാഫിനും മാത്രം. രക്ഷിതാക്കൾക്ക് മക്കളുടെ ഫലങ്ങൾ കാണാം.') + '</p>' +
+      '<p><a class="btn btn-primary" href="results.html">' + L('Exam results', 'പരീക്ഷാ ഫലങ്ങൾ') + '</a></p></div>';
+    return;
+  }
   const isStaff = role === 'teacher' || role === 'admin';
   let filter = { class: '', subject: '' };
 
@@ -24,7 +31,7 @@
         CLASSES.map(c => '<option>' + c + '</option>').join('') + '</select></div>' +
       '<div class="form-field"><label for="res-subject">' + L('Subject', 'വിഷയം') + '</label>' +
         '<input id="res-subject" placeholder="' + L('e.g. Maths', 'ഉദാ: ഗണിതം') + '"></div>' +
-      (isStaff ? '<div class="form-field" style="align-self:end"><a class="btn btn-ghost" href="dashboard.html#resources">' +
+      (isStaff ? '<div class="form-field" style="align-self:end"><a class="btn btn-primary" href="upload.html">' +
         L('Upload a PDF', 'പിഡിഎഫ് അപ്‌ലോഡ് ചെയ്യുക') + '</a></div>' : '') +
     '</div>' +
     '<div id="res-list"><div class="skeleton" style="height:90px;margin-bottom:.8rem"></div><div class="skeleton" style="height:90px"></div></div>';
@@ -46,7 +53,7 @@
       const rows = await API.resources(filter);
       if (!rows.length) {
         list.innerHTML = '<div class="empty"><span class="big">📄</span>' +
-          L('No notes here yet. Teachers add them from the dashboard.', 'ഇവിടെ കുറിപ്പുകൾ ഇല്ല. അധ്യാപകർ ഡാഷ്ബോർഡിൽ നിന്ന് ചേർക്കും.') + '</div>';
+          L('No notes here yet. Teachers add them from the Upload page.', 'ഇവിടെ കുറിപ്പുകൾ ഇല്ല. അധ്യാപകർ അപ്‌ലോഡ് പേജിൽ നിന്ന് ചേർക്കും.') + '</div>';
         return;
       }
       list.innerHTML = rows.map(r =>

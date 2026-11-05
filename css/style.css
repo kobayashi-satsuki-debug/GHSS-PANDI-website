@@ -769,6 +769,8 @@ html[data-lang="ml"] .site-footer h4 { font-family: var(--font-ml); }
 .res-actions { align-self: center; }
 .res-row { display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding: .65rem 0; border-bottom: 1px solid rgba(0, 0, 0, .07); }
 .res-row:last-child { border-bottom: 0; }
+.res-upload-card { max-width: 720px; margin: 1.4rem 0 2rem; }
+.res-h2 { margin: 2rem 0 1rem; font-size: 1.25rem; }
 @media (max-width: 620px) {
   .res-card { flex-direction: column; }
   .res-actions { align-self: flex-start; }

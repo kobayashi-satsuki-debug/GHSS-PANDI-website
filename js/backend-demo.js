@@ -261,6 +261,7 @@
 
     /* ---------- PDF notes / resources ---------- */
     async resources(filter) {
+      requireRole(['student', 'teacher', 'admin'], sessionId());
       const db = load();
       let rows = (db.resources || []).slice();
       if (filter && filter.class) rows = rows.filter(r => r.class === filter.class);

@@ -325,14 +325,6 @@
       return row.data;
     },
 
-    async signInWithOAuth(provider, role) {
-      throw new Error('oauth_unavailable');
-    },
-
-    async completeOAuth(payload) {
-      throw new Error('oauth_unavailable');
-    },
-
     async signOut() { setSession(null); },
 
     async session() {

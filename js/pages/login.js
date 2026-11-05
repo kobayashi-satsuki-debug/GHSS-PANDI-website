@@ -44,11 +44,6 @@
     });
   });
 
-  if (window.OAuthUI) OAuthUI.mount(document.getElementById('login-oauth'), () => {
-    const on = tabs.querySelector('[role=tab].active');
-    return on ? on.dataset.role : 'student';
-  });
-
   if (/[?&]pending=teacher/.test(location.search) && msg) {
     UI.showMsg(msg, I18NS.t('auth.pendingTeacher'), 'info');
   }

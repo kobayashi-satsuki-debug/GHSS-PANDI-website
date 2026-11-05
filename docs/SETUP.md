@@ -37,16 +37,13 @@ dashboard.html        Role dashboard (students, teachers, parents, admin)
 ai.html               AI study buddy page (students only)
 resources.html        PDF notes by class and subject (signed-in users)
 staff.html            Headmaster / headmistress / staff sign-in
-oauth.html            One-time role choice after Google sign-in
 chat.html             Moderated class group chat
 css/style.css         All styling
 js/config.js          School details and Supabase keys  ← edit this
 js/ai.js              AI study buddy answers (study-note knowledge base)
 js/pages/ai.js        AI study buddy page logic
-js/oauth.js           "Continue with Google" buttons
 js/pages/resources.js PDF notes page logic
 js/pages/staff.js     Staff sign-in page logic
-js/pages/oauth.js     Google sign-in completion page logic
 js/i18n.js            English / Malayalam dictionary and language switching
 js/lang-kn.js          Kannada dictionary (keyed by the English string)
 js/backend-demo.js    Preview mode (data kept in this browser)
@@ -114,38 +111,19 @@ created, in preview mode and in live mode.
       `set_ai_nickname` / `ai_history` / `log_ai_message` functions. Students can
       only read and write their own rows. Safe to re-run. Without it the AI pane
       still opens but saving a nickname fails with "sign in again".
-   8. `supabase/08-oauth.sql` — Google sign-in: the one-time role choice, the
-      `profiles.setup_complete` flag and `complete_oauth_profile()`. Safe to
-      re-run.
-   9. `supabase/09-resources.sql` — PDF notes: the `resources` table, its
+   8. `supabase/09-resources.sql` — PDF notes: the `resources` table, its
       policies, and the private `resources` storage bucket (20 MB per file,
       PDF only). Safe to re-run.
-3. **Google sign-in (optional, off by default).** The "Continue with Google"
-   buttons stay hidden while `window.OAUTH_CONFIG.providers` is empty. To switch
-   them on, do all four steps:
-   - **Google Cloud Console** → APIs & Services → Credentials → Create OAuth
-     client ID → Web application. Authorised redirect URI:
-     `https://ljpwzkmniocjpcijuuoq.supabase.co/auth/v1/callback`
-   - **Supabase** → Authentication → Providers → Google: turn it on and paste
-     that client ID and secret.
-   - **Supabase** → Authentication → URL Configuration → Redirect URLs: add
-     `https://ghsspandi.org.in/oauth.html` (and
-     `http://localhost:8111/oauth.html` if you test locally).
-   - `js/config.js`: set `providers: ['google']`.
-
-   Until the provider is enabled, Supabase answers
-   `Unsupported provider: provider is not enabled`; the site now shows a plain
-   message instead of that raw error.
-4. In **Authentication → URL configuration** set:
+3. In **Authentication → URL configuration** set:
    - Site URL: `https://ghsspandi.org.in`
    - Redirect URLs: `https://ghsspandi.org.in/reset.html`,
      `https://ghsspandi.org.in/**`, plus your preview host if you use one.
-5. In **Authentication → Email** keep email confirmation on. Password reset
+4. In **Authentication → Email** keep email confirmation on. Password reset
    links return to `reset.html`.
-6. In **Storage** confirm the bucket `resources` is **private** (the SQL creates
+5. In **Storage** confirm the bucket `resources` is **private** (the SQL creates
    it that way). Students get ten-minute signed links, so a copied URL stops
    working.
-7. Copy the project URL and anon key into `js/config.js`, set
+6. Copy the project URL and anon key into `js/config.js`, set
    `demoFallback: false`, and reload the site.
 
 ### Make the first administrator

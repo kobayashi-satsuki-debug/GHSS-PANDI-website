@@ -103,7 +103,7 @@ copy is opened over plain `http`.
 
 Security issues: `14101ghsspandi@gmail.com` (see `.well-known/security.txt`).
 
-## PDF notes and Google sign-in (SQL 08 and 09)
+## PDF notes (SQL 09)
 
 * `public.resources` holds one row per uploaded PDF. `set_resource_meta()`
   overwrites the uploader and trims the class/subject/title on the server, so a
@@ -112,7 +112,3 @@ Security issues: `14101ghsspandi@gmail.com` (see `.well-known/security.txt`).
 * PDFs live in the **private** `resources` bucket (20 MB limit, PDF only). Read
   and write policies are scoped to `authenticated`, and students download with
   ten-minute signed URLs, so a shared link expires.
-* `profiles.setup_complete` is false for accounts created by an OAuth provider.
-  `complete_oauth_profile()` may set the role exactly once, refuses `admin`, and
-  only bypasses the profile-change guard inside that transaction. Teachers still
-  start `pending` and need headmaster approval.

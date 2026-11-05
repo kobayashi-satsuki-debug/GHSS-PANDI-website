@@ -152,34 +152,6 @@
       return data.signedUrl;
     },
 
-    /* Google / other OAuth providers. The provider proves the email; the
-       school role is chosen once afterwards on oauth.html and checked by
-       complete_oauth_profile() in the database. */
-    async signInWithOAuth(provider, role) {
-      const target = location.origin + location.pathname.replace(/[^/]*$/, 'oauth.html');
-      try { sessionStorage.setItem('ghss_oauth_role', role || ''); } catch (e) {}
-      const { error } = await client().auth.signInWithOAuth({
-        provider: provider,
-        options: { redirectTo: target, queryParams: { prompt: 'select_account' } }
-      });
-      if (error) fail(error);
-      return { redirected: true };
-    },
-
-    async completeOAuth(payload) {
-      const { data, error } = await client().rpc('complete_oauth_profile', {
-        p_role: payload.role,
-        p_full_name: payload.full_name,
-        p_phone: payload.phone || '',
-        p_class: payload.class || '',
-        p_roll: payload.roll || '',
-        p_subject: payload.subject || ''
-      });
-      if (error) fail(error);
-      cachedProfile = null;
-      return data;
-    },
-
     async signOut() {
       await client().auth.signOut();
       cachedProfile = null;

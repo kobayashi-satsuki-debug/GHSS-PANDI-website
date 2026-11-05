@@ -28,9 +28,6 @@
       if (txt && txt !== raw) return txt;
     }
     if (/Invalid login credentials/i.test(raw)) return window.I18NS.t('err.invalidlogin');
-    if (/provider is not enabled|Unsupported provider/i.test(raw)) {
-      return window.I18NS.t('oauth.disabled');
-    }
     if (/Email not confirmed/i.test(raw)) return raw;
     if (/duplicate key|already registered/i.test(raw)) return 'This email is already registered.';
     if (/row-level security|permission denied|violates/i.test(raw)) return window.I18NS.t('err.noperm');

@@ -30,18 +30,6 @@ window.APP_CONFIG = {
   chatMaxLength: 500
 };
 
-/* Sign in with Google (or another Supabase OAuth provider).
-   Enable the provider in Supabase → Authentication → Providers → Google,
-   then list it here. Empty list = the buttons stay hidden. */
-/* Google sign-in buttons. They stay hidden while this list is empty.
-   After you switch Google on in Supabase (Authentication -> Providers ->
-   Google), change it to ['google'] and the buttons appear on the login,
-   register and staff pages. */
-window.OAUTH_CONFIG = {
-  providers: [],
-  labels: { google: 'Google' }
-};
-
 /* The student AI study buddy. Left empty, the buddy answers from the study
    notes built into js/ai.js, so the site works with no API key and no cost.
    To connect a real language model, deploy a Supabase Edge Function that holds

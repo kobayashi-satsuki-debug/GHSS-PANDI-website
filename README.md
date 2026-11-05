@@ -50,7 +50,7 @@ Preview accounts (password `pandi2026`):
 ## Go live
 1. Create a Supabase project and run `supabase/01-schema.sql`,
    `02-security.sql`, `03-rpc.sql`, `04-seed.sql`, `05-fix-students-unique.sql`,
-   `06-security-hardening.sql`, `07-ai-buddy.sql`, `08-oauth.sql`, `09-resources.sql` in that order. (If your project already ran the older `01-schema.sql`, run
+   `06-security-hardening.sql`, `07-ai-buddy.sql`, `09-resources.sql` in that order. (If your project already ran the older `01-schema.sql`, run
    only `05-fix-students-unique.sql` to repair student sign-up.)
 2. Put the project URL and anon public key in `js/config.js`
    (`demoFallback: false`). In Supabase → Authentication → Email Templates →

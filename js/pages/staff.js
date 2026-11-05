@@ -22,8 +22,6 @@
     });
   });
 
-  OAuthUI.mount(document.getElementById('staff-oauth'), 'teacher');
-
   form.addEventListener('submit', async e => {
     e.preventDefault();
     UI.hideMsg(msg);

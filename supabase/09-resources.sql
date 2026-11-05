@@ -1,6 +1,6 @@
 /* =========================================================
    G H S S PANDI — PDF notes / resources
-   Run AFTER 01-schema.sql … 08-oauth.sql.
+   Run AFTER 01-schema.sql … 07-ai-buddy.sql.
    Safe to run more than once.
 
    Teachers upload a PDF for one class and subject into the private

@@ -130,7 +130,7 @@
       }
 
       const actions = [];
-      if (role === 'student') actions.push(['#ai', L('Ask the AI study buddy', 'എ.ഐ പഠന സഹായിയോട് ചോദിക്കുക')]);
+      if (role === 'student') actions.push(['ai.html', L('Open the AI study buddy', 'എ.ഐ പഠന സഹായി തുറക്കുക')]);
       if (role === 'student' || isStaff) actions.push(['chat.html', L('Open class chat', 'ക്ലാസ് ചാറ്റ്')]);
       if (role !== 'teacher') actions.push(['results.html', L('View results', 'ഫലങ്ങൾ')]);
       if (isStaff) actions.push(['#publish', L('Publish results', 'ഫലം പ്രകാശനം')]);
@@ -242,7 +242,8 @@
         const chat = '<div class="ai-chat-wrap" id="ai-chat">' +
           '<div class="ai-chat-head"><span class="ai-avatar">🤖</span><div><strong>' + UI.esc(nick || L('Your assistant', 'നിങ്ങളുടെ സഹായി')) + '</strong>' +
           '<div class="small muted">' + L('Study helper · bot replies, not a teacher', 'പഠന സഹായി · ബോട്ട് മറുപടി, അധ്യാപകനല്ല') + '</div></div>' +
-          '<button class="btn btn-ghost btn-sm" id="ai-nick-edit">' + L('Change name', 'പേര് മാറ്റുക') + '</button></div>' +
+          '<button class="btn btn-ghost btn-sm" id="ai-nick-edit">' + L('Change name', 'പേര് മാറ്റുക') + '</button>' +
+          '<a class="btn btn-ghost btn-sm" href="ai.html">' + L('Full page', 'മുഴുവൻ പേജ്') + '</a></div>' +
           '<div class="ai-log" id="ai-log">' +
           (history.length
             ? history.map(m => aiBubble(m.role, m.content)).join('')
@@ -946,6 +947,10 @@
 
   nav.innerHTML = visible.map(k =>
     '<button type="button" data-pane="' + k + '">' + PANES[k].label() + '</button>').join('') +
+    ((role === 'student')
+      ? '<a class="btn btn-ghost btn-sm" href="ai.html" style="justify-content:space-between;display:flex;margin-top:.3rem">' +
+        L('AI study buddy', 'എ.ഐ പഠന സഹായി') + ' <span>🤖</span></a>'
+      : '') +
     ((role === 'student' || isStaff)
       ? '<a class="btn btn-ghost btn-sm" href="chat.html" style="justify-content:space-between;display:flex;margin-top:.3rem">' +
         L('Class chat', 'ക്ലാസ് ചാറ്റ്') + ' <span>💬</span></a>'

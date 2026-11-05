@@ -34,9 +34,12 @@ login.html            Sign in (student / teacher / parent tabs)
 register.html         Registration (student / teacher / parent tabs)
 reset.html            Password reset and recovery
 dashboard.html        Role dashboard (students, teachers, parents, admin)
+ai.html               AI study buddy page (students only)
 chat.html             Moderated class group chat
 css/style.css         All styling
 js/config.js          School details and Supabase keys  ← edit this
+js/ai.js              AI study buddy answers (study-note knowledge base)
+js/pages/ai.js        AI study buddy page logic
 js/i18n.js            English / Malayalam dictionary and language switching
 js/lang-kn.js          Kannada dictionary (keyed by the English string)
 js/backend-demo.js    Preview mode (data kept in this browser)

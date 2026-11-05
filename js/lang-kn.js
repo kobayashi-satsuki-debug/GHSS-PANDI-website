@@ -246,6 +246,13 @@ window.KN_TEXT = {
   'Keep the nickname under 25 letters.': 'ಅಡ್ಡಹೆಸರು 25 ಅಕ್ಷರಗಳಿಗಿಂತ ಕಡಿಮೆ ಇರಲಿ.',
   "Letters, numbers, spaces and - . ' only.": "ಅಕ್ಷರ, ಸಂಖ್ಯೆ, ಸ್ಪೇಸ್ ಮತ್ತು - . ' ಮಾತ್ರ.",
   'Ask the AI study buddy': 'ಎಐ ಅಧ್ಯಯನ ಸಹಾಯಕನನ್ನು ಕೇಳಿ',
+  'Open the AI study buddy': 'ಎಐ ಅಧ್ಯಯನ ಸಹಾಯಕ ತೆರೆಯಿರಿ',
+  'Full page': 'ಪೂರ್ಣ ಪುಟ',
+  'Student study helper': 'ವಿದ್ಯಾರ್ಥಿ ಅಧ್ಯಯನ ಸಹಾಯಕ',
+  'Answers come from the school study notes, in English, Malayalam and Kannada. You choose the nickname.':
+    'ಉತ್ತರಗಳು ಶಾಲೆಯ ಅಧ್ಯಯನ ಟಿಪ್ಪಣಿಗಳಿಂದ ಬರುತ್ತವೆ — ಇಂಗ್ಲಿಷ್, ಮಲಯಾಳಂ ಮತ್ತು ಕನ್ನಡ. ಅಡ್ಡಹೆಸರನ್ನು ನೀವು ಆಯ್ಕೆ ಮಾಡುತ್ತೀರಿ.',
+  'The study helper is not set up for your account yet. Ask the school office to enable it.':
+    'ಈ ಖಾತೆಗೆ ಅಧ್ಯಯನ ಸಹಾಯಕ ಇನ್ನೂ ಸಿದ್ಧವಿಲ್ಲ. ಶಾಲಾ ಕಚೇರಿಯನ್ನು ಕೇಳಿ.',
   'New nickname for your assistant': 'ಸಹಾಯಕನಿಗೆ ಹೊಸ ಅಡ್ಡಹೆಸರು',
 
   /* chat */

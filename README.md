@@ -8,7 +8,8 @@ results, chat and moderation. Every page works in English, Malayalam and Kannada
 
 ## Pages
 Home, About, Admissions, Photo gallery, Achievements, Faculty, Notices,
-Exam results, Sign in, Register, Password reset, Dashboard, Class chat.
+Exam results, Sign in, Register, Password reset, Dashboard, AI study buddy,
+Class chat.
 
 ## Portals
 - **Student** — own results, class chat, an AI study buddy with a nickname the

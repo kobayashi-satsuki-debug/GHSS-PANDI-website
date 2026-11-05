@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600" role="img" aria-label="Students wiring a practice board">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0.5" y2="1">
+      <stop offset="0%" stop-color="#123a52"/><stop offset="100%" stop-color="#2f7f8f"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="600" fill="url(#bg)"/>
+  <circle cx="650" cy="120" r="120" fill="#ffffff" opacity=".08"/>
+  <circle cx="140" cy="520" r="150" fill="#ffffff" opacity=".06"/>
+
+  <g stroke="#cdeaf2" stroke-width="6" fill="none" stroke-linecap="round" opacity=".9">
+    <rect x="230" y="180" width="340" height="250" rx="10"/>
+    <path d="M300 250 h200 M300 320 h200 M300 390 h140"/>
+    <path d="M370 250 v70 M440 320 v70"/>
+    <circle cx="520" cy="390" r="22"/>
+  </g>
+  <g fill="#ffe08a" opacity=".9">
+    <circle cx="300" cy="250" r="9"/><circle cx="500" cy="250" r="9"/>
+    <circle cx="300" cy="320" r="9"/><circle cx="370" cy="390" r="9"/>
+  </g>
+  <path d="M520 390 l18 -60 l-8 40 l22 -6 Z" fill="#ffe08a" opacity=".7"/>
+  <rect x="40" y="500" width="720" height="3" rx="1.5" fill="#ffffff" opacity=".25"/>
+</svg>

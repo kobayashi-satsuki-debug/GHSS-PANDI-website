@@ -9,6 +9,7 @@
     ['about.html', 'nav.about', 'About', 'സ്കൂളിനെക്കുറിച്ച്'],
     ['admissions.html', 'nav.admissions', 'Admissions', 'പ്രവേശനം'],
     ['gallery.html', 'nav.gallery', 'Gallery', 'ചിത്രശാല'],
+    ['creative.html', 'nav.creative', 'Creative corner', 'ക്രിയേറ്റീവ് കോർണർ'],
     ['achievements.html', 'nav.achievements', 'Achievements', 'നേട്ടങ്ങൾ'],
     ['faculty.html', 'nav.faculty', 'Faculty', 'അധ്യാപകർ'],
     ['notices.html', 'nav.notices', 'Notices', 'അറിയിപ്പുകൾ'],
@@ -80,6 +81,7 @@
           '<ul class="footer-links">' +
             '<li><a href="about.html" data-en="About us" data-ml="ഞങ്ങളെക്കുറിച്ച്">About us</a></li>' +
             '<li><a href="faculty.html" data-en="Our faculty" data-ml="അധ്യാപകർ">Our faculty</a></li>' +
+            '<li><a href="creative.html" data-en="Creative corner" data-ml="ക്രിയേറ്റീവ് കോർണർ">Creative corner</a></li>' +
             '<li><a href="achievements.html" data-en="Achievements" data-ml="നേട്ടങ്ങൾ">Achievements</a></li>' +
             '<li><a href="notices.html" data-en="Notices" data-ml="അറിയിപ്പുകൾ">Notices</a></li>' +
           '</ul>' +

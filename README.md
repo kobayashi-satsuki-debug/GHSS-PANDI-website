@@ -7,7 +7,7 @@ Static website (HTML, CSS, JavaScript) with a Supabase backend for accounts,
 results, chat and moderation. Every page works in English, Malayalam and Kannada.
 
 ## Pages
-Home, About, Admissions, Photo gallery, Achievements, Faculty, Notices,
+Home, About, Admissions, Photo gallery, Creative corner, Achievements, Faculty, Notices,
 Exam results, Sign in, Register, Password reset, Dashboard, AI study buddy,
 Class chat.
 

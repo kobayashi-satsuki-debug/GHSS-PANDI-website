@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600" role="img" aria-label="Students fitting pipes on a workbench">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0.5" y2="1">
+      <stop offset="0%" stop-color="#123c33"/><stop offset="100%" stop-color="#2f8f6b"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="600" fill="url(#bg)"/>
+  <circle cx="650" cy="120" r="120" fill="#ffffff" opacity=".08"/>
+  <circle cx="140" cy="520" r="150" fill="#ffffff" opacity=".06"/>
+
+  <g stroke="#d6f2e4" stroke-width="8" fill="none" stroke-linecap="round" opacity=".9">
+    <path d="M220 300 h140 v130 h190"/>
+    <path d="M220 300 v-70"/>
+    <rect x="200" y="200" width="40" height="34" rx="4"/>
+    <rect x="340" y="286" width="44" height="28" rx="4"/>
+    <rect x="520" y="416" width="40" height="34" rx="4"/>
+  </g>
+  <g fill="#d6f2e4" opacity=".55">
+    <circle cx="600" cy="200" r="34"/><circle cx="660" cy="250" r="20"/>
+  </g>
+  <rect x="40" y="500" width="720" height="3" rx="1.5" fill="#ffffff" opacity=".25"/>
+</svg>

@@ -26,6 +26,7 @@ index.html            Home page
 about.html            About the school
 admissions.html       Admissions + enquiry form
 gallery.html          Photo gallery
+creative.html         Creative corner — tailoring, electrical, plumbing and craft
 achievements.html     Student achievements
 faculty.html          Teachers and office staff
 notices.html          Notice board

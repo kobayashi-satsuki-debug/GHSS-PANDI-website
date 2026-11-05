@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600" role="img" aria-label="Students at a craft and woodwork table">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0.5" y2="1">
+      <stop offset="0%" stop-color="#3a2a10"/><stop offset="100%" stop-color="#a47b2c"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="600" fill="url(#bg)"/>
+  <circle cx="650" cy="120" r="120" fill="#ffffff" opacity=".08"/>
+  <circle cx="140" cy="520" r="150" fill="#ffffff" opacity=".06"/>
+
+  <g stroke="#ffe6b8" stroke-width="6" fill="none" stroke-linecap="round" opacity=".9">
+    <rect x="200" y="360" width="400" height="16" rx="6"/>
+    <path d="M260 360 v90 M540 360 v90"/>
+    <path d="M300 180 l120 170"/>
+    <path d="M520 200 l-40 150"/>
+  </g>
+  <g fill="#ffe6b8" opacity=".8">
+    <rect x="250" y="250" width="90" height="60" rx="6"/>
+    <path d="M480 300 q40 -50 80 -10 q-20 40 -60 40 Z"/>
+  </g>
+  <g stroke="#ffe6b8" stroke-width="4" opacity=".5">
+    <path d="M200 470 h400"/>
+  </g>
+  <rect x="40" y="500" width="720" height="3" rx="1.5" fill="#ffffff" opacity=".25"/>
+</svg>

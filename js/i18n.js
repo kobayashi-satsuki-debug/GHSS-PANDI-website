@@ -69,8 +69,8 @@
 
     // ---- password reset ----
     'pw.title': ['Reset your password', 'പാസ്‌വേഡ് പുനഃസജ്ജീകരിക്കുക'],
-    'pw.send': ['Send reset link', 'റീസെറ്റ് ലിങ്ക് അയക്കുക'],
-    'pw.sent': ['If that email is registered, a password reset link has been sent. Check your inbox and spam folder.', 'ആ ഇമെയിൽ രജിസ്റ്റർ ചെയ്തിട്ടുണ്ടെങ്കിൽ റീസെറ്റ് ലിങ്ക് അയച്ചിട്ടുണ്ട്. ഇൻബോക്സ് പരിശോധിക്കുക.'],
+    'pw.send': ['Email me a code', 'കോഡ് ഇമെയിൽ ചെയ്യുക'],
+    'pw.sent': ['If that email is registered, a 6-digit code has been sent. Enter it below.', 'ആ ഇമെയിൽ രജിസ്റ്റർ ചെയ്തിട്ടുണ്ടെങ്കിൽ 6 അക്ക കോഡ് അയച്ചിട്ടുണ്ട്. താഴെ നൽകുക.'],
     'pw.new': ['New password', 'പുതിയ പാസ്‌വേഡ്'],
     'pw.update': ['Update password', 'പാസ്‌വേഡ് അപ്‌ഡേറ്റ് ചെയ്യുക'],
     'pw.updated': ['Your password has been updated. Please sign in.', 'പാസ്‌വേഡ് അപ്‌ഡേറ്റ് ചെയ്തു. പ്രവേശിക്കുക.'],

@@ -170,11 +170,27 @@
       }
     },
 
-    async resetPassword(email) {
-      const { error } = await client().auth.resetPasswordForEmail(email.trim().toLowerCase(), {
-        redirectTo: location.origin + location.pathname.replace(/[^/]*$/, 'reset-password.html')
-      });
+    /* Password recovery by emailed code, no link. The email template must
+       send {{ .Token }} (see docs/EMAIL-TEMPLATES.md). */
+    async requestResetOtp(email) {
+      const { error } = await client().auth.resetPasswordForEmail(email.trim().toLowerCase());
       if (error) fail(error);
+      return true;
+    },
+
+    async verifyResetOtp(email, token) {
+      const { error } = await client().auth.verifyOtp({
+        email: email.trim().toLowerCase(),
+        token: String(token || '').trim(),
+        type: 'recovery'
+      });
+      if (error) {
+        const m = error.message || '';
+        if (/expired/i.test(m)) throw new Error('auth.otpExpired');
+        if (/invalid|incorrect|token/i.test(m)) throw new Error('auth.otpWrong');
+        if (/rate|too many/i.test(m)) throw new Error('auth.otpWait');
+        fail(error);
+      }
       return true;
     },
 

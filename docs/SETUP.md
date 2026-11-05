@@ -50,6 +50,7 @@ js/backend-demo.js    Preview mode (data kept in this browser)
 js/backend-supabase.js Live mode (Supabase)
 js/api.js             Chooses preview or live backend
 supabase/*.sql        Database schema, security, functions, seed data
+docs/EMAIL-TEMPLATES.md  Code-only email templates to paste into Supabase
 assets/               School crest and gallery images
 ```
 
@@ -118,8 +119,12 @@ created, in preview mode and in live mode.
    - Site URL: `https://ghsspandi.org.in`
    - Redirect URLs: `https://ghsspandi.org.in/reset.html`,
      `https://ghsspandi.org.in/**`, plus your preview host if you use one.
-4. In **Authentication → Email** keep email confirmation on. Password reset
-   links return to `reset.html`.
+4. In **Authentication → Emails** replace the *Confirm signup* and *Reset
+   password* templates so they send `{{ .Token }}` (a 6-digit code) instead of
+   `{{ .ConfirmationURL }}`. Copy the ready-made templates from
+   [EMAIL-TEMPLATES.md](EMAIL-TEMPLATES.md), and set Email OTP Expiration to
+   `600` seconds and Email OTP Length to `6`. Registration and password reset
+   then work by typing the code — no links at all.
 5. In **Storage** confirm the bucket `resources` is **private** (the SQL creates
    it that way). Students get ten-minute signed links, so a copied URL stops
    working.

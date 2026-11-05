@@ -349,7 +349,35 @@
       return { profile: p, ...extra };
     },
 
-    async resetPassword(email) {
+    async requestResetOtp(email) {
+      email = (email || '').trim().toLowerCase();
+      const p = db.profiles.find(x => x.email === email);
+      db.reset_otps = (db.reset_otps || []).filter(r => r.expires_at > Date.now() && r.email !== email);
+      if (!p) return { sent: true };
+      const rec = { email, profile_id: p.id, code: otpCode(), tries: 0, expires_at: Date.now() + OTP_TTL };
+      db.reset_otps.push(rec);
+      save(db);
+      return { sent: true, devCode: rec.code };
+    },
+
+    async verifyResetOtp(email, token) {
+      email = (email || '').trim().toLowerCase();
+      db.reset_otps = (db.reset_otps || []).filter(r => r.expires_at > Date.now());
+      const rec = db.reset_otps.find(r => r.email === email);
+      if (!rec) throw new Error('auth.otpExpired');
+      if (rec.tries >= OTP_MAX_TRIES) {
+        db.reset_otps = db.reset_otps.filter(r => r !== rec);
+        save(db);
+        throw new Error('auth.otpLocked');
+      }
+      if (String(token || '').trim() !== rec.code) {
+        rec.tries += 1;
+        save(db);
+        throw new Error('auth.otpWrong');
+      }
+      db.reset_otps = db.reset_otps.filter(r => r !== rec);
+      save(db);
+      setSession(rec.profile_id);
       return true;
     },
 

@@ -543,4 +543,5 @@ window.KN_TEXT = {
   "Vegetable seedlings raised by Class 8": "ಎಂಟನೇ ತರಗತಿಯವರು ಬೆಳೆಸಿದ ತರಕಾರಿ ಸಸಿಗಳು",
   "The Creative Corner stall on exhibition day": "ಪ್ರದರ್ಶನದ ದಿನ ಸೃಜನಶೀಲ ಮೂಲೆಯ ಅಂಗಡಿ",
   "The tool board — every tool has its place": "ಉಪಕರಣ ಫಲಕ — ಪ್ರತಿ ಉಪಕರಣಕ್ಕೂ ಸ್ವಂತ ಸ್ಥಾನ",
+  "Created by kobayashi-satsuki": "ರಚಿಸಿದವರು: kobayashi-satsuki",
 };

@@ -111,6 +111,7 @@
       '<div class="footer-bottom">' +
         '<span>© ' + new Date().getFullYear() + ' G H S S Pandi. <span data-en="All rights reserved." data-ml="എല്ലാ അവകാശങ്ങളും നിക്ഷിപ്തം.">All rights reserved.</span></span>' +
         '<span data-en="Website run by the school IT club" data-ml="സ്കൂൾ ഐ.ടി ക്ലബ്ബ് നിർവഹിക്കുന്നു">Website run by the school IT club</span>' +
+        '<span class="credit" data-en="Created by kobayashi-satsuki" data-ml="നിർമ്മാണം: kobayashi-satsuki">Created by kobayashi-satsuki</span>' +
       '</div>' +
     '</div>';
   }

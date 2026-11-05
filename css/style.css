@@ -524,6 +524,7 @@ html[data-lang="ml"] .site-footer h4 { font-family: var(--font-ml); }
 .footer-brand span { font-size: .74rem; color: #c9b39a; }
 .footer-links { list-style: none; padding: 0; margin: 0; display: grid; gap: .4rem; }
 .footer-contact { list-style: none; padding: 0; margin: 0; display: grid; gap: .5rem; font-size: .86rem; }
+.footer-bottom .credit { margin-left: auto; font-weight: 600; letter-spacing: .01em; }
 .footer-bottom { border-top: 1px solid rgba(255,255,255,.12); margin-top: 2rem; padding-top: 1rem; display: flex; flex-wrap: wrap; gap: .6rem; justify-content: space-between; font-size: .78rem; color: #b39783; }
 
 /* ---------- Utilities ---------- */

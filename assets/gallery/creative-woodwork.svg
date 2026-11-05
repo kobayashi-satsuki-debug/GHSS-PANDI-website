@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600" role="img" aria-label="Students sawing a plank at the bench">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0.55" y2="1">
+      <stop offset="0%" stop-color="#3a2a10"/><stop offset="100%" stop-color="#a47b2c"/>
+    </linearGradient>
+    <linearGradient id="soft" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity=".18"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="600" fill="url(#bg)"/>
+  <circle cx="670" cy="110" r="140" fill="url(#soft)"/>
+  <circle cx="120" cy="540" r="170" fill="#ffffff" opacity=".05"/>
+
+  <g fill="none" stroke="#ffe9c2" stroke-width="6" stroke-linecap="round" opacity=".92">
+    <rect x="170" y="360" width="450" height="18" rx="7"/>
+    <path d="M210 378 v100 M560 378 v100 M210 440 h350"/>
+    <path d="M290 360 l40 -110"/>
+    <path d="M300 250 h120 v28 h-120 Z"/>
+    <path d="M420 264 l24 -10 l18 26 l-24 10 Z" stroke-width="5"/>
+    <path d="M250 300 h96" stroke-dasharray="8 10"/>
+  </g>
+  <g fill="#ffe9c2" opacity=".5">
+    <circle cx="470" cy="300" r="5"/><circle cx="500" cy="322" r="4"/>
+    <circle cx="530" cy="296" r="4"/><circle cx="452" cy="336" r="3"/>
+    <rect x="600" y="300" width="70" height="12" rx="4"/>
+    <rect x="600" y="324" width="52" height="12" rx="4"/>
+  </g>
+</svg>

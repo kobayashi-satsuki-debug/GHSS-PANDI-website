@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600" role="img" aria-label="Students tending the school vegetable garden">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0.55" y2="1">
+      <stop offset="0%" stop-color="#1d3d22"/><stop offset="100%" stop-color="#4f8a4a"/>
+    </linearGradient>
+    <linearGradient id="soft" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity=".18"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="600" fill="url(#bg)"/>
+  <circle cx="670" cy="110" r="140" fill="url(#soft)"/>
+  <circle cx="120" cy="540" r="170" fill="#ffffff" opacity=".05"/>
+
+  <circle cx="620" cy="130" r="52" fill="#ffe9a8" opacity=".55"/>
+  <g stroke="#e2f3e0" stroke-width="5" fill="none" stroke-linecap="round" opacity=".9">
+    <path d="M150 380 h480"/>
+    <path d="M150 380 q40 60 0 120 M630 380 q-40 60 0 120"/>
+    <path d="M150 500 h480"/>
+    <path d="M210 380 q10 -60 40 -90"/>
+  </g>
+  <g stroke="#e2f3e0" stroke-width="4" fill="none" opacity=".8">
+    <path d="M280 380 v-52 M280 328 q-26 -12 -30 -40 M280 328 q26 -12 30 -40"/>
+    <path d="M380 380 v-64 M380 316 q-26 -12 -30 -40 M380 316 q26 -12 30 -40"/>
+    <path d="M480 380 v-44 M480 336 q-26 -12 -30 -40 M480 336 q26 -12 30 -40"/>
+  </g>
+  <g fill="#e2f3e0" opacity=".7">
+    <path d="M250 290 q22 -30 56 -12 q-18 32 -56 12 Z"/>
+    <path d="M350 280 q22 -30 56 -12 q-18 32 -56 12 Z"/>
+    <path d="M450 300 q22 -30 56 -12 q-18 32 -56 12 Z"/>
+  </g>
+  <g stroke="#e2f3e0" stroke-width="5" fill="none" opacity=".85">
+    <path d="M640 430 h70 l-8 60 h-54 Z"/>
+    <path d="M648 430 q22 -26 44 0"/>
+    <path d="M675 430 v-30 l40 -24" stroke-width="4"/>
+  </g>
+</svg>

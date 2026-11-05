@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600" role="img" aria-label="Tool board in the creative corner">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0.55" y2="1">
+      <stop offset="0%" stop-color="#22303f"/><stop offset="100%" stop-color="#41657a"/>
+    </linearGradient>
+    <linearGradient id="soft" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity=".18"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="600" fill="url(#bg)"/>
+  <circle cx="670" cy="110" r="140" fill="url(#soft)"/>
+  <circle cx="120" cy="540" r="170" fill="#ffffff" opacity=".05"/>
+
+  <rect x="140" y="120" width="520" height="360" rx="12" fill="#ffffff" opacity=".08"/>
+  <g stroke="#dceaf4" stroke-width="6" fill="none" stroke-linecap="round" opacity=".92">
+    <path d="M230 180 v120"/>
+    <path d="M210 176 h60 v22 h-60 Z"/>
+    <path d="M230 300 l-16 40 h32 Z"/>
+    <path d="M370 180 v70 M356 250 h28 v40 h-28 Z"/>
+    <path d="M510 180 l0 140 M496 320 h28"/>
+  </g>
+  <g stroke="#dceaf4" stroke-width="6" fill="none" stroke-linecap="round" opacity=".8">
+    <circle cx="370" cy="330" r="24"/>
+    <path d="M370 306 v-16 M370 354 v16"/>
+    <path d="M230 400 h120 M290 400 v40"/>
+    <path d="M470 400 h100 M500 400 v40"/>
+  </g>
+  <g fill="#dceaf4" opacity=".7">
+    <circle cx="200" cy="150" r="6"/><circle cx="330" cy="150" r="6"/>
+    <circle cx="460" cy="150" r="6"/><circle cx="590" cy="150" r="6"/>
+    <circle cx="200" cy="440" r="6"/><circle cx="590" cy="440" r="6"/>
+  </g>
+</svg>

@@ -538,4 +538,9 @@ window.KN_TEXT = {
   "Book stands and lamps made from scrap wood": "ಹಳೆಯ ಮರದಿಂದ ತಯಾರಿಸಿದ ಪುಸ್ತಕ ಸ್ಟ್ಯಾಂಡ್ ಮತ್ತು ದೀಪಗಳು",
   "Want to see the corner?": "ಮೂಲೆಯನ್ನು ನೋಡಬೇಕೇ?",
   "Apply for admission": "ಪ್ರವೇಶಕ್ಕೆ ಅರ್ಜಿ ಸಲ್ಲಿಸಿ",
+  "Embroidered cushion covers from the tailoring course": "ಹೊಲಿಗೆ ಕೋರ್ಸ್‌ನಲ್ಲಿ ತಯಾರಿಸಿದ ಕಸೂತಿ ದಿಂಬಿನ ಕವರ್‌ಗಳು",
+  "Sawing and planing practice at the carpenter’s bench": "ಮರಗೆಲಸದ ಮೇಜಿನಲ್ಲಿ ಗರಗಸ ಮತ್ತು ನಯಗೊಳಿಸುವ ಅಭ್ಯಾಸ",
+  "Vegetable seedlings raised by Class 8": "ಎಂಟನೇ ತರಗತಿಯವರು ಬೆಳೆಸಿದ ತರಕಾರಿ ಸಸಿಗಳು",
+  "The Creative Corner stall on exhibition day": "ಪ್ರದರ್ಶನದ ದಿನ ಸೃಜನಶೀಲ ಮೂಲೆಯ ಅಂಗಡಿ",
+  "The tool board — every tool has its place": "ಉಪಕರಣ ಫಲಕ — ಪ್ರತಿ ಉಪಕರಣಕ್ಕೂ ಸ್ವಂತ ಸ್ಥಾನ",
 };

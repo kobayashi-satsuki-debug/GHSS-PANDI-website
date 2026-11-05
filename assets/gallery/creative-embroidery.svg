@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600" role="img" aria-label="Students embroidering on a frame">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0.55" y2="1">
+      <stop offset="0%" stop-color="#4a1440"/><stop offset="100%" stop-color="#9a4a6a"/>
+    </linearGradient>
+    <linearGradient id="soft" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity=".18"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="600" fill="url(#bg)"/>
+  <circle cx="670" cy="110" r="140" fill="url(#soft)"/>
+  <circle cx="120" cy="540" r="170" fill="#ffffff" opacity=".05"/>
+
+  <g fill="none" stroke="#ffe1ef" stroke-width="5" stroke-linecap="round" opacity=".9">
+    <circle cx="330" cy="300" r="118"/>
+    <circle cx="330" cy="300" r="98" stroke-opacity=".55"/>
+    <path d="M330 182 v-26 M330 418 v26 M212 300 h-26 M448 300 h26"/>
+    <rect x="300" y="470" width="14" height="70" rx="6"/>
+    <path d="M470 250 l70 -70"/>
+    <circle cx="548" cy="172" r="7"/>
+  </g>
+  <g fill="#ffe1ef" opacity=".55">
+    <path d="M300 330 q28 -46 58 -6 q-20 40 -54 38 Z"/>
+    <path d="M356 258 q40 -30 62 10 q-28 26 -58 12 Z"/>
+    <circle cx="330" cy="300" r="9" opacity=".8"/>
+  </g>
+  <g stroke="#ffe1ef" stroke-width="3" stroke-dasharray="8 10" opacity=".6" fill="none">
+    <path d="M300 330 q28 -46 58 -6"/>
+    <path d="M356 258 q40 -30 62 10"/>
+  </g>
+</svg>

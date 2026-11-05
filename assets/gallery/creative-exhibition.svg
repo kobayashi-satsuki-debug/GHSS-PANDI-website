@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600" role="img" aria-label="Creative corner stall at the school exhibition">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0.55" y2="1">
+      <stop offset="0%" stop-color="#2a1030"/><stop offset="100%" stop-color="#7a2440"/>
+    </linearGradient>
+    <linearGradient id="soft" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity=".18"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="600" fill="url(#bg)"/>
+  <circle cx="670" cy="110" r="140" fill="url(#soft)"/>
+  <circle cx="120" cy="540" r="170" fill="#ffffff" opacity=".05"/>
+
+  <rect x="120" y="120" width="560" height="60" rx="10" fill="#ffffff" opacity=".12"/>
+  <g stroke="#ffe3c9" stroke-width="5" fill="none" opacity=".9">
+    <path d="M150 500 h500"/>
+    <path d="M150 500 v-24 M650 500 v-24"/>
+    <rect x="170" y="380" width="460" height="96" rx="8"/>
+    <path d="M170 420 h460"/>
+  </g>
+  <g fill="#ffe3c9" opacity=".75">
+    <rect x="210" y="330" width="70" height="50" rx="6"/>
+    <path d="M300 380 l24 -60 l24 60 Z"/>
+    <circle cx="390" cy="352" r="26"/>
+    <rect x="440" y="330" width="90" height="50" rx="6"/>
+    <path d="M560 380 q26 -56 52 0 Z"/>
+  </g>
+  <g stroke="#ffe3c9" stroke-width="3" opacity=".55" fill="none">
+    <path d="M180 520 h460"/>
+    <path d="M240 200 h320"/>
+  </g>
+</svg>

@@ -120,13 +120,22 @@ created, in preview mode and in live mode.
    9. `supabase/09-resources.sql` — PDF notes: the `resources` table, its
       policies, and the private `resources` storage bucket (20 MB per file,
       PDF only). Safe to re-run.
-3. **Google sign-in (optional).** In Supabase go to **Authentication →
-   Providers → Google**, enable it and paste a Google Cloud OAuth client ID and
-   secret. Add `https://<your-project>.supabase.co/auth/v1/callback` as the
-   authorised redirect URI in Google Cloud, and add
-   `https://ghsspandi.org.in/oauth.html` to Supabase's Redirect URLs. If you
-   leave Google off, the "Continue with Google" buttons hide themselves; set
-   `window.OAUTH_CONFIG = { providers: [] }` in `js/config.js` to force them off.
+3. **Google sign-in (optional, off by default).** The "Continue with Google"
+   buttons stay hidden while `window.OAUTH_CONFIG.providers` is empty. To switch
+   them on, do all four steps:
+   - **Google Cloud Console** → APIs & Services → Credentials → Create OAuth
+     client ID → Web application. Authorised redirect URI:
+     `https://ljpwzkmniocjpcijuuoq.supabase.co/auth/v1/callback`
+   - **Supabase** → Authentication → Providers → Google: turn it on and paste
+     that client ID and secret.
+   - **Supabase** → Authentication → URL Configuration → Redirect URLs: add
+     `https://ghsspandi.org.in/oauth.html` (and
+     `http://localhost:8111/oauth.html` if you test locally).
+   - `js/config.js`: set `providers: ['google']`.
+
+   Until the provider is enabled, Supabase answers
+   `Unsupported provider: provider is not enabled`; the site now shows a plain
+   message instead of that raw error.
 4. In **Authentication → URL configuration** set:
    - Site URL: `https://ghsspandi.org.in`
    - Redirect URLs: `https://ghsspandi.org.in/reset.html`,

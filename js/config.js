@@ -33,8 +33,12 @@ window.APP_CONFIG = {
 /* Sign in with Google (or another Supabase OAuth provider).
    Enable the provider in Supabase → Authentication → Providers → Google,
    then list it here. Empty list = the buttons stay hidden. */
+/* Google sign-in buttons. They stay hidden while this list is empty.
+   After you switch Google on in Supabase (Authentication -> Providers ->
+   Google), change it to ['google'] and the buttons appear on the login,
+   register and staff pages. */
 window.OAUTH_CONFIG = {
-  providers: ['google'],
+  providers: [],
   labels: { google: 'Google' }
 };
 

@@ -2,14 +2,27 @@
   "name": "ghss-pandi-website",
   "version": "1.0.0",
   "private": true,
-  "description": "Government Higher Secondary School Pandi website (English, Malayalam, Kannada)",
+  "description": "Government Higher Secondary School Pandi, Kerala — bilingual school website (English, Malayalam, Kannada)",
+  "homepage": "https://ghsspandi.org.in/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kobayashi-satsuki-debug/ghss-pandi-website.git"
+  },
+  "license": "UNLICENSED",
+  "type": "module",
+  "engines": {
+    "node": ">=18"
+  },
   "scripts": {
     "start": "node server.js",
     "serve": "node server.js",
     "test": "node scripts/check.mjs"
   },
-  "type": "module",
-  "engines": {
-    "node": ">=18"
-  }
+  "keywords": [
+    "school",
+    "kerala",
+    "ghss-pandi",
+    "static-site",
+    "malayalam"
+  ]
 }

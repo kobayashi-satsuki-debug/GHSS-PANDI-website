@@ -49,6 +49,7 @@ works too if Node is not installed.
 ## Check the site
 ```bash
 npm ci     # installs nothing; there are no dependencies
+# or: yarn install --frozen-lockfile — both lock files are committed
 npm test   # verifies every page reference resolves, every script parses and the sitemap is complete
 ```
 The same check runs in GitHub Actions on every push to the site branch.

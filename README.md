@@ -44,6 +44,13 @@ python3 -m http.server 8099
 ```
 Open http://localhost:8099 — without Supabase keys it runs in preview mode.
 
+## Check the site
+```bash
+npm ci     # installs nothing; there are no dependencies
+npm test   # verifies every page reference resolves, every script parses and the sitemap is complete
+```
+The same check runs in GitHub Actions on every push to the site branch.
+
 Registration sends a 6-digit code to the email address; in preview mode the
 code is displayed on the page instead of being emailed.
 

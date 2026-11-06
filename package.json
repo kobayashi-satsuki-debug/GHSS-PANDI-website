@@ -1,0 +1,10 @@
+{
+  "name": "ghss-pandi-website",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Government Higher Secondary School Pandi website (English, Malayalam, Kannada)",
+  "scripts": {
+    "test": "node scripts/check.mjs",
+    "serve": "python3 -m http.server 8080"
+  }
+}

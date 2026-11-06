@@ -126,22 +126,25 @@ created, in preview mode and in live mode.
       `repair_signup()` plus the `signup_report` view. Safe to re-run. Run it if
       registration ever answers "Database error saving new user".
 3. In **Authentication → URL configuration** set:
-   - Site URL: `https://ghsspandi.org.in`
-   - Redirect URLs, one line each:
+   - Site URL: `https://kobayashi-satsuki-debug.github.io/ghss-pandi-website/`
+     while the site is on GitHub Pages, then change it to
+     `https://ghsspandi.org.in` once the custom domain is live.
+   - Redirect URLs, one line each (add the last two after the domain is live):
      ```
-     https://ghsspandi.org.in/**
-     https://www.ghsspandi.org.in/**
+     https://kobayashi-satsuki-debug.github.io/ghss-pandi-website/**
      http://localhost:8080/**
      http://localhost:8099/**
      http://127.0.0.1:8080/**
+     https://ghsspandi.org.in/**
+     https://www.ghsspandi.org.in/**
      ```
-   The site only sends a redirect from `localhost`, `127.0.0.1` or a host
-   ending in `ghsspandi.org.in` (see `redirectUrl()` in
+   The site only sends a redirect from `localhost`, `127.0.0.1`, a `github.io`
+   host, or a host ending in `ghsspandi.org.in` (see `redirectUrl()` in
    `js/backend-supabase.js`), so the entries above cover every page and every
-   local preview port. On the GitHub Pages preview address no redirect is sent
-   and the Site URL is used instead, so that host needs no entry. Use the full
-   origin with scheme — `ghsspandi.org.in` on its own is rejected — and watch
-   for stray spaces when pasting.
+   local preview port. On GitHub Pages the redirect keeps the
+   `/ghss-pandi-website/` folder, which is why the wildcard is written after the
+   folder and not after the host. Use the full origin with scheme — a bare
+   hostname is rejected — and watch for stray spaces when pasting.
 4. In **Authentication → Emails** replace the *Confirm signup* and *Reset
    password* templates so they send `{{ .Token }}` (a 6-digit code) instead of
    `{{ .ConfirmationURL }}`. Copy the ready-made templates from

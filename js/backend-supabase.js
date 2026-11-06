@@ -34,7 +34,9 @@
       if (location.protocol !== 'http:' && location.protocol !== 'https:') return null;
       const host = location.hostname;
       const domain = (window.SCHOOL_CONFIG && window.SCHOOL_CONFIG.domain) || '';
+      // github.io covers the Pages preview, which lives in a subfolder
       const allowed = host === 'localhost' || host === '127.0.0.1' ||
+        host === 'kobayashi-satsuki-debug.github.io' || host.endsWith('.github.io') ||
         (domain && (host === domain || host.endsWith('.' + domain)));
       if (!allowed) return null;
       return location.origin + location.pathname.replace(/[^/]*$/, '') + path;

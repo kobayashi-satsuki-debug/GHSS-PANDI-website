@@ -24,7 +24,7 @@
     const map = { active: 'ok', approved: 'ok', pending: 'warn', rejected: 'bad', disabled: 'bad', open: 'warn', resolved: 'ok', dismissed: '' };
     return pill(I18NS.t('st.' + s) || s, map[s] || '');
   };
-  const classes = ['8 A','8 B','9 A','9 B','10 A','10 B','Plus One Science','Plus One Humanities','Plus Two Science','Plus Two Humanities'];
+  const classes = (window.SCHOOL_CLASSES || []);
   const classOptions = (sel, blank) => (blank ? '<option value="">' + L('Select class', 'ക്ലാസ് തിരഞ്ഞെടുക്കുക') + '</option>' : '') +
     classes.map(c => '<option' + (c === sel ? ' selected' : '') + '>' + c + '</option>').join('');
 

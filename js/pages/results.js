@@ -13,7 +13,7 @@
   gate.hidden = true;
   panel.hidden = false;
 
-  const classes = ['8 A','8 B','9 A','9 B','10 A','10 B','Plus One Science','Plus One Humanities','Plus Two Science','Plus Two Humanities'];
+  const classes = (window.SCHOOL_CLASSES || []);
   classSel.innerHTML = classes.map(c => '<option value="' + c + '">' + c + '</option>').join('');
 
   const role = session.profile.role;

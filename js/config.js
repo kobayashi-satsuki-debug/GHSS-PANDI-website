@@ -16,6 +16,14 @@ window.SCHOOL_CONFIG = {
   domain: 'ghsspandi.org.in'
 };
 
+// Classes offered: primary and upper primary (1-7), high school (8-10, split
+// into divisions) and higher secondary Commerce only.
+window.SCHOOL_CLASSES = [
+  '1', '2', '3', '4', '5', '6', '7',
+  '8 A', '8 B', '9 A', '9 B', '10 A', '10 B',
+  'Plus One Commerce', 'Plus Two Commerce'
+];
+
 window.SUPABASE_CONFIG = {
   /* Replace with your project values from Supabase → Settings → API */
   url: 'https://ljpwzkmniocjpcijuuoq.supabase.co',

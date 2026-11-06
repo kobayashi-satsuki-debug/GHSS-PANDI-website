@@ -2,7 +2,7 @@
   await Site.mount();
   const root = document.getElementById('resources-root');
   const L = (en, ml) => I18NS.pick(en, ml);
-  const CLASSES = ['8 A','8 B','9 A','9 B','10 A','10 B','Plus One Science','Plus One Humanities','Plus Two Science','Plus Two Humanities'];
+  const CLASSES = (window.SCHOOL_CLASSES || []);
 
   const session = await API.session();
   if (!session) {

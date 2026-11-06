@@ -6,6 +6,10 @@ Phone 9446553567 · 14101ghsspandi@gmail.com · ghsspandi.org.in
 Static website (HTML, CSS, JavaScript) with a Supabase backend for accounts,
 results, chat and moderation. Every page works in English, Malayalam and Kannada.
 
+## Classes
+Classes 1 to 7, high school 8 A/B to 10 A/B, and Plus One / Plus Two Commerce.
+The list lives in `window.SCHOOL_CLASSES` in `js/config.js`.
+
 ## Pages
 Home, About, Admissions, Photo gallery, Creative corner, Achievements, Faculty, Notices,
 Exam results, Sign in, Register, Password reset, Dashboard, AI study buddy,

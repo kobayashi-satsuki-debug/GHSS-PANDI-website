@@ -4,13 +4,13 @@
 -- =============================================================
 
 insert into public.class_rooms (id, name) values
+  ('1','Class 1'), ('2','Class 2'), ('3','Class 3'), ('4','Class 4'),
+  ('5','Class 5'), ('6','Class 6'), ('7','Class 7'),
   ('8 A','Class 8 A'), ('8 B','Class 8 B'),
   ('9 A','Class 9 A'), ('9 B','Class 9 B'),
   ('10 A','Class 10 A'), ('10 B','Class 10 B'),
-  ('Plus One Science','Plus One Science'),
-  ('Plus One Humanities','Plus One Humanities'),
-  ('Plus Two Science','Plus Two Science'),
-  ('Plus Two Humanities','Plus Two Humanities')
+  ('Plus One Commerce','Plus One Commerce'),
+  ('Plus Two Commerce','Plus Two Commerce')
 on conflict (id) do nothing;
 
 insert into public.notices (title_en, title_ml, body_en, body_ml, category, is_pinned, is_published, author_name, created_at)

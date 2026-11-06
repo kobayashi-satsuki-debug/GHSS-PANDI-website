@@ -164,6 +164,7 @@
     'err.passwordShort': ['Password must be at least 8 characters.', 'പാസ്‌വേഡ് കുറഞ്ഞത് 8 അക്ഷരങ്ങൾ വേണം.'],
     'err.emailTaken': ['This email is already registered. Sign in or use another address.', 'ഈ ഇമെയിൽ ഇതിനകം രജിസ്റ്റർ ചെയ്തിട്ടുണ്ട്. ലോഗിൻ ചെയ്യുക അല്ലെങ്കിൽ മറ്റൊരു വിലാസം ഉപയോഗിക്കുക.'],
     'err.slowdown': ['Please wait a moment, then send again.', 'അൽപ്പസമയം കാത്തിരുന്ന് വീണ്ടും അയക്കുക.'],
+    'err.mailFailed': ['The school mail server could not send the code, so the email never left Supabase. Your account was still created — open "Verify a new account" and press Resend code. If it keeps happening, the office must check Authentication → SMTP settings.', 'സ്കൂൾ മെയിൽ സെർവറിന് കോഡ് അയയ്ക്കാനായില്ല. അക്കൗണ്ട് ഉണ്ടാക്കിയിട്ടുണ്ട് — "പുതിയ അക്കൗണ്ട് സ്ഥിരീകരിക്കുക" തുറന്ന് "കോഡ് വീണ്ടും അയയ്ക്കുക" അമർത്തുക. തുടർന്നും പ്രശ്നമുണ്ടെങ്കിൽ ഓഫീസ് SMTP ക്രമീകരണം പരിശോധിക്കണം.'],
     'res.notpdf': ['Please choose a PDF file.', 'PDF ഫയൽ തിരഞ്ഞെടുക്കുക.'],
     'res.toobig': ['That file is bigger than 20 MB.', 'ഫയൽ 20 MB-ൽ കൂടുതലാണ്.'],
     'res.readfail': ['That file could not be read. Try another PDF.', 'ഫയൽ വായിക്കാനായില്ല. മറ്റൊരു PDF ശ്രമിക്കുക.'],

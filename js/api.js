@@ -32,6 +32,7 @@
     if (/redirect/i.test(raw) && /url/i.test(raw)) return window.I18NS.t('err.redirect');
     if (/already registered|already exists|user already/i.test(raw)) return window.I18NS.t('auth.alreadyRegistered');
     if (/signups? (are )?(not allowed|disabled)/i.test(raw)) return window.I18NS.t('err.signupDisabled');
+    if (/error sending|confirmation email|smtp|sending.*email/i.test(raw)) return window.I18NS.t('err.mailFailed');
     if (/duplicate key|already registered/i.test(raw)) return 'This email is already registered.';
     if (/row-level security|permission denied|violates/i.test(raw)) return window.I18NS.t('err.noperm');
     return raw;

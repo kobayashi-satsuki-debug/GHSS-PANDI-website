@@ -71,6 +71,7 @@
       if (error) {
         const m = error.message || '';
         if (/redirect/i.test(m)) throw mapErr('err.redirect', error);
+        if (/error sending|confirmation email|smtp/i.test(m)) throw mapErr('err.mailFailed', error);
         if (/already registered|already exists|user already/i.test(m)) throw mapErr('auth.alreadyRegistered', error);
         if (/disabled/i.test(m) && /signup|sign up/i.test(m)) throw mapErr('err.signupDisabled', error);
         fail(error);

@@ -104,6 +104,7 @@ Supabase side. Check them in this order.
 | "This email already has an account" | Supabase hides duplicates by returning a user with no identities | Sign in, or use Forgot password |
 | "The address this site is opened from is not allowed" | The page was opened from `file://` or a host that is not in the allow-list | Add the host under Authentication → URL Configuration → Redirect URLs |
 | "New sign-ups are turned off" | Sign-ups are disabled on the project | Authentication → Providers → Email → Enable sign-ups |
+| "Error sending confirmation email" | Supabase could not hand the message to a mail server: the built-in mailer hit its hourly cap, or the SMTP password / sender address is wrong | See §6a below |
 
 Also check, on the same Authentication page:
 
@@ -113,6 +114,33 @@ Also check, on the same Authentication page:
 3. Once `ghsspandi.org.in` is live, add both `https://ghsspandi.org.in` and
    `https://www.ghsspandi.org.in` to Redirect URLs, plus your preview address
    while you are still testing.
+
+## 6a. "Error sending confirmation email"
+
+This message comes from the mail server, never from the website, and the account
+**is still created** — Supabase stores the user first and only then tries to send.
+So do not register again; it will answer "already registered". Instead:
+
+1. Open `confirm-email.html` (linked from the sign-in page as *Verify a new
+   account*), type the same address and press **Resend code**.
+2. If resend also fails, read **Logs → Auth** and look for the mail line:
+
+| Log text | Meaning | Fix |
+| --- | --- | --- |
+| `over_email_send_rate_limit` / `email rate limit exceeded` | The free built-in mailer allows only a few messages per hour | Add custom SMTP in Authentication → SMTP Settings, then raise *Emails per hour* under Rate limits |
+| `535 Authentication failed` / `Invalid login` | Wrong SMTP username or password | Gmail needs an **app password**, not the normal one; regenerate it and paste it again |
+| `553` / `sender address rejected` | The From address is not allowed by the mail provider | Verify the sender domain at Brevo / Resend / Zoho, and use exactly that address in the sender field |
+| `connection timed out`, `ENOTFOUND` | Wrong host or port | Use port 587 with STARTTLS (or 465 with TLS) and the host your provider lists |
+| `Email template not found` | The template was cleared | Paste the templates from §1 and §2 again |
+
+3. After any SMTP change, send one test code and confirm it arrives inside a
+   minute. Gmail's SMTP also has a daily cap of roughly 500 recipients, so a
+   school that registers several classes a day should use a transactional
+   provider instead.
+
+The website translates this failure into a plain-language message in all three
+languages and tells the person their account already exists, so a student does
+not create a duplicate address while the office fixes SMTP.
 
 ## 7. Completing verification on its own page
 

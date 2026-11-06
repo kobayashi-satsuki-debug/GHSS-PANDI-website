@@ -1,0 +1,47 @@
+# Node.js checks for the G H S S Pandi site.
+# Save this file as .github/workflows/node-check.yml in the repository.
+name: Node.js CI
+
+on:
+  push:
+    branches: ["creative-corner-page", "main"]
+  pull_request:
+    branches: ["creative-corner-page", "main"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node-version: [18.x, 20.x, 22.x]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Check pages, links and scripts
+        run: npm test
+
+      - name: Start the preview server and fetch a page
+        run: |
+          node server.js --port 8099 &
+          for i in $(seq 1 20); do
+            if curl -fsS http://localhost:8099/ -o /tmp/home.html; then break; fi
+            sleep 0.5
+          done
+          grep -q '<title>' /tmp/home.html
+          curl -fsS -o /dev/null http://localhost:8099/admissions.html
+          echo "server ok"

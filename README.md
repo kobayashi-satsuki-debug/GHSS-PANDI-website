@@ -54,6 +54,13 @@ npm test   # verifies every page reference resolves, every script parses and the
 ```
 The same check runs in GitHub Actions on every push to the site branch.
 
+## GitHub Actions workflows
+- `.github/workflows/node.js.yml` — builds and publishes the site to GitHub Pages.
+- `docs/workflows/node-check.yml` — a separate Node.js job that runs `npm ci`,
+  `npm test` and boots the preview server on Node 18, 20 and 22. Copy it to
+  `.github/workflows/node-check.yml` to enable it (this project's automation
+  login cannot create workflow files itself).
+
 Registration sends a 6-digit code to the email address; in preview mode the
 code is displayed on the page instead of being emailed.
 

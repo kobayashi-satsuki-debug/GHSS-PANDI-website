@@ -90,3 +90,26 @@ password stays the same.</p>
 4. Sign in with the new password.
 
 If the email still contains a link, the template in step 1 or 2 was not saved.
+
+## 6. When confirmation fails
+
+The website now explains each of these in English, Malayalam and Kannada
+instead of showing Supabase's raw text, but the cause is always on the
+Supabase side. Check them in this order.
+
+| What the person sees | Cause | Fix |
+| --- | --- | --- |
+| "That confirmation link has expired or was already used" | The email still holds a link, or the same link was opened twice | Put `{{ .Token }}` in the Confirm signup template and save |
+| "This email address is not confirmed yet" on sign-in | The account exists but no code was ever entered | Register again with the same address and press Resend code |
+| "This email already has an account" | Supabase hides duplicates by returning a user with no identities | Sign in, or use Forgot password |
+| "The address this site is opened from is not allowed" | The page was opened from `file://` or a host that is not in the allow-list | Add the host under Authentication → URL Configuration → Redirect URLs |
+| "New sign-ups are turned off" | Sign-ups are disabled on the project | Authentication → Providers → Email → Enable sign-ups |
+
+Also check, on the same Authentication page:
+
+1. **Email OTP Length** is 6 and **Email OTP Expiration** is 600 seconds, so the
+   six digits in the template match what the form accepts.
+2. **Confirm email** stays on — with it off no code is sent at all.
+3. Once `ghsspandi.org.in` is live, add both `https://ghsspandi.org.in` and
+   `https://www.ghsspandi.org.in` to Redirect URLs, plus your preview address
+   while you are still testing.

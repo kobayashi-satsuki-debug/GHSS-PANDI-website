@@ -12,7 +12,12 @@
 
   /* An old-style recovery link still lands here with a session, so let those
      users set a password without a code. */
-  const fromLink = /type=recovery/.test(location.hash) || /type=recovery/.test(location.search);
+  const linkStatus = API.urlAuthStatus();
+  if (linkStatus.error && msg) {
+    UI.showMsg(msg, I18NS.t('auth.linkExpired'), 'error');
+    API.cleanAuthUrl();
+  }
+  const fromLink = !linkStatus.error && (/type=recovery/.test(location.hash) || /type=recovery/.test(location.search));
   if (fromLink) openUpdate(null);
 
   function openUpdate(email, devCode) {

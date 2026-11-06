@@ -26,6 +26,21 @@
     return cachedProfile;
   }
 
+  // Only hand Supabase a redirect that its allow-list can match: the school
+  // domain or a local preview host. Anything else makes sign-up fail with
+  // "Invalid redirect URL" before the confirmation email is ever sent.
+  function redirectUrl(path) {
+    try {
+      if (location.protocol !== 'http:' && location.protocol !== 'https:') return null;
+      const host = location.hostname;
+      const domain = (window.SCHOOL_CONFIG && window.SCHOOL_CONFIG.domain) || '';
+      const allowed = host === 'localhost' || host === '127.0.0.1' ||
+        (domain && (host === domain || host.endsWith('.' + domain)));
+      if (!allowed) return null;
+      return location.origin + location.pathname.replace(/[^/]*$/, '') + path;
+    } catch (e) { return null; }
+  }
+
   function fail(error) {
     const msg = (error && (error.message || error.error_description)) || 'err.generic';
     const e = new Error(msg);
@@ -33,17 +48,39 @@
     throw e;
   }
 
+  function mapErr(key, error) {
+    const e = new Error(key);
+    e.code = error && error.code;
+    e.raw = (error && error.message) || '';
+    return e;
+  }
+
   const Backend = {
     mode: 'supabase',
 
     async signUp({ email, password, role, full_name, phone, extra }) {
       const meta = { full_name, role, phone: phone || '', extra: extra || {} };
+      const options = { data: meta };
+      const back = redirectUrl('login.html?confirmed=1');
+      if (back) options.emailRedirectTo = back;
       const { data, error } = await client().auth.signUp({
         email: email.trim().toLowerCase(),
         password,
-        options: { data: meta, emailRedirectTo: location.origin + location.pathname.replace(/[^/]*$/, 'login.html') }
+        options
       });
-      if (error) fail(error);
+      if (error) {
+        const m = error.message || '';
+        if (/redirect/i.test(m)) throw mapErr('err.redirect', error);
+        if (/already registered|already exists|user already/i.test(m)) throw mapErr('auth.alreadyRegistered', error);
+        if (/disabled/i.test(m) && /signup|sign up/i.test(m)) throw mapErr('err.signupDisabled', error);
+        fail(error);
+      }
+      // With email confirmation on, Supabase answers an existing address with a
+      // stub user that has no identities. No code is sent, so say so instead of
+      // dropping the person on a code screen that can never succeed.
+      if (data && data.user && Array.isArray(data.user.identities) && data.user.identities.length === 0) {
+        throw mapErr('auth.alreadyRegistered', {});
+      }
       return {
         requiresApproval: role === 'teacher',
         needsOtp: !data.session,
@@ -60,9 +97,11 @@
       });
       if (error) {
         const m = (error.message || '');
-        if (/expired/i.test(m)) throw new Error('auth.otpExpired');
-        if (/invalid|incorrect/i.test(m)) throw new Error('auth.otpWrong');
-        if (/rate|too many/i.test(m)) throw new Error('auth.otpWait');
+        const c = String(error.code || '');
+        if (c === 'otp_expired' || /expired/i.test(m)) throw mapErr('auth.otpExpired', error);
+        if (c === 'otp_disabled') throw mapErr('err.signupDisabled', error);
+        if (/invalid|incorrect/i.test(m)) throw mapErr('auth.otpWrong', error);
+        if (/rate|too many/i.test(m)) throw mapErr('auth.otpWait', error);
         fail(error);
       }
       if (data && data.user) {
@@ -87,6 +126,7 @@
     async signIn(email, password) {
       const { error } = await client().auth.signInWithPassword({ email: email.trim().toLowerCase(), password });
       if (error) {
+        if (/email not confirmed/i.test(error.message || '')) throw mapErr('auth.notConfirmed', error);
         const e = new Error('err.invalidlogin');
         e.detail = error.message;
         throw e;

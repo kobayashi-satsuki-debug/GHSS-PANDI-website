@@ -28,11 +28,47 @@
       if (txt && txt !== raw) return txt;
     }
     if (/Invalid login credentials/i.test(raw)) return window.I18NS.t('err.invalidlogin');
-    if (/Email not confirmed/i.test(raw)) return raw;
+    if (/Email not confirmed/i.test(raw)) return window.I18NS.t('auth.notConfirmed');
+    if (/redirect/i.test(raw) && /url/i.test(raw)) return window.I18NS.t('err.redirect');
+    if (/already registered|already exists|user already/i.test(raw)) return window.I18NS.t('auth.alreadyRegistered');
+    if (/signups? (are )?(not allowed|disabled)/i.test(raw)) return window.I18NS.t('err.signupDisabled');
     if (/duplicate key|already registered/i.test(raw)) return 'This email is already registered.';
     if (/row-level security|permission denied|violates/i.test(raw)) return window.I18NS.t('err.noperm');
     return raw;
   };
+
+  // Supabase puts the outcome of an email link in the URL: either a session
+  // (#access_token=...) or a failure (#error=access_denied&error_code=otp_expired).
+  // Reads both, and can strip them so the message is not repeated on reload.
+  API.urlAuthStatus = function () {
+    const out = { error: false, code: '', description: '', confirmed: false, recovery: false };
+    try {
+      const hash = new URLSearchParams(String(location.hash || '').replace(/^#/, ''));
+      const search = new URLSearchParams(String(location.search || ''));
+      const pick = k => hash.get(k) || search.get(k);
+      const err = pick('error');
+      const code = pick('error_code');
+      out.code = code || '';
+      out.description = pick('error_description') || '';
+      out.error = !!(err || code);
+      out.recovery = pick('type') === 'recovery';
+      out.confirmed = search.get('confirmed') === '1';
+      if (!out.error && out.confirmed) out.confirmed = true;
+    } catch (e) {}
+    return out;
+  };
+
+  API.cleanAuthUrl = function () {
+    try {
+      const search = new URLSearchParams(location.search);
+      ['confirmed', 'error', 'error_code', 'error_description'].forEach(k => search.delete(k));
+      const q = search.toString();
+      history.replaceState(null, '', location.pathname + (q ? '?' + q : ''));
+    } catch (e) {
+      try { history.replaceState(null, '', location.pathname); } catch (e2) {}
+    }
+  };
+
 
   API.gradeFor = function (marks, max) {
     const pct = (Number(marks) / Number(max || 100)) * 100;

@@ -4,6 +4,16 @@
 
   const form = document.getElementById('login-form');
   const msg = document.getElementById('login-msg');
+
+  // A confirmation or recovery link lands here with its outcome in the URL.
+  const linkStatus = API.urlAuthStatus();
+  if (msg && linkStatus.error) {
+    UI.showMsg(msg, I18NS.t('auth.linkExpired'), 'error');
+    API.cleanAuthUrl();
+  } else if (msg && linkStatus.confirmed) {
+    UI.showMsg(msg, I18NS.t('auth.confirmed'), 'success');
+    API.cleanAuthUrl();
+  }
   if (/[?&]timeout=1/.test(location.search) && msg) {
     UI.showMsg(msg, I18NS.pick('You were signed out after 30 minutes of inactivity. Please sign in again.', '30 മിനിറ്റ് നിഷ്ക്രിയത്വത്തിന് ശേഷം പുറത്തായി. വീണ്ടും പ്രവേശിക്കുക.'), 'info');
   }

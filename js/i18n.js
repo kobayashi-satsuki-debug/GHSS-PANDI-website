@@ -45,6 +45,12 @@
     'auth.otpExpired': ['That code has expired or was already used. Press Resend code.', 'കോഡിന്റെ സമയം കഴിഞ്ഞു അല്ലെങ്കിൽ ഇതിനകം ഉപയോഗിച്ചു. "കോഡ് വീണ്ടും അയയ്ക്കുക" അമർത്തുക.'],
     'auth.otpLocked': ['Too many wrong attempts. Please register again.', 'വളരെയധികം തെറ്റായ ശ്രമങ്ങൾ. വീണ്ടും രജിസ്റ്റർ ചെയ്യുക.'],
     'auth.otpWait': ['Please wait a minute before asking for another code.', 'അടുത്ത കോഡ് ആവശ്യപ്പെടുന്നതിന് മുമ്പ് ഒരു മിനിറ്റ് കാത്തിരിക്കുക.'],
+    'auth.notConfirmed': ['This email address is not confirmed yet. Open the Register page, enter the same email and press Resend code, then type the new code.', 'ഈ ഇമെയിൽ ഇതുവരെ സ്ഥിരീകരിച്ചിട്ടില്ല. രജിസ്റ്റർ പേജിൽ അതേ ഇമെയിൽ നൽകി "കോഡ് വീണ്ടും അയയ്ക്കുക" അമർത്തി പുതിയ കോഡ് നൽകുക.'],
+    'auth.alreadyRegistered': ['This email already has an account. Sign in instead, or use Forgot password if you do not remember it.', 'ഈ ഇമെയിലിന് അക്കൗണ്ട് ഉണ്ട്. പ്രവേശിക്കുക, അല്ലെങ്കിൽ പാസ്‌വേഡ് മറന്നെങ്കിൽ "പാസ്‌വേഡ് മറന്നോ?" ഉപയോഗിക്കുക.'],
+    'auth.linkExpired': ['That confirmation link has expired or was already used. Sign in with your password, or register again to get a fresh code.', 'സ്ഥിരീകരണ ലിങ്കിന്റെ സമയം കഴിഞ്ഞു അല്ലെങ്കിൽ ഇതിനകം ഉപയോഗിച്ചു. പാസ്‌വേഡ് ഉപയോഗിച്ച് പ്രവേശിക്കുക, അല്ലെങ്കിൽ പുതിയ കോഡിനായി വീണ്ടും രജിസ്റ്റർ ചെയ്യുക.'],
+    'auth.confirmed': ['Your email address is confirmed. Sign in to continue.', 'നിങ്ങളുടെ ഇമെയിൽ സ്ഥിരീകരിച്ചു. തുടരാൻ പ്രവേശിക്കുക.'],
+    'err.redirect': ['The address this site is opened from is not allowed for sign-up. Use the school website address, or ask the office to add this address in Supabase.', 'ഈ സൈറ്റ് തുറന്നിരിക്കുന്ന വിലാസം രജിസ്ട്രേഷന് അനുവദിച്ചിട്ടില്ല. സ്കൂൾ വെബ്സൈറ്റ് വിലാസം ഉപയോഗിക്കുക.'],
+    'err.signupDisabled': ['New sign-ups are turned off for this project. Please contact the school office.', 'ഈ പ്രോജക്ടിൽ പുതിയ രജിസ്ട്രേഷൻ ഓഫ് ചെയ്തിരിക്കുന്നു. സ്കൂൾ ഓഫീസുമായി ബന്ധപ്പെടുക.'],
 
     // ---- register ----
     'reg.title': ['Create an account', 'അക്കൗണ്ട് ഉണ്ടാക്കുക'],

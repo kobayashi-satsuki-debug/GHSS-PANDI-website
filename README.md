@@ -88,5 +88,9 @@ Full instructions, security notes and the custom-domain checklist:
 [docs/SETUP.md](docs/SETUP.md). How roles, rate limits and headers are
 enforced: [docs/SECURITY.md](docs/SECURITY.md).
 
+Dashboard work in one tick-list — Site URL, redirect URLs, email templates,
+SMTP, the SQL files and the first administrator:
+[docs/SUPABASE-CHECKLIST.md](docs/SUPABASE-CHECKLIST.md).
+
 The crest in `assets/logo.svg` and the gallery images are placeholders —
 replace them with the school's real photograph and photo set.

@@ -81,6 +81,15 @@
       }
     } catch (err) {
       UI.showMsg(msg, API.errorText(err), 'error');
+      if (err && err.code === 'err.mailFailed') {
+        const pending = String(email).trim().toLowerCase();
+        try { localStorage.setItem('ghss_pending_email', pending); } catch (e) {}
+        const link = document.createElement('a');
+        link.href = 'confirm-email.html?email=' + encodeURIComponent(pending);
+        link.textContent = I18NS.pick('Open the verify page', 'സ്ഥിരീകരണ പേജ് തുറക്കുക');
+        msg.appendChild(document.createElement('br'));
+        msg.appendChild(link);
+      }
     } finally {
       UI.busy(btn, false);
     }

@@ -98,6 +98,7 @@
 
   function startOtp(email, devCode) {
     otpEmail = email;
+    try { localStorage.setItem('ghss_pending_email', email); } catch (e) {}
     form.hidden = true;
     otpStep.hidden = false;
     otpInput.value = '';

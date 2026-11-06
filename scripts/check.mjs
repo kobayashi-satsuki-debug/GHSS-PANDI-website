@@ -52,7 +52,7 @@ for (const file of jsFiles) {
 }
 
 /* 3. sitemap lists real pages, and every public page is listed */
-const privatePages = ['dashboard.html', 'login.html', 'register.html', 'reset.html', 'staff.html', 'results.html', 'upload.html', 'resources.html', 'chat.html', 'ai.html'];
+const privatePages = ['dashboard.html', 'login.html', 'register.html', 'reset.html', 'confirm-email.html', 'staff.html', 'results.html', 'upload.html', 'resources.html', 'chat.html', 'ai.html'];
 const publicPages = htmlFiles.filter(f => !privatePages.includes(f));
 if (exists('sitemap.xml')) {
   const locs = [...read('sitemap.xml').matchAll(/<loc>([^<]+)<\/loc>/g)].map(m => m[1]);

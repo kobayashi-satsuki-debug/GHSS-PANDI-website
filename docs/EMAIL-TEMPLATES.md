@@ -113,3 +113,12 @@ Also check, on the same Authentication page:
 3. Once `ghsspandi.org.in` is live, add both `https://ghsspandi.org.in` and
    `https://www.ghsspandi.org.in` to Redirect URLs, plus your preview address
    while you are still testing.
+
+## 7. Completing verification on its own page
+
+`confirm-email.html` takes an email address plus the 6-digit code and calls
+`verifyOtp({ type: 'signup' })`. Link to it as `confirm-email.html?email=…` from
+anywhere that needs a verification step; the code field only accepts digits and
+the page offers a resend button with a 60-second cool-down. After a successful
+check it points the visitor at `login.html`. Teacher accounts still show the
+"waiting for school approval" notice instead of promising access.

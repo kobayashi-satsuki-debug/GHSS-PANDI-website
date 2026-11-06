@@ -4,7 +4,12 @@
   "private": true,
   "description": "Government Higher Secondary School Pandi website (English, Malayalam, Kannada)",
   "scripts": {
-    "test": "node scripts/check.mjs",
-    "serve": "python3 -m http.server 8080"
+    "start": "node server.js",
+    "serve": "node server.js",
+    "test": "node scripts/check.mjs"
+  },
+  "type": "module",
+  "engines": {
+    "node": ">=18"
   }
 }

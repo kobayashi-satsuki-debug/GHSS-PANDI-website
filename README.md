@@ -40,9 +40,11 @@ and `security definer` functions, so they cannot be changed from the browser.
 
 ## Run locally
 ```bash
-python3 -m http.server 8099
+npm start          # Node 18+, no dependencies
 ```
-Open http://localhost:8099 — without Supabase keys it runs in preview mode.
+Open http://localhost:8080 — without Supabase keys it runs in preview mode.
+Pass another port with `npm start -- --port 8099`. `python3 -m http.server 8099`
+works too if Node is not installed.
 
 ## Check the site
 ```bash

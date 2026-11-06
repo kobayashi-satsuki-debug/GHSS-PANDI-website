@@ -127,8 +127,21 @@ created, in preview mode and in live mode.
       registration ever answers "Database error saving new user".
 3. In **Authentication → URL configuration** set:
    - Site URL: `https://ghsspandi.org.in`
-   - Redirect URLs: `https://ghsspandi.org.in/reset.html`,
-     `https://ghsspandi.org.in/**`, plus your preview host if you use one.
+   - Redirect URLs, one line each:
+     ```
+     https://ghsspandi.org.in/**
+     https://www.ghsspandi.org.in/**
+     http://localhost:8080/**
+     http://localhost:8099/**
+     http://127.0.0.1:8080/**
+     ```
+   The site only sends a redirect from `localhost`, `127.0.0.1` or a host
+   ending in `ghsspandi.org.in` (see `redirectUrl()` in
+   `js/backend-supabase.js`), so the entries above cover every page and every
+   local preview port. On the GitHub Pages preview address no redirect is sent
+   and the Site URL is used instead, so that host needs no entry. Use the full
+   origin with scheme — `ghsspandi.org.in` on its own is rejected — and watch
+   for stray spaces when pasting.
 4. In **Authentication → Emails** replace the *Confirm signup* and *Reset
    password* templates so they send `{{ .Token }}` (a 6-digit code) instead of
    `{{ .ConfirmationURL }}`. Copy the ready-made templates from

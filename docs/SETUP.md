@@ -121,6 +121,10 @@ created, in preview mode and in live mode.
    9. `supabase/10-resource-roles.sql` — narrows who may read the notes to
       students, teachers and staff (`can_read_resources()`), so parent accounts
       cannot open the library. Safe to re-run.
+   10. `supabase/11-signup-trigger-fix.sql` — makes the sign-up trigger unable to
+      fail the whole registration, whitelists the role value, and adds
+      `repair_signup()` plus the `signup_report` view. Safe to re-run. Run it if
+      registration ever answers "Database error saving new user".
 3. In **Authentication → URL configuration** set:
    - Site URL: `https://ghsspandi.org.in`
    - Redirect URLs: `https://ghsspandi.org.in/reset.html`,
@@ -229,6 +233,39 @@ yet — that is why the GitHub Pages URL shows no site.
 - Keep the admin list short (principal, office superintendent, one IT teacher).
 - Take a Supabase database backup before each term's result publishing.
 - If an account is compromised, admin can disable it in **Dashboard → Accounts**.
+
+## 7a. "Database error saving new user"
+
+Supabase sends this message whenever the trigger on `auth.users` raises, so one
+bad row blocks the account. In this project the usual causes are:
+
+| Cause | What you see |
+| --- | --- |
+| The same class + roll number is already taken (unique index `students_class_roll_idx`) | the second student cannot register at all |
+| A role value that is not student / teacher / parent | registration fails before a profile exists |
+| `01-schema.sql` was never run, or `profiles` lives in another schema | every registration fails |
+
+Fix, in this order:
+
+1. Run `supabase/11-signup-trigger-fix.sql` in the SQL editor. From then on the
+   profile is written first, and a bad child row becomes a warning instead of a
+   failed sign-up.
+2. Look at what is left over:
+   ```sql
+   select * from public.signup_report();
+   ```
+3. Fill in any account that was created without a profile:
+   ```sql
+   select public.repair_signup('someone@example.com');
+   select public.repair_signup();          -- all of them
+   ```
+4. If it still fails, read **Logs → Postgres** (filter `handle_new_user`) or
+   **Logs → Auth** for the real error text, and check that
+   `Authentication → Providers → Email → Confirm email` is on.
+
+The unique index on class + roll number is intentional: it stops two people
+claiming the same seat. The office should check the class list before a student
+registers, and correct mistakes from **Dashboard → Accounts**.
 
 ## 8. Local check
 

@@ -178,16 +178,28 @@
     if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em)) return UI.showMsg(msg, I18NS.t('err.email'), 'error');
     if (!pw) return UI.showMsg(msg, I18NS.t('err.required'), 'error');
 
+    const wait = window.Security ? Security.signInWaitMinutes(em) : 0;
+    if (wait > 0) return UI.showMsg(msg, I18NS.t('err.tooManyTries').replace('{n}', wait), 'error');
+
     const btn = form.querySelector('button[type=submit]');
     UI.busy(btn, true);
     try {
       const s = await API.signIn(em, pw);
+      if (window.Security) Security.clearSignInTries(em);
       const next = new URLSearchParams(location.search).get('next');
       const prof = s && (s.profile || s);
       const role = prof ? prof.role : '';
       const target = next && next.indexOf('http') !== 0 ? next : 'dashboard.html';
       location.href = (role === 'parent' && target === 'dashboard.html') ? 'dashboard.html#children' : target;
     } catch (err) {
+      if (window.Security) {
+        const left = Security.noteFailedSignIn(em);
+        if (left > 0) {
+          UI.showMsg(msg, I18NS.t('err.tooManyTries').replace('{n}', left), 'error');
+          UI.busy(btn, false);
+          return;
+        }
+      }
       UI.showMsg(msg, API.errorText(err), 'error');
       UI.busy(btn, false);
     }

@@ -63,7 +63,12 @@
     if (!fromLink && code.length !== 6) {
       return UI.showMsg(updMsg, I18NS.pick('Enter the 6-digit code from the email.', 'ഇമെയിലിലെ 6 അക്ക കോഡ് നൽകുക.'), 'error');
     }
-    if (pw.length < 8) return UI.showMsg(updMsg, I18NS.t('err.passwordShort'), 'error');
+    const check = window.Security ? Security.checkPassword(pw) : { ok: pw.length >= 12, reason: 'short' };
+    if (!check.ok) {
+      const k = check.reason === 'common' ? 'err.passwordCommon'
+              : check.reason === 'plain' ? 'err.passwordPlain' : 'err.passwordShort';
+      return UI.showMsg(updMsg, I18NS.t(k), 'error');
+    }
     if (pw !== pw2) return UI.showMsg(updMsg, I18NS.pick('Passwords do not match.', 'പാസ്‌വേഡുകൾ ഒത്തുപോകുന്നില്ല.'), 'error');
     const btn = updForm.querySelector('button[type=submit]');
     UI.busy(btn, true);

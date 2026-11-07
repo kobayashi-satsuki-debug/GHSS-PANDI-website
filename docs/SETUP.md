@@ -125,7 +125,11 @@ created, in preview mode and in live mode.
       fail the whole registration, whitelists the role value, and adds
       `repair_signup()` plus the `signup_report` view. Safe to re-run. Run it if
       registration ever answers "Database error saving new user".
-   11. `supabase/12-set-admin-password.sql` — optional. Edit `v_password`, run
+   11. `supabase/13-security-advance.sql` — optional but recommended. Stops
+       anyone editing their own role, status or class, makes class records
+       read-only for users, turns on RLS everywhere, and starts an audit trail
+       of account changes. See `docs/SECURITY-HARDENING.md`. Safe to re-run.
+   12. `supabase/12-set-admin-password.sql` — optional. Edit `v_password`, run
        it, and the two office accounts can sign in without email (the address is
        marked confirmed at the same time). Refuses to run on the placeholder or
        on fewer than 12 characters; safe to re-run to change the password.

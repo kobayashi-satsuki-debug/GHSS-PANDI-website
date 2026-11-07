@@ -64,10 +64,85 @@
     });
   }
 
+
+  /* ---------------- password policy ---------------- */
+  const PASSWORD_MIN = 12;
+  const COMMON = ['password', 'passw0rd', 'qwerty', 'letmein', 'welcome', 'admin123',
+    'iloveyou', 'monkey', 'dragon', 'football', 'cricket', 'india123', 'kerala123',
+    'ghsspandi', 'school123', 'student123', 'teacher123', '123456', '12345678'];
+  const KEYBOARD_RUNS = ['qwertyuiop', 'asdfghjkl', 'zxcvbnm', '1234567890'];
+
+  function weakReason(pw) {
+    const v = String(pw || '');
+    if (v.length < PASSWORD_MIN) return 'short';
+    const low = v.toLowerCase();
+    if (COMMON.indexOf(low) !== -1) return 'common';
+    if (KEYBOARD_RUNS.some(function (r) { return low.indexOf(r) !== -1; })) return 'common';
+    if (/^(.)\1+$/.test(v)) return 'common';
+    if (/^[a-z]+$/.test(v) && v.length < 16) return 'plain';
+    if (/^[0-9]+$/.test(v)) return 'plain';
+    return '';
+  }
+
+  function checkPassword(pw) {
+    return { ok: weakReason(pw) === '', reason: weakReason(pw) };
+  }
+
+  /* ---------------- sign-in throttling ---------------- */
+  const TRY_KEY = 'ghss_signin_tries';
+  const MAX_TRIES = 5;
+  const WINDOW_MS = 10 * 60 * 1000;
+
+  function readTries() {
+    try { return JSON.parse(localStorage.getItem(TRY_KEY) || '{}') || {}; } catch (e) { return {}; }
+  }
+
+  function writeTries(all) {
+    try { localStorage.setItem(TRY_KEY, JSON.stringify(all)); } catch (e) { /* storage off */ }
+  }
+
+  function bucket(all, email) {
+    const k = String(email || '').trim().toLowerCase();
+    const b = all[k] || { n: 0, first: 0, until: 0 };
+    if (b.until && Date.now() > b.until) { b.n = 0; b.first = 0; b.until = 0; }
+    if (!b.first || Date.now() - b.first > WINDOW_MS) { b.n = 0; b.first = 0; }
+    all[k] = b;
+    return b;
+  }
+
+  function noteFailedSignIn(email) {
+    const all = readTries();
+    const b = bucket(all, email);
+    b.n += 1;
+    if (!b.first) b.first = Date.now();
+    if (b.n >= MAX_TRIES) {
+      const waitMs = Math.min(30, Math.pow(2, b.n - MAX_TRIES)) * 60 * 1000;
+      b.until = Date.now() + waitMs;
+    }
+    writeTries(all);
+    return Math.max(0, Math.ceil((b.until - Date.now()) / 60000));
+  }
+
+  function signInWaitMinutes(email) {
+    const b = bucket(readTries(), email);
+    return b.until > Date.now() ? Math.ceil((b.until - Date.now()) / 60000) : 0;
+  }
+
+  function clearTries(email) {
+    const all = readTries();
+    delete all[String(email || '').trim().toLowerCase()];
+    writeTries(all);
+  }
+
   window.Security = {
     startIdleGuard: startIdleGuard,
     bindPublicForm: bindPublicForm,
-    idleMinutes: IDLE_MINUTES
+    idleMinutes: IDLE_MINUTES,
+    passwordMin: PASSWORD_MIN,
+    checkPassword: checkPassword,
+    noteFailedSignIn: noteFailedSignIn,
+    signInWaitMinutes: signInWaitMinutes,
+    clearSignInTries: clearTries
   };
 
   if (document.readyState === 'loading') {

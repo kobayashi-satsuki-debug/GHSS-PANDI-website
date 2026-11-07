@@ -59,7 +59,12 @@
     if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return UI.showMsg(msg, I18NS.t('err.email'), 'error');
     if (!/^[0-9]{10}$/.test(phone)) return UI.showMsg(msg, I18NS.t('err.phone'), 'error');
     if (role !== 'student') {
-      if (pw.length < 8) return UI.showMsg(msg, I18NS.t('err.passwordShort'), 'error');
+      const check = window.Security ? Security.checkPassword(pw) : { ok: pw.length >= 12, reason: 'short' };
+      if (!check.ok) {
+        const k = check.reason === 'common' ? 'err.passwordCommon'
+                : check.reason === 'plain' ? 'err.passwordPlain' : 'err.passwordShort';
+        return UI.showMsg(msg, I18NS.t(k), 'error');
+      }
       if (pw !== pw2) return UI.showMsg(msg, I18NS.pick('Passwords do not match.', 'പാസ്‌വേഡുകൾ ഒത്തുപോകുന്നില്ല.'), 'error');
     }
 

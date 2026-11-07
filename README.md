@@ -91,6 +91,7 @@ enforced: [docs/SECURITY.md](docs/SECURITY.md).
 Dashboard work in one tick-list — Site URL, redirect URLs, email templates,
 SMTP, the SQL files and the first administrator:
 [docs/SUPABASE-CHECKLIST.md](docs/SUPABASE-CHECKLIST.md).
+- Locked out of one account? [docs/SIGN-IN-WITHOUT-EMAIL.md](docs/SIGN-IN-WITHOUT-EMAIL.md) sets its password from the SQL Editor.
 
 The crest in `assets/logo.svg` and the gallery images are placeholders —
 replace them with the school's real photograph and photo set.

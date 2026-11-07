@@ -134,11 +134,31 @@
     writeTries(all);
   }
 
+
+  /* A password nobody types: it only satisfies Supabase's "valid password"
+     rule for student accounts, which are opened and used through emailed
+     six-digit codes. 32 random characters, never stored or shown. */
+  function randomPassword(len) {
+    const n = len || 32;
+    const alphabet = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789!@#%&*';
+    const c = window.crypto || window.msCrypto;
+    const out = [];
+    if (c && c.getRandomValues) {
+      const buf = new Uint32Array(n);
+      c.getRandomValues(buf);
+      for (let i = 0; i < n; i++) out.push(alphabet[buf[i] % alphabet.length]);
+    } else {
+      for (let i = 0; i < n; i++) out.push(alphabet[Math.floor(Math.random() * alphabet.length)]);
+    }
+    return out.join('');
+  }
+
   window.Security = {
     startIdleGuard: startIdleGuard,
     bindPublicForm: bindPublicForm,
     idleMinutes: IDLE_MINUTES,
     passwordMin: PASSWORD_MIN,
+    randomPassword: randomPassword,
     checkPassword: checkPassword,
     noteFailedSignIn: noteFailedSignIn,
     signInWaitMinutes: signInWaitMinutes,

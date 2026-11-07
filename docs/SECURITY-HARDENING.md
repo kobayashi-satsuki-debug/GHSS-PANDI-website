@@ -52,6 +52,12 @@ Used by the registration form and the password-reset form, with messages in
 English and Malayalam (`err.passwordShort`, `err.passwordCommon`,
 `err.passwordPlain`).
 
+`Security.randomPassword(32)` exists for one job: student accounts. Supabase
+will not create a user without a password, so the register page generates 32
+random characters, sends them with the sign-up and forgets them. Students sign
+in with emailed codes only; the random value is not shown to anyone, not stored
+by the site, and cannot be guessed.
+
 ## 3. Sign-in throttling
 
 Five wrong attempts for one address inside ten minutes locks that address for

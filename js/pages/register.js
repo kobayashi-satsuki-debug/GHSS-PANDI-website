@@ -85,7 +85,12 @@
     const btn = form.querySelector('button[type=submit]');
     UI.busy(btn, true);
     try {
-      const res = await API.signUp({ email, password: role === 'student' ? '' : pw, role, full_name: name, phone, extra });
+      // Supabase refuses an empty password ("Signup requires a valid password").
+      // Students never learn theirs; they sign in with emailed codes.
+      const secret = role === 'student'
+        ? (window.Security ? Security.randomPassword(32) : 'St' + Math.random().toString(36).slice(2) + Math.random().toString(36).slice(2))
+        : pw;
+      const res = await API.signUp({ email, password: secret, role, full_name: name, phone, extra });
       if (res && (res.needsOtp || res.needsEmailConfirm)) {
         startOtp(email, res.devCode);
       } else {

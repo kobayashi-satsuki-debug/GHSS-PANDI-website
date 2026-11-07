@@ -204,6 +204,13 @@ check it points the visitor at `login.html`. Teacher accounts still show the
 A student never types a password: they give an email address, receive six digits
 and type them, on registration and on every later sign-in.
 
+**The account still gets a password.** Supabase rejects a sign-up without one
+(`400 validation_failed — Signup requires a valid password`), so the register
+page generates 32 random characters in the browser (`Security.randomPassword`)
+and sends them once. Nobody sees or stores that value: students reach the
+account only through emailed codes. If you ever need to open a student account
+another way, use *Forgot password* with the student's address.
+
 **Which template carries that code:** not *Confirm signup*. A returning student's
 code comes from the **Magic Link** template, because the site calls
 `signInWithOtp`. So both templates need the token:

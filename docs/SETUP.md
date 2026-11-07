@@ -129,6 +129,10 @@ created, in preview mode and in live mode.
        the top and run it to give both people the admin role (there is no limit
        on how many admins exist). Safe to re-run; the file also reports an
        address that has no account yet.
+   12. `supabase/14-set-admin-password.sql` — optional. Edit `v_password`, run
+       it, and both admins above can sign in without email (the address is
+       marked confirmed at the same time). Refuses to run on the placeholder or
+       on fewer than 12 characters; safe to re-run to change the password.
 3. In **Authentication → URL configuration** set:
    - Site URL: `https://kobayashi-satsuki-debug.github.io/ghss-pandi-website/`
      while the site is on GitHub Pages, then change it to

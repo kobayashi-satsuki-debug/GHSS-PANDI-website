@@ -142,6 +142,54 @@ The website translates this failure into a plain-language message in all three
 languages and tells the person their account already exists, so a student does
 not create a duplicate address while the office fixes SMTP.
 
+### Is it the website or Supabase?
+
+It is Supabase. A direct call to the project answers the same way, without the
+site involved at all:
+
+```
+POST /auth/v1/signup  ->  500 {"error_code":"unexpected_failure",
+                               "msg":"Error sending confirmation email",
+                               "error_id":"…"}
+```
+
+That `error_id` is the handle to quote: paste it into **Logs → Auth** (or into a
+support ticket) and the SMTP line behind it appears.
+
+Two things this proves, both worth knowing:
+
+- the browser code is not at fault, so no page change can make mail leave;
+- when the send fails with a 500, GoTrue rolls the sign-up back. Signing in
+  afterwards answers `invalid_credentials`, not `email_not_confirmed`, so **no
+  half-made account is left behind** and the person can simply try again.
+
+A `429` or "email rate limit exceeded" is the opposite case — the account is
+kept, and only the message is missing.
+
+## 6b. Running without email at all
+
+If SMTP cannot be fixed today and classes are waiting to register, confirmation
+can be switched off so no mail is needed:
+
+**Authentication → Providers → Email → Confirm email: off → Save**
+
+What happens then:
+
+- `signUp` returns a session straight away, so the register page skips the code
+  step and takes the student to the dashboard.
+- The teacher still lands in **pending** and cannot open teacher pages until an
+  administrator approves, because that is enforced by the database, not by the
+  email.
+- Roles are still server-enforced by row-level security, so nothing in the
+  browser can turn a student into a teacher.
+
+What is lost: the address is not proven to belong to the person, and **Forgot
+password still needs email**. Until then, the office can remove the account in
+**Authentication → Users** and ask the person to register again.
+
+Turn confirmation back on once SMTP delivers a test code — the code page and the
+templates above keep working unchanged.
+
 ## 7. Completing verification on its own page
 
 `confirm-email.html` takes an email address plus the 6-digit code and calls

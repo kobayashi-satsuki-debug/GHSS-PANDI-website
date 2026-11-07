@@ -1,6 +1,6 @@
 (async function () {
   await Site.mount();
-  const C = window.Components;
+  const C = window.Components || { emptyState: (icon, text) => '<p class="muted">' + (text || '') + '</p>' };
   const list = document.getElementById('notice-list');
   const filters = document.getElementById('notice-filters');
   let all = [];

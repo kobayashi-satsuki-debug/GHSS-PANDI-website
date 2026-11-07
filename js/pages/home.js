@@ -1,6 +1,6 @@
 (async function () {
   await Site.mount();
-  const C = window.Components;
+  const C = window.Components || { emptyState: (icon, text) => '<p class="muted">' + (text || '') + '</p>' };
 
   async function loadNotices() {
     const box = document.getElementById('home-notices');

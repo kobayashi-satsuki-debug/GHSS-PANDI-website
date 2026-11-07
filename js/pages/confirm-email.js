@@ -13,22 +13,15 @@
   if (session) { location.replace('dashboard.html'); return; }
   if (demo && !API.isLive) demo.hidden = false;
 
-  const params = new URLSearchParams(location.search);
-  const fromQuery = params.get('email') || params.get('phone');
+  const fromQuery = new URLSearchParams(location.search).get('email');
   const pending = (function () { try { return localStorage.getItem('ghss_pending_email'); } catch (e) { return null; } })();
   const prefill = (fromQuery || pending || '').trim();
   if (prefill) {
     emailInput.value = prefill;
-    const bySms = !String(prefill).includes('@');
-    hint.textContent = bySms
-      ? I18NS.pick(
-        'We texted a code to ' + prefill + '. Enter it above, or ask for a new one.',
-        prefill + ' എന്ന നമ്പറിലേക്ക് കോഡ് SMS ആയി അയച്ചു. മുകളിൽ നൽകുക.'
-      )
-      : I18NS.pick(
-        'We sent a code to ' + prefill + '. Enter it above, or ask for a new one.',
-        prefill + ' എന്ന വിലാസത്തിലേക്ക് കോഡ് അയച്ചു. മുകളിൽ നൽകുക, അല്ലെങ്കിൽ പുതിയത് ചോദിക്കുക.'
-      );
+    hint.textContent = I18NS.pick(
+      'We sent a code to ' + prefill + '. Enter it above, or ask for a new one.',
+      prefill + ' എന്ന വിലാസത്തിലേക്ക് കോഡ് അയച്ചു. മുകളിൽ നൽകുക, അല്ലെങ്കിൽ പുതിയത് ചോദിക്കുക.'
+    );
     codeInput.focus();
   } else {
     emailInput.focus();

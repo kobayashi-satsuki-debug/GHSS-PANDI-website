@@ -70,21 +70,8 @@ together will hit "Error sending confirmation email".
 - [ ] `09-resources.sql`
 - [ ] `10-resource-roles.sql`
 - [ ] `11-signup-trigger-fix.sql`
-- [ ] `12-phone-accounts.sql` — only if the code is sent by SMS
 
 Files 05–11 are safe to re-run.
-
-## 5a. SMS codes (optional)
-
-Only if `js/config.js` says `channel: 'sms'`:
-
-- [ ] Authentication → Providers → Phone → **Enable**
-- [ ] Provider credentials added (Twilio / MSG91 / Textlocal)
-- [ ] SMS OTP Length `6`, Expiration `600`
-- [ ] Sender and template DLT-approved in India
-- [ ] One test message received on the headmaster's phone
-
-Full detail: `docs/SMS-OTP.md`.
 
 ## 6. First administrator
 

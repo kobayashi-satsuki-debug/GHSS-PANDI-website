@@ -30,36 +30,6 @@ window.SUPABASE_CONFIG = {
   anonKey: 'sb_publishable_XNVFQfIFiGAelOGk2_NXQQ_i8RHoQpU'
 };
 
-/* How a new account proves it owns the contact it registered with.
-   'sms'   -> a six-digit code is texted to the mobile number
-   'email' -> the old behaviour, a six-digit code by email
-   SMS needs a provider on the Supabase side: Authentication -> Providers ->
-   Phone, with Twilio/MSG91 and (in India) a DLT-registered sender and template.
-   Until that is on, leave this as 'email' or registration stops working. */
-window.OTP_CONFIG = {
-  channel: 'sms',
-  country: '+91'
-};
-
-/* Turns 9446553567, 09446553567 or +91 94465 53567 into +919446553567. */
-window.OTP_CONFIG.toE164 = function (value) {
-  const digits = String(value || '').replace(/\D/g, '');
-  if (!digits) return '';
-  const cc = String(window.OTP_CONFIG.country || '+91').replace('+', '');
-  if (digits.length > 10 && digits.startsWith(cc)) return '+' + digits;
-  return '+' + cc + digits.replace(/^0+/, '').slice(-10);
-};
-
-/* True when this build sends the code by SMS rather than email. */
-window.OTP_CONFIG.usesSms = function () {
-  return String(window.OTP_CONFIG.channel || 'email').toLowerCase() === 'sms';
-};
-
-/* What the person types: a mobile number in SMS mode, an address otherwise. */
-window.OTP_CONFIG.identityOf = function (email, phone) {
-  return window.OTP_CONFIG.usesSms() ? window.OTP_CONFIG.toE164(phone) : String(email || '').trim().toLowerCase();
-};
-
 window.APP_CONFIG = {
   /* When Supabase is not configured the site runs in local demo mode so the
      UI can be previewed. All accounts live in this browser only. */

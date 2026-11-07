@@ -181,13 +181,66 @@
         rows.push([L('Subject', 'വിഷയം'), session.teacher.subject || '—']);
         rows.push([L('Assigned classes', 'ക്ലാസുകൾ'), (session.classes || []).join(', ') || '—']);
       }
-      return head(L('My profile', 'എന്റെ പ്രൊഫൈൽ'), L('Details held by the school office.', 'സ്കൂൾ ഓഫീസിലുള്ള വിവരങ്ങൾ.')) +
+      return head(L('My profile', 'എന്റെ പ്രൊഫൈൽ'), L('Details held by the school office.', 'സ്കൂൾ ഓഫീസിലുള്ള വിവരങ്ങൾ.'),
+          '<a class="btn btn-ghost btn-sm" href="#profile" id="prof-focus">' + L('Edit profile', 'പ്രൊഫൈൽ തിരുത്തുക') + '</a>') +
         '<div class="dash-card"><table class="tbl"><tbody>' +
-        rows.map(r => '<tr><th style="width:38%">' + r[0] + '</th><td>' + UI.esc(String(r[1])) + '</td></tr>').join('') +
+        rows.map(r => '<tr><th style="width:38%">' + r[0] + '</th><td id="prof-row-' + UI.esc(String(r[0])) + '">' + UI.esc(String(r[1])) + '</td></tr>').join('') +
         '</tbody></table></div>' +
+        '<div class="dash-card" id="prof-edit-card"><h3>' + L('Edit your details', 'നിങ്ങളുടെ വിവരങ്ങൾ മാറ്റുക') + '</h3>' +
+        '<form class="mini-form" id="prof-form" novalidate>' +
+          '<div class="form-row">' +
+            '<div class="form-field"><label for="prof-name">' + L('Full name', 'പേര്') + '</label>' +
+              '<input id="prof-name" name="full_name" maxlength="80" autocomplete="name" value="' + UI.esc(me.full_name || '') + '" required></div>' +
+            '<div class="form-field"><label for="prof-phone">' + L('Mobile number', 'മൊബൈൽ നമ്പർ') + '</label>' +
+              '<input id="prof-phone" name="phone" inputmode="numeric" maxlength="10" autocomplete="tel" value="' + UI.esc(me.phone || '') + '" placeholder="10 digits"></div>' +
+          '</div>' +
+          '<p class="small muted">' + L('You can correct your name and phone here. Class, roll number, email and your role stay with the office — ask them if one of those is wrong.',
+            'ഇവിടെ പേരും ഫോൺ നമ്പറും തിരുത്താം. ക്ലാസ്, റോൾ നമ്പർ, ഇമെയിൽ, റോൾ എന്നിവ ഓഫീസിന്റെ കൈവശമാണ് — തെറ്റുണ്ടെങ്കിൽ അവരെ അറിയിക്കുക.') + '</p>' +
+          '<div class="form-msg" id="prof-msg" role="alert"></div>' +
+          '<div><button class="btn btn-primary" type="submit" id="prof-save">' + L('Save changes', 'മാറ്റങ്ങൾ സേവ് ചെയ്യുക') + '</button></div>' +
+        '</form></div>' +
         '<div class="dash-card"><h3>' + L('Password', 'പാസ്‌വേഡ്') + '</h3><p class="small muted">' +
         L('Reset your password from the secure recovery page.', 'സുരക്ഷിത റിക്കവറി പേജിൽ പാസ്‌വേഡ് പുനഃസജ്ജീകരിക്കാം.') +
         '</p><a class="btn btn-ghost btn-sm" href="reset.html">' + L('Change password', 'പാസ്‌വേഡ് മാറ്റുക') + '</a></div>';
+    },
+    async after() {
+      const form = document.getElementById('prof-form');
+      const msg = document.getElementById('prof-msg');
+      if (!form) return;
+      const focus = document.getElementById('prof-focus');
+      if (focus) focus.addEventListener('click', function (e) {
+        e.preventDefault();
+        const card = document.getElementById('prof-edit-card');
+        if (card) { card.scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('prof-name').focus(); }
+      });
+
+      form.addEventListener('submit', async function (e) {
+        e.preventDefault();
+        UI.hideMsg(msg);
+        const name = (document.getElementById('prof-name').value || '').trim().replace(/\s+/g, ' ');
+        const phone = (document.getElementById('prof-phone').value || '').replace(/[^0-9]/g, '');
+        if (name.length < 2) return UI.showMsg(msg, L('Please write your full name.', 'പൂർണ്ണ പേര് നൽകുക.'), 'error');
+        if (name.length > 80) return UI.showMsg(msg, L('That name is too long (80 characters at most).', 'പേര് വളരെ നീളമുള്ളതാണ് (പരമാവധി 80 അക്ഷരം).'), 'error');
+        if (phone && !/^[0-9]{10}$/.test(phone)) return UI.showMsg(msg, I18NS.t('err.phone'), 'error');
+
+        const btn = document.getElementById('prof-save');
+        UI.busy(btn, true);
+        try {
+          const out = await API.updateProfile({ full_name: name, phone: phone });
+          me.full_name = (out && out.full_name) || name;
+          me.phone = out && out.phone !== undefined ? out.phone : phone;
+          if (session.profile) { session.profile.full_name = me.full_name; session.profile.phone = me.phone; }
+          if (session.student) session.student.full_name = me.full_name;
+          if (session.teacher) session.teacher.full_name = me.full_name;
+          document.getElementById('dash-name').textContent = me.full_name;
+          document.getElementById('dash-avatar').textContent = UI.initials(me.full_name);
+          UI.toast(L('Profile saved.', 'പ്രൊഫൈൽ സേവ് ചെയ്തു.'), 'success');
+          await renderPane('profile');
+        } catch (err) {
+          UI.showMsg(msg, API.errorText(err), 'error');
+          UI.busy(btn, false);
+        }
+      });
     }
   };
 

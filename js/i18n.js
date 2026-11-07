@@ -161,6 +161,7 @@
     'err.invalidlogin': ['Incorrect email or password.', 'ഇമെയിലോ പാസ്‌വേഡോ തെറ്റാണ്.'],
     'err.required': ['Please fill in all required fields.', 'എല്ലാ ആവശ്യമായ വിവരങ്ങളും പൂരിപ്പിക്കുക.'],
     'err.email': ['Enter a valid email address.', 'ശരിയായ ഇമെയിൽ വിലാസം നൽകുക.'],
+    'err.nameLength': ['Please write your full name (2 to 80 characters).', 'പൂർണ്ണ പേര് നൽകുക (2 മുതൽ 80 അക്ഷരം വരെ).'],
     'err.phone': ['Enter a valid 10-digit mobile number.', 'ശരിയായ 10 അക്ക മൊബൈൽ നമ്പർ നൽകുക.'],
     'err.passwordShort': ['Password must be at least 12 characters.', 'പാസ്‌വേഡ് കുറഞ്ഞത് 12 അക്ഷരങ്ങൾ വേണം.'],
     'err.passwordCommon': ['That password is too easy to guess. Use a phrase only you would know.', 'ഈ പാസ്‌വേഡ് എളുപ്പം ഊഹിക്കാം. നിങ്ങൾക്ക് മാത്രം അറിയാവുന്ന ഒരു വാക്യം ഉപയോഗിക്കുക.'],

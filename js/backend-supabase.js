@@ -479,6 +479,16 @@
       if (error) fail(error);
       return true;
     },
+    async updateProfile({ full_name, phone }) {
+      const { data, error } = await client().rpc('update_my_profile', {
+        p_full_name: String(full_name || '').trim(),
+        p_phone: String(phone || '').trim()
+      });
+      if (error) fail(error);
+      cachedProfile = null;
+      return data || {};
+    },
+
     async setAccountStatus(profileId, status) {
       const { error } = await client().rpc('set_account_status', { p_profile: profileId, p_status: status });
       if (error) fail(error);

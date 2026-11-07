@@ -129,7 +129,10 @@ created, in preview mode and in live mode.
        anyone editing their own role, status or class, makes class records
        read-only for users, turns on RLS everywhere, and starts an audit trail
        of account changes. See `docs/SECURITY-HARDENING.md`. Safe to re-run.
-   12. `supabase/12-set-admin-password.sql` — optional. Edit `v_password`, run
+   12. `supabase/14-profile-edit.sql` — lets a signed-in student, parent or
+       teacher correct their own name and phone from **My profile**, while
+       class, roll number, email and role stay office-only. Safe to re-run.
+   13. `supabase/12-set-admin-password.sql` — optional. Edit `v_password`, run
        it, and the two office accounts can sign in without email (the address is
        marked confirmed at the same time). Refuses to run on the placeholder or
        on fewer than 12 characters; safe to re-run to change the password.

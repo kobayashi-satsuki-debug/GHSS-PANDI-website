@@ -486,6 +486,24 @@
       return { nickname: s.ai_nickname || '', name: me.full_name || '' };
     },
 
+    async updateProfile({ full_name, phone }) {
+      const me = requireRole(['student', 'teacher', 'parent', 'admin'], sessionId());
+      const name = String(full_name || '').trim();
+      const tel = String(phone || '').trim();
+      if (name.length < 2 || name.length > 80) throw new Error('err.nameLength');
+      if (tel && !/^[0-9]{10}$/.test(tel)) throw new Error('err.phone');
+      me.full_name = name;
+      me.phone = tel;
+      const st = db.students.find(x => x.profile_id === me.id);
+      if (st) st.full_name = name;
+      const te = db.teachers.find(x => x.profile_id === me.id);
+      if (te) te.full_name = name;
+      const pa = db.parents.find(x => x.profile_id === me.id);
+      if (pa) { pa.full_name = name; pa.phone = tel; }
+      save(db);
+      return { full_name: name, phone: tel, role: me.role };
+    },
+
     async setAiNickname(name) {
       const me = requireRole(['student'], sessionId());
       const s = db.students.find(x => x.profile_id === me.id);

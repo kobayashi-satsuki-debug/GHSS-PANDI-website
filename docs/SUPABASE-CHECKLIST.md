@@ -9,7 +9,8 @@ nothing here is done from the website code.
 ## 1. Authentication → Providers → Email
 
 - [ ] Email provider: **on**
-- [ ] Confirm email: **on**
+- [ ] Confirm email: **on** — or **off** as a temporary bridge while SMTP is broken
+      (see `docs/EMAIL-TEMPLATES.md` §6b)
 - [ ] Email OTP Length: `6`
 - [ ] Email OTP Expiration: `600`
 

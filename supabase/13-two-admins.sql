@@ -8,8 +8,8 @@
 --    created first in Authentication → Users → Add user with Auto Confirm).
 with wanted(email) as (
   values
-    ('first.admin@ghsspandi.in'),
-    ('second.admin@ghsspandi.in')
+    ('14101ghsspandi@gmail.com'),
+    ('ziyadahmad778@gmail.com')
 )
 update public.profiles p
    set role = 'admin',
@@ -28,8 +28,8 @@ select p.email, p.full_name, p.status, p.created_at
 -- 3. Anything still missing? These addresses have no account yet.
 with wanted(email) as (
   values
-    ('first.admin@ghsspandi.in'),
-    ('second.admin@ghsspandi.in')
+    ('14101ghsspandi@gmail.com'),
+    ('ziyadahmad778@gmail.com')
 )
 select w.email as missing_account
   from wanted w

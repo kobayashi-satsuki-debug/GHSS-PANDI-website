@@ -49,11 +49,12 @@
           <div class="form-field"><label for="reg-phone" data-en="Mobile number" data-ml="മൊബൈൽ">Mobile number</label><input id="reg-phone" name="phone" inputmode="numeric" maxlength="10" required></div>
         </div>
         <div class="form-row">
-          <div class="form-field"><label for="reg-password" data-en="Password" data-ml="പാസ്‌വേഡ്">Password</label>
-            <div class="pw-wrap"><input id="reg-password" type="password" autocomplete="new-password" required>
+          <p class="small muted" id="student-code-note" data-en="No password for students — a six-digit code is emailed and you type it in." data-ml="വിദ്യാർത്ഥികൾക്ക് പാസ്‌വേഡ് വേണ്ട — ആറ് അക്ക കോഡ് ഇമെയിലിൽ അയയ്ക്കും, അത് നൽകുക.">No password for students — a six-digit code is emailed and you type it in.</p>
+          <div class="form-field" id="reg-password-field"><label for="reg-password" data-en="Password" data-ml="പാസ്‌വേഡ്">Password</label>
+            <div class="pw-wrap"><input id="reg-password" type="password" autocomplete="new-password">
             <button class="pw-toggle" type="button" data-target="reg-password">SHOW</button></div></div>
-          <div class="form-field"><label for="reg-password2" data-en="Confirm password" data-ml="പാസ്‌വേഡ് വീണ്ടും">Confirm password</label>
-            <div class="pw-wrap"><input id="reg-password2" type="password" autocomplete="new-password" required>
+          <div class="form-field" id="reg-password2-field"><label for="reg-password2" data-en="Confirm password" data-ml="പാസ്‌വേഡ് വീണ്ടും">Confirm password</label>
+            <div class="pw-wrap"><input id="reg-password2" type="password" autocomplete="new-password">
             <button class="pw-toggle" type="button" data-target="reg-password2">SHOW</button></div></div>
         </div>
 

@@ -41,6 +41,7 @@
     'auth.pendingTeacher': ['Your teacher account is awaiting approval by the school administrator. You can sign in after approval.', 'നിങ്ങളുടെ അധ്യാപക അക്കൗണ്ട് സ്കൂൾ അഡ്മിനിസ്ട്രേറ്ററുടെ അംഗീകാരത്തിനായി കാത്തിരിക്കുന്നു. അംഗീകാരത്തിന് ശേഷം പ്രവേശിക്കാം.'],
     'auth.pendingStudent': ['Your student account is awaiting verification by the school.', 'നിങ്ങളുടെ വിദ്യാർത്ഥി അക്കൗണ്ട് സ്കൂളിന്റെ പരിശോധനയ്ക്കായി കാത്തിരിക്കുന്നു.'],
     'auth.disabled': ['This account has been disabled. Please contact the school office.', 'ഈ അക്കൗണ്ട് പ്രവർത്തനരഹിതമാക്കിയിരിക്കുന്നു. സ്കൂൾ ഓഫീസുമായി ബന്ധപ്പെടുക.'],
+    'auth.noAccount': ['No account uses this email address. Ask the office to add you, or register first.', 'ഈ ഇമെയിലിൽ അക്കൗണ്ട് ഇല്ല. ഓഫീസിനെ അറിയിക്കുക അല്ലെങ്കിൽ ആദ്യം രജിസ്റ്റർ ചെയ്യുക.'],
     'auth.otpWrong': ['That code is not correct. Check the email and try again.', 'ആ കോഡ് ശരിയല്ല. ഇമെയിൽ പരിശോധിച്ച് വീണ്ടും ശ്രമിക്കുക.'],
     'auth.otpExpired': ['That code has expired or was already used. Press Resend code.', 'കോഡിന്റെ സമയം കഴിഞ്ഞു അല്ലെങ്കിൽ ഇതിനകം ഉപയോഗിച്ചു. "കോഡ് വീണ്ടും അയയ്ക്കുക" അമർത്തുക.'],
     'auth.otpLocked': ['Too many wrong attempts. Please register again.', 'വളരെയധികം തെറ്റായ ശ്രമങ്ങൾ. വീണ്ടും രജിസ്റ്റർ ചെയ്യുക.'],

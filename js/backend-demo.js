@@ -145,6 +145,7 @@
   function pruneOtps() {
     const t = Date.now();
     db.pending_signups = (db.pending_signups || []).filter(p => p.expires_at > t);
+    db.login_otps = (db.login_otps || []).filter(r => r.expires_at > t);
   }
 
   function profileById(id) { return db.profiles.find(p => p.id === id) || null; }
@@ -157,6 +158,14 @@
   }
   function teacherOf(profileId) { return db.teachers.find(t => t.profile_id === profileId) || null; }
 
+
+  /* The last gate before a session is handed out. */
+  function openSession(p) {
+    if (p.status === 'pending') throw new Error(p.role === 'teacher' ? 'auth.pendingTeacher' : 'auth.pendingStudent');
+    if (p.status === 'disabled') throw new Error('auth.disabled');
+    setSession(p.id);
+    return p;
+  }
 
   async function createAccount(rec) {
     const { email, role, full_name, phone, extra } = rec;
@@ -193,14 +202,14 @@
     mode: 'demo',
     async signUp({ email, password, role, full_name, phone, extra }) {
       email = (email || '').trim().toLowerCase();
-      if (!email || !password) throw new Error('err.required');
-      if (password.length < 8) throw new Error('err.passwordShort');
+      if (!email) throw new Error('err.required');
+      if (password && password.length < 8) throw new Error('err.passwordShort');
       if (db.profiles.some(p => p.email === email)) throw new Error('err.emailTaken');
       pruneOtps();
       db.pending_signups = (db.pending_signups || []).filter(p => p.email !== email);
       const rec = {
         email, role, full_name, phone: phone || '', extra: extra || {},
-        password_hash: await hash(password),
+        password_hash: password ? await hash(password) : null,
         code: otpCode(), tries: 0,
         sent_at: Date.now(), expires_at: Date.now() + OTP_TTL
       };
@@ -253,10 +262,44 @@
       }
       const h = await hash(password || '');
       if (p.password_hash !== h) throw new Error('err.invalidlogin');
-      if (p.status === 'pending') throw new Error(p.role === 'teacher' ? 'auth.pendingTeacher' : 'auth.pendingStudent');
+      return openSession(p);
+    },
+
+    /* Students sign in with a six-digit code and no password. */
+    async sendLoginOtp(email) {
+      email = (email || '').trim().toLowerCase();
+      const p = db.profiles.find(x => x.email === email);
+      if (!p) throw new Error('auth.noAccount');
       if (p.status === 'disabled') throw new Error('auth.disabled');
-      setSession(p.id);
-      return p;
+      if (p.role === 'teacher' && p.status === 'pending') throw new Error('auth.pendingTeacher');
+      pruneOtps();
+      db.login_otps = (db.login_otps || []).filter(r => r.email !== email);
+      const rec = { email, code: otpCode(), tries: 0, sent_at: Date.now(), expires_at: Date.now() + OTP_TTL };
+      db.login_otps.push(rec);
+      save(db);
+      return { sent: true, devCode: rec.code };
+    },
+
+    async verifyLoginOtp(email, token) {
+      email = (email || '').trim().toLowerCase();
+      pruneOtps();
+      const rec = (db.login_otps || []).find(r => r.email === email);
+      if (!rec) throw new Error('auth.otpExpired');
+      if (rec.tries >= OTP_MAX_TRIES) {
+        db.login_otps = db.login_otps.filter(r => r !== rec);
+        save(db);
+        throw new Error('auth.otpLocked');
+      }
+      if (String(token || '').trim() !== rec.code) {
+        rec.tries += 1;
+        save(db);
+        throw new Error('auth.otpWrong');
+      }
+      db.login_otps = db.login_otps.filter(r => r !== rec);
+      save(db);
+      const p = db.profiles.find(x => x.email === email);
+      if (!p) throw new Error('err.invalidlogin');
+      return openSession(p);
     },
 
     /* ---------- PDF notes / resources ---------- */

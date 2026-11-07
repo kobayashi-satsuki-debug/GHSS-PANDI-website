@@ -198,3 +198,34 @@ anywhere that needs a verification step; the code field only accepts digits and
 the page offers a resend button with a 60-second cool-down. After a successful
 check it points the visitor at `login.html`. Teacher accounts still show the
 "waiting for school approval" notice instead of promising access.
+
+## 8. Students sign in with a six-digit code
+
+A student never types a password: they give an email address, receive six digits
+and type them, on registration and on every later sign-in.
+
+**Which template carries that code:** not *Confirm signup*. A returning student's
+code comes from the **Magic Link** template, because the site calls
+`signInWithOtp`. So both templates need the token:
+
+| Template | Must contain |
+| --- | --- |
+| Confirm signup | `{{ .Token }}` |
+| Magic Link | `{{ .Token }}` |
+| Reset password | `{{ .Token }}` |
+
+If Magic Link only holds `{{ .ConfirmationURL }}`, the student receives a link
+with no digits and the sign-in page asks for a code that does not exist.
+
+**Dashboard settings that matter:**
+
+- Authentication → Providers → Email → **Confirm email: on** (a new student
+  proves the address before the account works)
+- Providers → Email → **Email OTP length 6**, expiration 600
+- The site asks Supabase *not* to create unknown accounts on sign-in, so a
+  mistyped address answers "No account uses this email address" instead of
+  quietly making a new account.
+
+**Where it is enforced:** teachers and parents still use a password, and every
+session ends at the same profile check, so a pending teacher or a disabled
+account cannot get past the dashboard gate by using a code instead.

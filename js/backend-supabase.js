@@ -126,14 +126,9 @@
       return { sent: true };
     },
 
-    async signIn(email, password) {
-      const { error } = await client().auth.signInWithPassword({ email: email.trim().toLowerCase(), password });
-      if (error) {
-        if (/email not confirmed/i.test(error.message || '')) throw mapErr('auth.notConfirmed', error);
-        const e = new Error('err.invalidlogin');
-        e.detail = error.message;
-        throw e;
-      }
+    /* Shared tail of every sign-in: a session exists, so check the profile
+       before the person is let near a dashboard. */
+    async settleSession() {
       const p = await profile();
       if (!p) throw new Error('err.session');
       if (p.profile.status === 'pending') {
@@ -147,6 +142,51 @@
         throw new Error('auth.disabled');
       }
       return p;
+    },
+
+    async signIn(email, password) {
+      const { error } = await client().auth.signInWithPassword({ email: email.trim().toLowerCase(), password });
+      if (error) {
+        if (/email not confirmed/i.test(error.message || '')) throw mapErr('auth.notConfirmed', error);
+        const e = new Error('err.invalidlogin');
+        e.detail = error.message;
+        throw e;
+      }
+      return this.settleSession();
+    },
+
+    /* Students sign in with a six-digit code and no password. */
+    async sendLoginOtp(email) {
+      const addr = (email || '').trim().toLowerCase();
+      const { error } = await client().auth.signInWithOtp({
+        email: addr,
+        options: { shouldCreateUser: false, emailRedirectTo: redirectUrl('login.html') || undefined }
+      });
+      if (error) {
+        const m = error.message || '';
+        if (/signups? (are )?(not allowed|disabled)|user not found|no user/i.test(m)) throw mapErr('auth.noAccount', error);
+        if (/rate|too many|seconds/i.test(m)) throw mapErr('auth.otpWait', error);
+        if (/error sending|confirmation email|smtp|sending.*email/i.test(m)) throw mapErr('err.mailFailed', error);
+        fail(error);
+      }
+      return { sent: true };
+    },
+
+    async verifyLoginOtp(email, token) {
+      const { error } = await client().auth.verifyOtp({
+        email: (email || '').trim().toLowerCase(),
+        token: String(token || '').trim(),
+        type: 'email'
+      });
+      if (error) {
+        const m = error.message || '';
+        const c = String(error.code || '');
+        if (c === 'otp_expired' || /expired/i.test(m)) throw mapErr('auth.otpExpired', error);
+        if (/rate|too many/i.test(m)) throw mapErr('auth.otpWait', error);
+        if (/invalid|incorrect|token/i.test(m)) throw mapErr('auth.otpWrong', error);
+        fail(error);
+      }
+      return this.settleSession();
     },
 
     /* ---------- PDF notes / resources ---------- */

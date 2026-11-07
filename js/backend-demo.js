@@ -160,7 +160,7 @@
 
   async function createAccount(rec) {
     const { email, role, full_name, phone, extra } = rec;
-    if (db.profiles.some(p => p.email === email)) throw new Error('err.emailTaken');
+    if (email && db.profiles.some(p => p.email === email)) throw new Error('err.emailTaken');
     const isTeacher = role === 'teacher';
     const isStudent = role === 'student';
     const profile = {
@@ -193,12 +193,19 @@
     mode: 'demo',
     async signUp({ email, password, role, full_name, phone, extra }) {
       email = (email || '').trim().toLowerCase();
-      if (!email || !password) throw new Error('err.required');
+      const bySms = !!(window.OTP_CONFIG && window.OTP_CONFIG.usesSms());
+      const e164 = window.OTP_CONFIG ? window.OTP_CONFIG.toE164(phone) : '';
+      const key = bySms ? e164 : email;
+      if (!key || !password) throw new Error('err.required');
       if (password.length < 8) throw new Error('err.passwordShort');
-      if (db.profiles.some(p => p.email === email)) throw new Error('err.emailTaken');
+      if (email && db.profiles.some(p => p.email === email)) throw new Error('err.emailTaken');
+      if (bySms && db.profiles.some(p => p.phone && window.OTP_CONFIG.toE164(p.phone) === e164)) {
+        throw new Error('err.phoneTaken');
+      }
       pruneOtps();
-      db.pending_signups = (db.pending_signups || []).filter(p => p.email !== email);
+      db.pending_signups = (db.pending_signups || []).filter(p => p.key !== key);
       const rec = {
+        key, channel: bySms ? 'sms' : 'email',
         email, role, full_name, phone: phone || '', extra: extra || {},
         password_hash: await hash(password),
         code: otpCode(), tries: 0,
@@ -206,13 +213,15 @@
       };
       db.pending_signups.push(rec);
       save(db);
-      return { needsOtp: true, email, devCode: rec.code };
+      return { needsOtp: true, channel: rec.channel, identity: key, email, devCode: rec.code };
     },
 
-    async verifySignupOtp(email, token) {
-      email = (email || '').trim().toLowerCase();
+    async verifySignupOtp(identifier, token) {
+      const raw = String(identifier || '').trim();
+      const key = raw.includes('@') ? raw.toLowerCase()
+        : (window.OTP_CONFIG ? window.OTP_CONFIG.toE164(raw) : raw);
       pruneOtps();
-      const rec = (db.pending_signups || []).find(p => p.email === email);
+      const rec = (db.pending_signups || []).find(p => (p.key || p.email) === key);
       if (!rec) throw new Error('auth.otpExpired');
       if (rec.tries >= OTP_MAX_TRIES) {
         db.pending_signups = db.pending_signups.filter(p => p !== rec);
@@ -228,10 +237,12 @@
       return createAccount(rec);
     },
 
-    async resendSignupOtp(email) {
-      email = (email || '').trim().toLowerCase();
+    async resendSignupOtp(identifier) {
+      const raw = String(identifier || '').trim();
+      const key = raw.includes('@') ? raw.toLowerCase()
+        : (window.OTP_CONFIG ? window.OTP_CONFIG.toE164(raw) : raw);
       pruneOtps();
-      const rec = (db.pending_signups || []).find(p => p.email === email);
+      const rec = (db.pending_signups || []).find(p => (p.key || p.email) === key);
       if (!rec) throw new Error('auth.otpExpired');
       if (Date.now() - rec.sent_at < OTP_RESEND_GAP) throw new Error('auth.otpWait');
       rec.code = otpCode();
@@ -242,9 +253,13 @@
       return { devCode: rec.code };
     },
 
-    async signIn(email, password) {
-      email = (email || '').trim().toLowerCase();
-      const p = db.profiles.find(x => x.email === email);
+    async signIn(identifier, password) {
+      const raw = String(identifier || '').trim();
+      const key = raw.includes('@') ? raw.toLowerCase()
+        : (window.OTP_CONFIG ? window.OTP_CONFIG.toE164(raw) : raw);
+      const p = db.profiles.find(x => raw.includes('@')
+        ? x.email === key
+        : (x.phone && window.OTP_CONFIG.toE164(x.phone) === key));
       if (!p) throw new Error('err.invalidlogin');
       if (!p.password_hash) {
         if (password !== DEMO_PASSWORD) throw new Error('err.invalidlogin');

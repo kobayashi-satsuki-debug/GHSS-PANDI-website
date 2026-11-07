@@ -50,8 +50,10 @@
     const pw = get('reg-password');
     const pw2 = get('reg-password2');
 
+    const bySms = !!(window.OTP_CONFIG && window.OTP_CONFIG.usesSms());
     if (!name) return UI.showMsg(msg, I18NS.t('err.required'), 'error');
-    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return UI.showMsg(msg, I18NS.t('err.email'), 'error');
+    if (email && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return UI.showMsg(msg, I18NS.t('err.email'), 'error');
+    if (!email && !bySms) return UI.showMsg(msg, I18NS.t('err.email'), 'error');
     if (!/^[0-9]{10}$/.test(phone)) return UI.showMsg(msg, I18NS.t('err.phone'), 'error');
     if (pw.length < 8) return UI.showMsg(msg, I18NS.t('err.passwordShort'), 'error');
     if (pw !== pw2) return UI.showMsg(msg, I18NS.pick('Passwords do not match.', 'പാസ്‌വേഡുകൾ ഒത്തുപോകുന്നില്ല.'), 'error');
@@ -75,17 +77,19 @@
     try {
       const res = await API.signUp({ email, password: pw, role, full_name: name, phone, extra });
       if (res && (res.needsOtp || res.needsEmailConfirm)) {
-        startOtp(email, res.devCode);
+        startOtp((res && res.identity) || email, res.devCode, (res && res.channel) || 'email');
       } else {
         finish(role);
       }
     } catch (err) {
       UI.showMsg(msg, API.errorText(err), 'error');
-      if (err && err.code === 'err.mailFailed') {
-        const pending = String(email).trim().toLowerCase();
+      if (err && (err.code === 'err.mailFailed' || err.code === 'err.smsFailed' || err.code === 'err.smsNotEnabled')) {
+        const pending = window.OTP_CONFIG.usesSms()
+          ? window.OTP_CONFIG.toE164(phone)
+          : String(email).trim().toLowerCase();
         try { localStorage.setItem('ghss_pending_email', pending); } catch (e) {}
         const link = document.createElement('a');
-        link.href = 'confirm-email.html?email=' + encodeURIComponent(pending);
+        link.href = 'confirm-email.html?' + (window.OTP_CONFIG.usesSms() ? 'phone=' : 'email=') + encodeURIComponent(pending);
         link.textContent = I18NS.pick('Open the verify page', 'സ്ഥിരീകരണ പേജ് തുറക്കുക');
         msg.appendChild(document.createElement('br'));
         msg.appendChild(link);
@@ -105,17 +109,22 @@
   let otpEmail = '';
   let resendTimer = null;
 
-  function startOtp(email, devCode) {
-    otpEmail = email;
-    try { localStorage.setItem('ghss_pending_email', email); } catch (e) {}
+  function startOtp(identity, devCode, channel) {
+    otpEmail = identity;
+    try { localStorage.setItem('ghss_pending_email', identity); } catch (e) {}
     form.hidden = true;
     otpStep.hidden = false;
     otpInput.value = '';
     UI.hideMsg(msg);
-    otpHint.textContent = I18NS.pick(
-      'We sent a 6-digit code to ' + email + '. Enter it below — there is no link to click.',
-      email + ' എന്ന വിലാസത്തിലേക്ക് 6 അക്ക കോഡ് അയച്ചു. താഴെ നൽകുക — ലിങ്ക് ക്ലിക്ക് ചെയ്യേണ്ടതില്ല.'
-    ) + (devCode ? ' ' + I18NS.pick('Preview mode — your code is ' + devCode, 'പ്രിവ്യൂ മോഡ് — നിങ്ങളുടെ കോഡ് ' + devCode) : '');
+    otpHint.textContent = (channel === 'sms'
+      ? I18NS.pick(
+        'We texted a 6-digit code to ' + identity + '. Enter it below — there is no link to click.',
+        identity + ' എന്ന നമ്പറിലേക്ക് 6 അക്ക കോഡ് SMS ആയി അയച്ചു. താഴെ നൽകുക.'
+      )
+      : I18NS.pick(
+        'We sent a 6-digit code to ' + identity + '. Enter it below — there is no link to click.',
+        identity + ' എന്ന വിലാസത്തിലേക്ക് 6 അക്ക കോഡ് അയച്ചു. താഴെ നൽകുക — ലിങ്ക് ക്ലിക്ക് ചെയ്യേണ്ടതില്ല.'
+      )) + (devCode ? ' ' + I18NS.pick('Preview mode — your code is ' + devCode, 'പ്രിവ്യൂ മോഡ് — നിങ്ങളുടെ കോഡ് ' + devCode) : '');
     otpInput.focus();
     if (devCode) UI.showMsg(otpMsg, I18NS.pick('Preview mode: use code ' + devCode, 'പ്രിവ്യൂ മോഡ്: കോഡ് ' + devCode), 'info');
     startResendCountdown();

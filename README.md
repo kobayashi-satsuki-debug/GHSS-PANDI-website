@@ -88,6 +88,9 @@ Full instructions, security notes and the custom-domain checklist:
 [docs/SETUP.md](docs/SETUP.md). How roles, rate limits and headers are
 enforced: [docs/SECURITY.md](docs/SECURITY.md).
 
+Codes can arrive by SMS instead of email — setup, costs and the DLT rules:
+[docs/SMS-OTP.md](docs/SMS-OTP.md).
+
 Dashboard work in one tick-list — Site URL, redirect URLs, email templates,
 SMTP, the SQL files and the first administrator:
 [docs/SUPABASE-CHECKLIST.md](docs/SUPABASE-CHECKLIST.md).

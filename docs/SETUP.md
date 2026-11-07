@@ -121,7 +121,11 @@ created, in preview mode and in live mode.
    9. `supabase/10-resource-roles.sql` — narrows who may read the notes to
       students, teachers and staff (`can_read_resources()`), so parent accounts
       cannot open the library. Safe to re-run.
-   10. `supabase/11-signup-trigger-fix.sql` — makes the sign-up trigger unable to
+   10. `supabase/12-phone-accounts.sql` — needed only for SMS codes: makes
+      `profiles.email` optional, keeps one address and one mobile number per
+      account, and lets the trigger take the address from the form. Safe to
+      re-run.
+   11. `supabase/11-signup-trigger-fix.sql` — makes the sign-up trigger unable to
       fail the whole registration, whitelists the role value, and adds
       `repair_signup()` plus the `signup_report` view. Safe to re-run. Run it if
       registration ever answers "Database error saving new user".

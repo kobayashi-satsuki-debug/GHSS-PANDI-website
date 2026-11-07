@@ -63,7 +63,9 @@
     UI.hideMsg(msg);
     const em = email.value.trim();
     const pw = document.getElementById('login-password').value;
-    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em)) return UI.showMsg(msg, I18NS.t('err.email'), 'error');
+    const looksEmail = /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em);
+    const looksPhone = /^\+?[0-9][0-9\s-]{8,15}$/.test(em);
+    if (!looksEmail && !looksPhone) return UI.showMsg(msg, I18NS.t('err.email'), 'error');
     if (!pw) return UI.showMsg(msg, I18NS.t('err.required'), 'error');
 
     const btn = form.querySelector('button[type=submit]');

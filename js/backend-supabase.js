@@ -61,19 +61,23 @@
     mode: 'supabase',
 
     async signUp({ email, password, role, full_name, phone, extra }) {
-      const meta = { full_name, role, phone: phone || '', extra: extra || {} };
+      const clean = (email || '').trim().toLowerCase();
+      const e164 = window.OTP_CONFIG ? window.OTP_CONFIG.toE164(phone) : '';
+      const bySms = !!(window.OTP_CONFIG && window.OTP_CONFIG.usesSms());
+      const meta = { full_name, role, phone: phone || '', email: clean, extra: extra || {} };
       const options = { data: meta };
       const back = redirectUrl('login.html?confirmed=1');
       if (back) options.emailRedirectTo = back;
-      const { data, error } = await client().auth.signUp({
-        email: email.trim().toLowerCase(),
-        password,
-        options
-      });
+      const credentials = bySms
+        ? { phone: e164, password, options }
+        : { email: clean, password, options };
+      const { data, error } = await client().auth.signUp(credentials);
       if (error) {
         const m = error.message || '';
         if (/redirect/i.test(m)) throw mapErr('err.redirect', error);
         if (/error sending|confirmation email|smtp/i.test(m)) throw mapErr('err.mailFailed', error);
+        if (/phone.*(disabled|not enabled|provider)|sms.*(disabled|not enabled)/i.test(m)) throw mapErr('err.smsNotEnabled', error);
+        if (/could not be sent|failed to send/i.test(m)) throw mapErr('err.smsFailed', error);
         if (/already registered|already exists|user already/i.test(m)) throw mapErr('auth.alreadyRegistered', error);
         if (/disabled/i.test(m) && /signup|sign up/i.test(m)) throw mapErr('err.signupDisabled', error);
         fail(error);
@@ -88,15 +92,21 @@
         requiresApproval: role === 'teacher',
         needsOtp: !data.session,
         verified: !!data.session,
-        email: email.trim().toLowerCase()
+        channel: bySms ? 'sms' : 'email',
+        identity: bySms ? e164 : clean,
+        email: clean,
+        phone: bySms ? e164 : ''
       };
     },
 
-    async verifySignupOtp(email, token) {
+    async verifySignupOtp(identifier, token) {
+      const raw = String(identifier || '').trim();
+      const byEmail = raw.includes('@');
       const { data, error } = await client().auth.verifyOtp({
-        email: (email || '').trim().toLowerCase(),
-        token: String(token || '').trim(),
-        type: 'signup'
+        ...(byEmail
+          ? { email: raw.toLowerCase(), type: 'signup' }
+          : { phone: window.OTP_CONFIG.toE164(raw), type: 'sms' }),
+        token: String(token || '').trim()
       });
       if (error) {
         const m = (error.message || '');
@@ -114,11 +124,12 @@
       return { verified: true, requiresApproval: (localStorage.getItem('ghss_last_signup_role') === 'teacher') };
     },
 
-    async resendSignupOtp(email) {
-      const { error } = await client().auth.resend({
-        type: 'signup',
-        email: (email || '').trim().toLowerCase()
-      });
+    async resendSignupOtp(identifier) {
+      const raw = String(identifier || '').trim();
+      const byEmail = raw.includes('@');
+      const { error } = await client().auth.resend(byEmail
+        ? { type: 'signup', email: raw.toLowerCase() }
+        : { type: 'sms', phone: window.OTP_CONFIG.toE164(raw) });
       if (error) {
         if (/rate|too many|seconds/i.test(error.message || '')) throw new Error('auth.otpWait');
         fail(error);
@@ -126,10 +137,14 @@
       return { sent: true };
     },
 
-    async signIn(email, password) {
-      const { error } = await client().auth.signInWithPassword({ email: email.trim().toLowerCase(), password });
+    async signIn(identifier, password) {
+      const raw = String(identifier || '').trim();
+      const byEmail = raw.includes('@');
+      const { error } = await client().auth.signInWithPassword(byEmail
+        ? { email: raw.toLowerCase(), password }
+        : { phone: window.OTP_CONFIG.toE164(raw), password });
       if (error) {
-        if (/email not confirmed/i.test(error.message || '')) throw mapErr('auth.notConfirmed', error);
+        if (/email not confirmed|phone not confirmed/i.test(error.message || '')) throw mapErr('auth.notConfirmed', error);
         const e = new Error('err.invalidlogin');
         e.detail = error.message;
         throw e;

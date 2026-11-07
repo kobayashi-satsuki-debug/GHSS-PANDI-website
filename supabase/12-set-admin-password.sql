@@ -1,4 +1,4 @@
--- 14-set-admin-password.sql — let the two office accounts sign in while email
+-- 12-set-admin-password.sql — let the two office accounts sign in while email
 -- is broken. This only sets a password; it does not change anyone's role.
 --
 -- Supabase → SQL Editor → New query → paste this file → change v_password →

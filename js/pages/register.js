@@ -92,7 +92,7 @@
         : pw;
       const res = await API.signUp({ email, password: secret, role, full_name: name, phone, extra });
       if (res && (res.needsOtp || res.needsEmailConfirm)) {
-        startOtp(email, res.devCode);
+        if (role === 'parent') startMail(email); else startOtp(email, res.devCode);
       } else {
         finish(role);
       }
@@ -110,6 +110,75 @@
     } finally {
       UI.busy(btn, false);
     }
+  });
+
+  /* ---------- step 2 (parents): check your email ---------- */
+  const mailStep = document.getElementById('mail-step');
+  const mailHint = document.getElementById('mail-hint');
+  const mailHelp = document.getElementById('mail-help');
+  const mailMsg = document.getElementById('mail-msg');
+  const mailResend = document.getElementById('mail-resend');
+  const mailToCode = document.getElementById('mail-tocode');
+  const SCHOOL_PHONE = '9446553567';
+  const SCHOOL_MAIL = '14101ghsspandi@gmail.com';
+  let mailEmail = '';
+  let mailTimer = null;
+
+  function startMail(email) {
+    mailEmail = email;
+    try { localStorage.setItem('ghss_pending_email', email); } catch (e) {}
+    form.hidden = true;
+    if (otpStep) otpStep.hidden = true;
+    mailStep.hidden = false;
+    UI.hideMsg(msg);
+    UI.hideMsg(mailMsg);
+    mailHint.textContent = I18NS.pick(
+      'We sent a confirmation link to ' + email + '. Open the message from GHSS Pandi and click the link, then sign in. If nothing arrives in five minutes, look in Spam, press "Send it again", or call the office on ' + SCHOOL_PHONE + '.',
+      email + ' എന്ന വിലാസത്തിലേക്ക് സ്ഥിരീകരണ ലിങ്ക് അയച്ചു. GHSS Pandi യിൽ നിന്നുള്ള മെയിൽ തുറന്ന് ലിങ്ക് ക്ലിക്ക് ചെയ്ത ശേഷം പ്രവേശിക്കുക. അഞ്ച് മിനിറ്റിനുള്ളിൽ ലഭിച്ചില്ലെങ്കിൽ Spam പരിശോധിക്കുക, "വീണ്ടും അയയ്ക്കുക" അമർത്തുക, അല്ലെങ്കിൽ ഓഫീസിൽ വിളിക്കുക: ' + SCHOOL_PHONE + '.'
+    );
+    mailHelp.textContent = I18NS.pick(
+      'Still nothing? The office can confirm the account for you: ' + SCHOOL_MAIL + '.',
+      'ഇപ്പോഴും ലഭിച്ചില്ലേ? ഓഫീസിന് അക്കൗണ്ട് സ്ഥിരീകരിക്കാം: ' + SCHOOL_MAIL + '.'
+    );
+    startMailCountdown();
+  }
+
+  function startMailCountdown() {
+    let left = 60;
+    clearInterval(mailTimer);
+    mailResend.disabled = true;
+    mailResend.textContent = I18NS.pick('Send again in ' + left + 's', 'വീണ്ടും അയയ്ക്കാൻ ' + left + ' സെ');
+    mailTimer = setInterval(function () {
+      left -= 1;
+      if (left <= 0) {
+        clearInterval(mailTimer);
+        mailResend.disabled = false;
+        mailResend.textContent = I18NS.pick('Send it again', 'വീണ്ടും അയയ്ക്കുക');
+        return;
+      }
+      mailResend.textContent = I18NS.pick('Send again in ' + left + 's', 'വീണ്ടും അയയ്ക്കാൻ ' + left + ' സെ');
+    }, 1000);
+  }
+
+  if (mailResend) mailResend.addEventListener('click', async function () {
+    UI.hideMsg(mailMsg);
+    UI.busy(mailResend, true);
+    try {
+      await API.resendSignupOtp(mailEmail);
+      UI.showMsg(mailMsg, I18NS.pick('Sent again. Check your inbox and Spam.', 'വീണ്ടും അയച്ചു. Inbox-ഉം Spam-ഉം പരിശോധിക്കുക.'), 'success');
+    } catch (err) {
+      UI.showMsg(mailMsg, API.errorText(err), 'error');
+    } finally {
+      UI.busy(mailResend, false);
+      startMailCountdown();
+    }
+  });
+
+  if (mailToCode) mailToCode.addEventListener('click', function (e) {
+    e.preventDefault();
+    clearInterval(mailTimer);
+    mailStep.hidden = true;
+    startOtp(mailEmail);
   });
 
   /* ---------- step 2: email OTP ---------- */

@@ -217,9 +217,58 @@ code comes from the **Magic Link** template, because the site calls
 
 | Template | Must contain |
 | --- | --- |
-| Confirm signup | `{{ .Token }}` |
+| Confirm signup | `{{ .ConfirmationURL }}` **and** `{{ .Token }}` |
 | Magic Link | `{{ .Token }}` |
 | Reset password | `{{ .Token }}` |
+
+**Confirm signup needs both on purpose.** Students use the six digits; parents
+read the same email and click the link instead. If the template only has
+`{{ .Token }}`, a parent receives a code with no link and the parent screen
+(which asks them to click) looks like "no email arrived". If it only has
+`{{ .ConfirmationURL }}`, students get a link and no digits.
+
+A safe Confirm signup body:
+
+```html
+<h2>Confirm your GHSS Pandi account</h2>
+<p>Open this link to confirm: <a href="{{ .ConfirmationURL }}">confirm my account</a></p>
+<p>Or type this code on the site: <strong>{{ .Token }}</strong></p>
+```
+
+## 9. Parents: the confirmation email
+
+Parents register with their own password, so unlike students they finish by
+clicking a link. After submitting, the register page shows a **Check your email**
+panel naming the address, with:
+
+- **Send it again** — calls `auth.resend({ type: 'signup' })`, one minute apart;
+- **I confirmed — sign in** — goes to the parent sign-in form;
+- **I have a 6-digit code instead** — opens the code screen, for anyone who
+  reads the digits from the same email;
+- the school phone (9446553567) and address (14101ghsspandi@gmail.com) as a
+  fallback when the message never arrives.
+
+### If the mail still does not arrive
+
+Check the order below; each step rules one cause out.
+
+1. **Did Supabase accept the message?** A direct sign-up probe answers
+   `200` with `"confirmation_sent_at": "..."` — that means Supabase handed the
+   mail to SMTP. A `500 "Error sending confirmation email"` means it did not
+   reach SMTP at all: fix Authentication → SMTP Settings first.
+2. **Is it in Spam or Promotions?** A school-domain sender that has no SPF/DKIM
+   record lands there. Add the records your SMTP provider lists.
+3. **Did the SMTP provider accept it?** Signs of silent loss: wrong port
+   (587 STARTTLS vs 465 SSL), a sender address that is not verified with the
+   provider (SendGrid/Resend/Brevo all require this), or a free-mail sender
+   (Gmail SMTP is capped at a few hundred a day and often blocks scripted use).
+4. **Authentication → Logs** in Supabase shows the request; your provider's
+   dashboard shows whether the message was delivered, bounced or dropped.
+5. **A parent who already tried to sign in** is unconfirmed but exists. Sending
+   a new code/link is fine; `auth.resend` handles that case.
+
+Nothing in the website can confirm an account without the person clicking the
+link or typing the code — that is what makes the address verified.
 
 If Magic Link only holds `{{ .ConfirmationURL }}`, the student receives a link
 with no digits and the sign-in page asks for a code that does not exist.

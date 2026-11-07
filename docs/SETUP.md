@@ -125,6 +125,10 @@ created, in preview mode and in live mode.
       fail the whole registration, whitelists the role value, and adds
       `repair_signup()` plus the `signup_report` view. Safe to re-run. Run it if
       registration ever answers "Database error saving new user".
+   11. `supabase/13-two-admins.sql` — optional. Put the two office addresses at
+       the top and run it to give both people the admin role (there is no limit
+       on how many admins exist). Safe to re-run; the file also reports an
+       address that has no account yet.
 3. In **Authentication → URL configuration** set:
    - Site URL: `https://kobayashi-satsuki-debug.github.io/ghss-pandi-website/`
      while the site is on GitHub Pages, then change it to
